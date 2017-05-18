@@ -7,12 +7,12 @@ class Player {
 public:
 	float x, y, w, h, dx, dy, speed = 0;
 	int dir;
-	String File;
+	String file;
 	Image image;
 	Texture texture;
 	Sprite sprite;
 
-		Player(String F, float X, float Y, float W, float H, float speed);
+	Player(String File, float X, float Y, float W, float H, float Speed);
 
-		void update(float time);
+	void update(float time);
 };
