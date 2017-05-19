@@ -1,18 +1,16 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
-class Player {
+class Player :public Entity {
 public:
-	float x, y, w, h, dx, dy, speed = 0;
-	int dir;
-	String file;
-	Image image;
-	Texture texture;
-	Sprite sprite;
+	int playerScore;
 
-	Player(String File, float X, float Y, float W, float H, float Speed);
+	Player(Image &image, float X, float Y, int W, int H, float Speed, float Health, String Name) :Entity(image, X, Y, W, H, Speed, Health, Name) {
+		playerScore = 0;
+	}
+
+	void control(void);
 
 	void update(float time);
 };
