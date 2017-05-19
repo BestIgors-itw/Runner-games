@@ -1,22 +1,20 @@
+#include <iostream> 
 #include <SFML/Graphics.hpp>
-#include "Player.h"
+#include "Object.h"
 
 using namespace sf;
 
-Player::Player(String File, float X, float Y, float W, float H, float Speed) {
+Object::Object(String File, float X, float Y, float W, float H, float Speed) {
 	file = File;
-	w = W;
-	h = H;
+	w = W; h = H;
 	speed = Speed;
-	x = X;
-	y = Y;
+	x = X; y = Y;
 	image.loadFromFile("res/images/" + file);
-	image.createMaskFromColor(Color(255, 255, 255));
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }
 
-void Player::update(float time) {
+void Object::movement(float time) {
 	switch (dir) {
 	case 0: dx = speed; dy = 0; break;
 	case 1: dx = -speed; dy = 0; break;

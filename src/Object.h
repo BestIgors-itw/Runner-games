@@ -3,7 +3,7 @@
 
 using namespace sf;
 
-class Player {
+class Object {
 public:
 	float x, y, w, h, dx, dy, speed = 0;
 	int dir;
@@ -12,7 +12,7 @@ public:
 	Texture texture;
 	Sprite sprite;
 
-	Player(String File, float X, float Y, float W, float H, float Speed);
+	Object(String File, float X, float Y, float W, float H, float Speed);
 
-	void update(float time);
+	void movement(float time);
 };
