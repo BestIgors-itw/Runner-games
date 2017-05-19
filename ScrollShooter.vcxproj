@@ -31,7 +31,7 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Plaeyr.cpp" />
+    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

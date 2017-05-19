@@ -1,12 +1,14 @@
 #include <SFML/Graphics.hpp>
+#include <list>
+#include <vector>
 #include "Entity.h"
 #include "Object.h"
 
 using namespace sf;
 
-extern int screen_hight;
+extern int screen_width, screen_hight;
 
-void  Object::update(float time) {
+void Object::update(float time) {
 	if (name == "Background") {
 		y += dy * time;
 		sprite.setPosition(x + w / 2, y + h / 2);

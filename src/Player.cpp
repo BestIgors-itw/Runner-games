@@ -6,23 +6,45 @@
 
 using namespace sf;
 
-void Player::control(void) {
-	if (Keyboard::isKeyPressed(Keyboard::Right)) {
-		dir = 0;
-		sprite.setRotation(2.5);
-	}
+extern int screen_width, screen_hight;
 
-	if (Keyboard::isKeyPressed(Keyboard::Left)) {
-		dir = 1;
-		sprite.setRotation(-2.5);
-	}
+	void Player::control(void) {
+		if (Keyboard::isKeyPressed(Keyboard::Right)) {
+			if (x + w / 2 < screen_width) {
+				dir = 0;
+				sprite.setRotation(2.5);
+			}
+			else {
+				dir = 8;
+			}
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Left)) {
+			if (x - w / 2 > 0) {
+				dir = 1;
+				sprite.setRotation(-2.5);
+			}
+			else {
+				dir = 8;
+			}
+		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down)) {
-			dir = 2;
+			if (y + h / 2 < screen_hight) {
+				dir = 2;
+			}
+			else {
+				dir = 8;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up)) {
-			dir = 3;
+			if (y - h / 2 > 0) {
+				dir = 3;
+			}
+			else {
+				dir = 8;
+			}
 		}
 
 		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left))) {
@@ -30,19 +52,59 @@ void Player::control(void) {
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			dir = 4;
+			if (y - h / 2 > 0) {
+				dir = 3;
+				sprite.setRotation(0);
+			}
+			if (x - w / 2 > 0) {
+				dir = 1;
+				sprite.setRotation(-2.5);
+			}
+			if (x - w / 2 > 0 && y - h / 2 > 0) {
+				dir = 4;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			dir = 5;
+			if (x + w / 2 < screen_width) {
+				dir = 0;
+				sprite.setRotation(2.5);
+			}
+			if (y - h / 2 > 0) {
+				dir = 3;
+				sprite.setRotation(0);
+			}
+			if (x + w / 2 < screen_width && y - h / 2 > 0) {
+				dir = 5;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			dir = 6;
+			if (y + h / 2 < screen_hight) {
+				dir = 2;
+				sprite.setRotation(0);
+			}
+			if (x + w / 2 < screen_width) {
+				dir = 0;
+				sprite.setRotation(2.5);
+			}
+			if (x + w / 2 < screen_width && y + h / 2 < screen_hight) {
+				dir = 6;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			dir = 7;
+			if (y + h / 2 < screen_hight) {
+				dir = 2;
+				sprite.setRotation(0);
+			}
+			if (x - w / 2 > 0) {
+				dir = 1;
+				sprite.setRotation(-2.5);
+			}
+			if (x - w / 2 > 0 && y + h / 2 < screen_hight) {
+				dir = 7;
+			}
 		}
 
 		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)) && !(Keyboard::isKeyPressed(Keyboard::Up))

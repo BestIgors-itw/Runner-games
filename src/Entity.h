@@ -10,7 +10,7 @@ public:
 	Texture texture;
 	Sprite sprite;
 	String name;
+	Entity::Entity(Image &image, float X, float Y, int W, int H, float Speed, float Health, String Name);
 
-	Entity(Image &image, float X, float Y, int W, int H, float Speed, float Health, String Name);
 	virtual void update(float time);
 };
