@@ -10,6 +10,7 @@ Object::Object(String File, float X, float Y, float W, float H, float Speed) {
 	speed = Speed;
 	x = X; y = Y;
 	image.loadFromFile("res/images/" + file);
+
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }

@@ -6,7 +6,7 @@ int screen_width = 1600, screen_hight = 900;
 
 using namespace sf;
 
-int main(){
+int main() {
 	RenderWindow window(sf::VideoMode(screen_width, screen_hight), "ScrollShooter", Style::Fullscreen);
 
 	Clock clock;
@@ -25,7 +25,7 @@ int main(){
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Right)) {
-			if (p.x + p.w < screen_width){
+			if (p.x + p.w < screen_width) {
 				p.dir = 0;
 				p.sprite.setRotation(2.5);
 			}
@@ -63,27 +63,67 @@ int main(){
 		}
 
 		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left))) {
-			p.sprite.setRotation(0); 
+			p.sprite.setRotation(0);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			p.dir = 4;
+			if (p.y > 0) {
+				p.dir = 3;
+				p.sprite.setRotation(0);
+			}
+			if (p.x > 0) {
+				p.dir = 1;
+				p.sprite.setRotation(-2.5);
+			}
+			if (p.x > 0 && p.y > 0) {
+				p.dir = 4;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			p.dir = 5;
+			if (p.x + p.w < screen_width) {
+				p.dir = 0;
+				p.sprite.setRotation(2.5);
+			}
+			if (p.y > 0) {
+				p.dir = 3;
+				p.sprite.setRotation(0);
+			}
+			if (p.x + p.w < screen_width && p.y > 0) {
+				p.dir = 5;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			p.dir = 6;
+			if (p.y + p.h < screen_hight) {
+				p.dir = 2;
+				p.sprite.setRotation(0);
+			}
+			if (p.x + p.w < screen_width) {
+				p.dir = 0;
+				p.sprite.setRotation(2.5);
+			}
+			if (p.x + p.w < screen_width && p.y + p.h < screen_hight) {
+				p.dir = 6;
+			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			p.dir = 7;
+			if (p.y + p.h < screen_hight) {
+				p.dir = 2;
+				p.sprite.setRotation(0);
+			}
+			if (p.x > 0) {
+				p.dir = 1;
+				p.sprite.setRotation(-2.5);
+			}
+			if (p.x > 0 && p.y + p.h < screen_hight) {
+				p.dir = 7;
+			}
 		}
 
 		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)) && !(Keyboard::isKeyPressed(Keyboard::Up))
-		  && !(Keyboard::isKeyPressed(Keyboard::Down))) {
+			&& !(Keyboard::isKeyPressed(Keyboard::Down))) {
 			p.dir = 8;
 		}
 
