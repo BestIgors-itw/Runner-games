@@ -63,7 +63,7 @@ int main() {
 	float bk_time;
 	float hedge_time;
 
-	RenderWindow window(sf::VideoMode(screen_width, 800), "ScrollShooter", Style::Fullscreen);
+	RenderWindow window(sf::VideoMode(screen_width, 800), "Race", Style::Fullscreen);
 
 	while (window.isOpen()){
 		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
@@ -115,8 +115,33 @@ int main() {
 		player.score = player.score + game_time - score_time;
 		score_time = game_time;
 
-		for (it = entities.begin(); it != entities.end(); ++it) {
-			(*it)->update(time);
+		for (it = entities.begin(); it != entities.end();){
+			Entity *b = *it;
+			b->update(time);
+			if (b->life == false) {
+				it = entities.erase(it);
+				delete b;
+			}
+			else ++it;
+		}
+
+		for (it = entities.begin(); it != entities.end(); it++)
+		{
+			if ((*it)->getRect().intersects(player.getRect()))
+			{
+				if ((*it)->name == "Hedge") {
+					player.health -= 10;
+					(*it)->life = false;
+					entities.push_back(new Object(effects_explosion2_i, (*it)->x, (*it)->y, 67, 69, 0, 100, "Effect"));
+					interface_health_and_score_bar.health = 500;
+					if (player.score > 5) {
+						player.score -= 5;
+					}
+					else {
+						player.score = 5;
+					}
+				}
+			}
 		}
 
 		for (it = entities.begin(); it != entities.end(); ++it) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.h"
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
@@ -14,9 +14,24 @@ class Entity
     Sprite sprite;
     String name;
 
-    Entity(Image &image, float X, float Y, int W, int H, float Speed, float Health, String Name);
+	Entity::Entity(Image &image, float X, float Y, int W, int H, float Speed, float Health, String Name)
+	{
+		x = X;
+		y = Y;
+		w = W;
+		h = H;
+		name = Name;
+		speed = Speed;
+		health = Health;
+		dx = 0;
+		dy = 0;
+		life = true;
+		texture.loadFromImage(image);
+		sprite.setTexture(texture);
+		sprite.setOrigin(w / 2, h / 2);
+	};
 
-    virtual int update(float time) = 0;
+	virtual int update(float time);
 
     FloatRect getRect();
 };

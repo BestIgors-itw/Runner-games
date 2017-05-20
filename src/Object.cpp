@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "Object.h"
 #include "Entity.h"
 
@@ -40,9 +39,5 @@ int Object::update(float time)
             --health;
         }
     }
-	if (name == "Interface")
-	{
-		sprite.setPosition(x + w / 2, y + h / 2);
-	}
     return 0;
 }

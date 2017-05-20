@@ -37,6 +37,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{6A0DC571-FC4D-4147-A419-E4ADCE4BA3F6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>Race</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
