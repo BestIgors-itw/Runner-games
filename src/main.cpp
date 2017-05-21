@@ -22,7 +22,6 @@ Clock game_timer;
 Clock background_timer;
 Clock enemy_timer;
 
-
 int main() {
 	Image player_i;
 	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
@@ -269,6 +268,20 @@ int main() {
 			}
 		}
 
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end();) {
+			Enemies *b = *it1_enemies;
+			if (b->getRect().intersects(player.getRect())) {
+				effects.push_back(new Effects(effects_explosion2_i, player.x, player.y, 67, 69, 0.6, 2, 0.1));
+				player.health -= b->health;
+				player.score -= 5;
+				it1_enemies = enemies.erase(it1_enemies);
+				delete b;
+			}
+			else {
+				++it1_enemies;
+			}
+		}
+
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();) {
 			Bullets *b = *it_bullets;
 			b->update(time);
@@ -317,7 +330,6 @@ int main() {
 			}
 			else ++it_effects;
 		}
-
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
 			window.draw((*it_background)->sprite);
