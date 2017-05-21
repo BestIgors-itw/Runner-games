@@ -15,96 +15,94 @@
 #define screen_width 1600
 #define screen_hight 900
 
-using namespace sf;
+sf::Clock clock1;
+sf::Clock game_timer;
+sf::Clock background_timer;
+sf::Clock enemy_timer;
 
-Clock clock1;
-Clock game_timer;
-Clock background_timer;
-Clock enemy_timer;
-
-int main() {
-	Image player_i;
+int game(sf::RenderWindow & window) {
+	sf::Image player_i;
 	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
 		return 1;
 	}
 
-	Image background_rocksand1_i;
+	sf::Image background_rocksand1_i;
 	if(!background_rocksand1_i.loadFromFile("res/images/background/rocksand1.png")) {
 		return 1;
 	}
 
-	Image background_rocksand2_i;
+	sf::Image background_rocksand2_i;
 	if(!background_rocksand2_i.loadFromFile("res/images/background/rocksand2.png")) {
 		return 1;
 	}
 
-	Image background_rockgray1_i;
+	sf::Image background_rockgray1_i;
 	if(!background_rockgray1_i.loadFromFile("res/images/background/rockgray1.png")) {
 		return 1;
 	}
 
-	Image effects_explosion1_i;
+	sf::Image effects_explosion1_i;
 	if (!effects_explosion1_i.loadFromFile("res/images/effects/explosion1.png")) {
 		return 1;
 	}
 
-	Image effects_explosion2_i;
+	sf::Image effects_explosion2_i;
 	if(!effects_explosion2_i.loadFromFile("res/images/effects/explosion2.png")) {
 		return 1;
 	}
 
-	Image effects_shooting_i;
+	sf::Image effects_shooting_i;
 	if (!effects_shooting_i.loadFromFile("res/images/effects/shooting1.png")) {
 		return 1;
 	}
 
-	Image enemy_battlemule_i;
+	sf::Image enemy_battlemule_i;
 	if(!enemy_battlemule_i.loadFromFile("res/images/enemy/battlemule.png")) {
 		return 1;
 	}
 
-	Image enemy_impalabattle_i;
+	sf::Image enemy_impalabattle_i;
 	if(!enemy_impalabattle_i.loadFromFile("res/images/enemy/impalabattle.png")) {
 		return 1;
 	}
 
-	Image enemy_slage_i;
+	sf::Image enemy_slage_i;
 	if (!enemy_slage_i.loadFromFile("res/images/enemy/slage.png")) {
 		return 1;
 	}
 
-	Image background_i;
+	sf::Image background_i;
 	if(!background_i.loadFromFile("res/images/background/sandbackground.png")) {
 		return 1;
 	}
-	Texture background_t;
+	sf::Texture background_t;
 	background_t.loadFromImage(background_i);
 
-	Sprite background_s;
+	sf::Sprite background_s;
 	background_s.setTexture(background_t);
 	background_s.setScale(5.8181, 4.9180);
 
-	Image bullet_bullet1_i;
+	sf::Image bullet_bullet1_i;
 	if (!bullet_bullet1_i.loadFromFile("res/images/bullets/bullet1.png")) {
 		return 1;
 	}
 
-	Image interface_button_i;
-	if(!interface_button_i.loadFromFile("res/images/interface/button.png")) {
+	sf::Image button_i;
+	if(!button_i.loadFromFile("res/images/interface/button.png")) {
 		return 1;
 	}
 
-	Font font;
+	sf::Font font;
 	if(!font.loadFromFile("res/font/beer_money.ttf")) {
 		return 1;
 	}
 
-	Text text("", font, 50);
-	text.setColor(Color::Black);
+	sf::Text text("", font, 50);
+	text.setColor(sf::Color::Black);
 
 
 	Player player(player_i, 750, 650, 69, 100, 0.7, 100, 0.25, 20);
-	Interface interface_health_and_score_bar(interface_button_i, 1152, 792, 448, 108);
+	Interface interface_health_and_score_bar(button_i, 1152, 792, 448, 108);
 
 	std::list<Background*>  background_objects;
 	std::list<Background*>::iterator it_background;
@@ -127,12 +125,8 @@ int main() {
 	float bk_time;
 	float enemy_time;
 
-	RenderWindow window(sf::VideoMode(screen_width, screen_hight), "ScrollShooter", Style::Fullscreen);
-
-	window.setFramerateLimit(60);
-
 	while (window.isOpen()){
-		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
 
@@ -361,6 +355,101 @@ int main() {
 		window.draw(text);
 
 		window.display();
+	}
+
+	return 0;
+}
+
+int menu(sf::RenderWindow & window) {
+	sf::Image background_i;
+	if (!background_i.loadFromFile("res/images/menu/menuback.png")) {
+		return 1;
+	}
+
+	sf::Texture background_t;
+	background_t.loadFromImage(background_i);
+
+	sf::Sprite background_s;
+	background_s.setTexture(background_t);
+
+	sf::Font font;
+	if (!font.loadFromFile("res/font/beer_money.ttf")) {
+		return 1;
+	}
+
+	sf::Text text("", font, 50);
+	text.setColor(sf::Color::Black);
+
+	int mode = 0;
+
+	while (1) {
+		window.clear();
+
+		window.draw(background_s);
+
+		text.setString("Game");
+		text.setPosition(20, 20);
+		if (mode == 0) {
+			text.setColor(sf::Color::Blue);
+		}
+		else {
+			text.setColor(sf::Color::Black);
+		}
+		window.draw(text);
+
+		text.setString("Exit");
+		text.setPosition(20, 128);
+		if (mode == 1) {
+			text.setColor(sf::Color::Blue);
+		}
+		else {
+			text.setColor(sf::Color::Black);
+		}
+		window.draw(text);
+
+		window.display();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			if (mode < 1) {
+				++mode;
+			}
+			else {
+				mode = 0;
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			if (mode > 0) {
+				--mode;
+			}
+			else {
+				mode = 1;
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+			switch (mode) {
+			case 0:
+				return 1;
+				break;
+			case 1:
+				return 0;
+				break;
+			}
+		}
+	}
+}
+
+int main(){
+	sf::RenderWindow window(sf::VideoMode(screen_width, screen_hight), "Game", sf::Style::Fullscreen);
+
+	window.setFramerateLimit(60);
+
+	switch (menu(window)){
+	case 1:
+		game(window);
+		break;
+	default:
+		break;
 	}
 
 	return 0;

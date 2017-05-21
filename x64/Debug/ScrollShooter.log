@@ -1,12 +1,4 @@
-﻿  Player.cpp
+﻿D:\VS\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (ScrollShooter.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   main.cpp
-  Interface.cpp
-  Entity.cpp
-  Enemies.cpp
-  Effects.cpp
-  Direction.cpp
-  Bullets.cpp
-  Background.cpp
-  Создание кода...
-  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.exe
-  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.pdb (Partial PDB)
+  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\SS\ScrollShooter билд 8 menu\x64\Debug\Runner games.exe
+  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\SS\ScrollShooter билд 8 menu\x64\Debug\Runner games.pdb (Partial PDB)
