@@ -19,8 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Background.h" />
+    <ClInclude Include="src\Bullets.h" />
+    <ClInclude Include="src\Direction.h" />
+    <ClInclude Include="src\Effects.h" />
     <ClInclude Include="src\Entity.h" />
-    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Interface.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\resource.h" />
   </ItemGroup>
@@ -28,9 +32,13 @@
     <ResourceCompile Include="src\ScrollShooter.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Background.cpp" />
+    <ClCompile Include="src\Bullets.cpp" />
+    <ClCompile Include="src\Direction.cpp" />
+    <ClCompile Include="src\Effects.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Interface.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

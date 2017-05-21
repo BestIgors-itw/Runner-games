@@ -1,7 +1,11 @@
 ﻿  Player.cpp
-  Object.cpp
   main.cpp
+  Interface.cpp
   Entity.cpp
+  Effects.cpp
+  Direction.cpp
+  Bullets.cpp
+  Background.cpp
   Создание кода...
   ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.exe
   ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.pdb (Partial PDB)

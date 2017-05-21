@@ -1,136 +1,134 @@
 #include <SFML/Graphics.hpp>
-#include <list>
-#include <vector>
 #include "Entity.h"
 #include "Player.h"
+#include "Direction.h"
 
-using namespace sf;
+#define screen_width 1600
+#define screen_hight 900
 
-extern int screen_width, screen_hight;
-
-	void Player::control(void) {
-		if (Keyboard::isKeyPressed(Keyboard::Right)) {
-			if (x + w / 2 < screen_width) {
-				dir = 0;
-				sprite.setRotation(2.5);
-			}
-			else {
-				dir = 8;
-			}
+void Player::control() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		if (x + w / 2 < screen_width) {
+			direction = RIGHT;
+			sprite.setRotation(2.5);
 		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Left)) {
-			if (x - w / 2 > 0) {
-				dir = 1;
-				sprite.setRotation(-2.5);
-			}
-			else {
-				dir = 8;
-			}
+		else {
+			direction = STAY;
 		}
+	}
 
-		if (Keyboard::isKeyPressed(Keyboard::Down)) {
-			if (y + h / 2 < screen_hight) {
-				dir = 2;
-			}
-			else {
-				dir = 8;
-			}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		if (x - w / 2 > 0) {
+			direction = LEFT;
+			sprite.setRotation(-2.5);
 		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Up)) {
-			if (y - h / 2 > 0) {
-				dir = 3;
-			}
-			else {
-				dir = 8;
-			}
+		else {
+			direction = STAY;
 		}
+	}
 
-		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left))) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		if (y + h < screen_hight) {
+			direction = DOWN;
+		}
+		else {
+			direction = STAY;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		if (y - h / 2 > 0) {
+			direction = UP;
+		}
+		else {
+			direction = STAY;
+		}
+	}
+	
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		if (y - h / 2 > 0) {
+			direction = UP;
 			sprite.setRotation(0);
 		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			if (y - h / 2 > 0) {
-				dir = 3;
-				sprite.setRotation(0);
-			}
-			if (x - w / 2 > 0) {
-				dir = 1;
-				sprite.setRotation(-2.5);
-			}
-			if (x - w / 2 > 0 && y - h / 2 > 0) {
-				dir = 4;
-			}
+		if (x - w / 2 > 0) {
+			direction = LEFT;
+			sprite.setRotation(-2.5);
 		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			if (x + w / 2 < screen_width) {
-				dir = 0;
-				sprite.setRotation(2.5);
-			}
-			if (y - h / 2 > 0) {
-				dir = 3;
-				sprite.setRotation(0);
-			}
-			if (x + w / 2 < screen_width && y - h / 2 > 0) {
-				dir = 5;
-			}
-		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Right)) {
-			if (y + h / 2 < screen_hight) {
-				dir = 2;
-				sprite.setRotation(0);
-			}
-			if (x + w / 2 < screen_width) {
-				dir = 0;
-				sprite.setRotation(2.5);
-			}
-			if (x + w / 2 < screen_width && y + h / 2 < screen_hight) {
-				dir = 6;
-			}
-		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Left)) {
-			if (y + h / 2 < screen_hight) {
-				dir = 2;
-				sprite.setRotation(0);
-			}
-			if (x - w / 2 > 0) {
-				dir = 1;
-				sprite.setRotation(-2.5);
-			}
-			if (x - w / 2 > 0 && y + h / 2 < screen_hight) {
-				dir = 7;
-			}
-		}
-
-		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)) && !(Keyboard::isKeyPressed(Keyboard::Up))
-			&& !(Keyboard::isKeyPressed(Keyboard::Down))) {
-			dir = 8;
+		if (x - w / 2 > 0 && y - h / 2 > 0) {
+			direction = UP_LEFT;
 		}
 	}
 
-	void Player::update(float time) {
-		control();
-		switch (dir) {
-		case 0: dx = speed; dy = 0; break;
-		case 1: dx = -speed; dy = 0; break;
-		case 2: dy = speed; dx = 0; break;
-		case 3: dy = -speed; dx = 0; break;
-		case 4: dx = -speed; dy = -speed; break;
-		case 5: dx = speed; dy = -speed; break;
-		case 6: dx = speed; dy = speed; break;
-		case 7: dx = -speed; dy = speed; break;
-		case 8: dx = 0; dy = 0; break;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		if (x + w / 2 < screen_width) {
+			direction = RIGHT;
+			sprite.setRotation(2.5);
 		}
-		x += dx * time;
-		y += dy * time;
-
-		sprite.setPosition(x, y);
-		if (health <= 0) {
-			exit(0);
+		if (y - h / 2 > 0) {
+			direction = UP;
+			sprite.setRotation(0);
+		}
+		if (x + w / 2 < screen_width && y - h / 2 > 0) {
+			direction = UP_RIGHT;
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		if (y + h / 2 < screen_hight) {
+			direction = DOWN;
+			sprite.setRotation(0);
+		}
+		if (x + w / 2 < screen_width) {
+			direction = RIGHT;
+			sprite.setRotation(2.5);
+		}
+		if (x + w / 2 < screen_width && y + h < screen_hight) {
+			direction = DOWN_RIGHT;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		if (y + h < screen_hight) {
+			direction = DOWN;
+			sprite.setRotation(0);
+		}
+		if (x - w / 2 > 0) {
+			direction = LEFT;
+			sprite.setRotation(-2.5);
+		}
+		if (x - w / 2 > 0 && y + h < screen_hight) {
+			direction = DOWN_LEFT;
+		}
+	}
+
+	if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		&& !(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		&& !(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		&& !(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))) {
+		direction = STAY;
+		sprite.setRotation(0);
+	}
+}
+
+int Player::update(float time) {
+	control();
+	Direction_convert(direction, dx, dy, speed);
+	x += dx * time;
+	y += dy * time;
+
+	sprite.setPosition(x, y);
+
+	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_timer > time_between_attack) {
+		is_shot = true;
+		attack_frequency_timer = game_timer.getElapsedTime().asSeconds();
+	}
+
+	if (health <= 0) {
+		return 1;
+	}
+	return 0;
+}
