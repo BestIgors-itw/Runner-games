@@ -23,57 +23,57 @@ sf::Clock enemy_timer;
 int game(sf::RenderWindow & window) {
 	sf::Image player_i;
 	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image background_rocksand1_i;
 	if(!background_rocksand1_i.loadFromFile("res/images/background/rocksand1.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image background_rocksand2_i;
 	if(!background_rocksand2_i.loadFromFile("res/images/background/rocksand2.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image background_rockgray1_i;
 	if(!background_rockgray1_i.loadFromFile("res/images/background/rockgray1.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image effects_explosion1_i;
 	if (!effects_explosion1_i.loadFromFile("res/images/effects/explosion1.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image effects_explosion2_i;
 	if(!effects_explosion2_i.loadFromFile("res/images/effects/explosion2.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image effects_shooting_i;
 	if (!effects_shooting_i.loadFromFile("res/images/effects/shooting1.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image enemy_battlemule_i;
 	if(!enemy_battlemule_i.loadFromFile("res/images/enemy/battlemule.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image enemy_impalabattle_i;
 	if(!enemy_impalabattle_i.loadFromFile("res/images/enemy/impalabattle.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image enemy_slage_i;
 	if (!enemy_slage_i.loadFromFile("res/images/enemy/slage.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image background_i;
 	if(!background_i.loadFromFile("res/images/background/sandbackground.png")) {
-		return 1;
+		return 0;
 	}
 	sf::Texture background_t;
 	background_t.loadFromImage(background_i);
@@ -84,17 +84,17 @@ int game(sf::RenderWindow & window) {
 
 	sf::Image bullet_bullet1_i;
 	if (!bullet_bullet1_i.loadFromFile("res/images/bullets/bullet1.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Image button_i;
 	if(!button_i.loadFromFile("res/images/interface/button.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Font font;
 	if(!font.loadFromFile("res/font/beer_money.ttf")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Text text("", font, 50);
@@ -474,12 +474,17 @@ int main() {
 
 	window.setFramerateLimit(60);
 
-	switch (menu(window)) {
-	case 1:
-		game(window);
-		break;
-	default:
-		break;
+	while (1) {
+		switch (menu(window)) {
+		case 0:
+			return 0;
+			break;
+		case 1:
+			game(window);
+			break;
+		default:
+			break;
+		}
 	}
 
 	return 0;
