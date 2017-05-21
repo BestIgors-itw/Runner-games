@@ -363,7 +363,7 @@ int game(sf::RenderWindow & window) {
 int menu(sf::RenderWindow & window) {
 	sf::Image background_i;
 	if (!background_i.loadFromFile("res/images/menu/menuback.png")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Texture background_t;
@@ -372,20 +372,41 @@ int menu(sf::RenderWindow & window) {
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
 
+	sf::Image button_i;
+	if (!background_i.loadFromFile("res/images/menu/button.png")) {
+		return 0;
+	}
+
+	sf::Texture button_t;
+	button_t.loadFromImage(button_i);
+
+	sf::Sprite button_s;
+	button_s.setTexture(button_t);
+
 	sf::Font font;
 	if (!font.loadFromFile("res/font/beer_money.ttf")) {
-		return 1;
+		return 0;
 	}
 
 	sf::Text text("", font, 50);
 	text.setColor(sf::Color::Black);
 
 	int mode = 0;
+	float button_press_time = game_timer.getElapsedTime().asSeconds();
+	bool is_pressed = false;
 
 	while (1) {
 		window.clear();
 
 		window.draw(background_s);
+
+		button_s.setPosition(0, 0);
+
+		window.draw(button_s);
+
+		button_s.setPosition(0, 110);
+
+		window.draw(button_s);
 
 		text.setString("Game");
 		text.setPosition(20, 20);
@@ -409,7 +430,14 @@ int menu(sf::RenderWindow & window) {
 
 		window.display();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		if (game_timer.getElapsedTime().asSeconds() - button_press_time > 0.25) {
+			is_pressed = false;
+			button_press_time = game_timer.getElapsedTime().asSeconds();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && is_pressed == false) {
+			is_pressed = true;
+			button_press_time = game_timer.getElapsedTime().asSeconds();
 			if (mode < 1) {
 				++mode;
 			}
@@ -418,7 +446,9 @@ int menu(sf::RenderWindow & window) {
 			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && is_pressed == false) {
+			is_pressed = true;
+			button_press_time = game_timer.getElapsedTime().asSeconds();
 			if (mode > 0) {
 				--mode;
 			}
@@ -439,12 +469,12 @@ int menu(sf::RenderWindow & window) {
 	}
 }
 
-int main(){
+int main() {
 	sf::RenderWindow window(sf::VideoMode(screen_width, screen_hight), "Game", sf::Style::Fullscreen);
 
 	window.setFramerateLimit(60);
 
-	switch (menu(window)){
+	switch (menu(window)) {
 	case 1:
 		game(window);
 		break;
