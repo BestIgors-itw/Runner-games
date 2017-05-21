@@ -373,7 +373,7 @@ int menu(sf::RenderWindow & window) {
 	background_s.setTexture(background_t);
 
 	sf::Image button_i;
-	if (!background_i.loadFromFile("res/images/menu/button.png")) {
+	if (!button_i.loadFromFile("res/images/menu/button.png")) {
 		return 0;
 	}
 
@@ -400,16 +400,16 @@ int menu(sf::RenderWindow & window) {
 
 		window.draw(background_s);
 
-		button_s.setPosition(0, 0);
+		button_s.setPosition(0, screen_hight - 108);
 
 		window.draw(button_s);
 
-		button_s.setPosition(0, 110);
+		button_s.setPosition(0, screen_hight - 108 - 110);
 
 		window.draw(button_s);
 
 		text.setString("Game");
-		text.setPosition(20, 20);
+		text.setPosition(180, screen_hight - 108 - 110 + 20);
 		if (mode == 0) {
 			text.setColor(sf::Color::Blue);
 		}
@@ -419,7 +419,7 @@ int menu(sf::RenderWindow & window) {
 		window.draw(text);
 
 		text.setString("Exit");
-		text.setPosition(20, 128);
+		text.setPosition(180, screen_hight - 108 + 20);
 		if (mode == 1) {
 			text.setColor(sf::Color::Blue);
 		}
