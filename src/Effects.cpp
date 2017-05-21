@@ -1,7 +1,6 @@
-#include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Effects.h"
-#include "Direction.h"
+#include  "Direction.h"
 
 extern sf::Clock clock1, game_timer, background_timer;
 

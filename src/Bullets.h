@@ -1,8 +1,8 @@
 #pragma once
+
+#include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Direction.h"
-
-extern sf::Clock clock1, game_timer, background_timer;
 
 class Bullets : public Entity {
 public:

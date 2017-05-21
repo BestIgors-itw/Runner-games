@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Player.h"
 #include "Direction.h"
@@ -44,8 +43,8 @@ void Player::control() {
 			direction = STAY;
 		}
 	}
-	
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		if (y - h / 2 > 0) {
 			direction = UP;

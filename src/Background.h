@@ -1,7 +1,7 @@
 #pragma once
-#include "Entity.h"
 
-extern sf::Clock clock1, game_timer, background_timer;
+#include <SFML/Graphics.hpp>
+#include "Entity.h"
 
 class Background : public Entity {
 public:

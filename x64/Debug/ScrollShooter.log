@@ -1,11 +1,3 @@
-﻿  Player.cpp
-  main.cpp
-  Interface.cpp
-  Entity.cpp
-  Effects.cpp
-  Direction.cpp
-  Bullets.cpp
-  Background.cpp
-  Создание кода...
-  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.exe
-  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\ScrollShooter.pdb (Partial PDB)
+﻿  Effects.cpp
+  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\SS\ScrollShooter билд 5\x64\Debug\ScrollShooter.exe
+  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\SS\ScrollShooter билд 5\x64\Debug\ScrollShooter.pdb (Partial PDB)

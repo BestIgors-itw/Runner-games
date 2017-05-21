@@ -23,6 +23,7 @@
     <ClInclude Include="src\Bullets.h" />
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Effects.h" />
+    <ClInclude Include="src\Enemies.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Interface.h" />
     <ClInclude Include="src\Player.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="src\Bullets.cpp" />
     <ClCompile Include="src\Direction.cpp" />
     <ClCompile Include="src\Effects.cpp" />
+    <ClCompile Include="src\Enemies.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Interface.cpp" />
     <ClCompile Include="src\main.cpp" />

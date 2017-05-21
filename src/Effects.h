@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "SFML\Graphics.hpp"
 #include "Entity.h"
 #include "Direction.h"
 

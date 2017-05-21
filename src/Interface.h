@@ -1,9 +1,7 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include "SFML\Graphics.hpp"
 #include "Entity.h"
-
-extern sf::Clock clock1, game_timer, background_timer;
 
 class Interface : public Entity {
 public:
