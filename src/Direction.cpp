@@ -1,4 +1,4 @@
-#include"Direction.h"
+#include "Direction.h"
 
 void Direction_convert(int Direction, float &dx, float &dy, float speed) {
 	switch (Direction) {

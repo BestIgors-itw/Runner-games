@@ -1,9 +1,4 @@
-#include "Entity.h"
 #include "Enemies.h"
-#include "Direction.h"
-
-#define screen_width 1600
-#define screen_hight 900
 
 int Enemies::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 1) {
@@ -59,6 +54,9 @@ int Enemies::update(float time) {
 	x += dx * time;
 	y += dy * time;
 	sprite.setPosition(x + w / 2, y + h / 2);
-
+	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_timer > time_between_attack) {
+		attack_frequency_timer = game_timer.getElapsedTime().asSeconds();
+		return 1;
+	}
 	return 0;
 }

@@ -22,6 +22,7 @@ Clock game_timer;
 Clock background_timer;
 Clock enemy_timer;
 
+
 int main() {
 	Image player_i;
 	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
@@ -171,27 +172,27 @@ int main() {
 			switch (r) {
 			case 0:
 				enemies.push_back(new Enemies(enemy_battlemule_i,
-				rand() % (screen_width - 100) + 100, -200, 90, 150, 0.15, 2, 25, 30, 15));
+				rand() % (screen_width - 100) + 100, -200, 90, 150, 0.15, 2, 25, 0.7, 5));
 				break;
 			case 1:
 				enemies.push_back(new Enemies(enemy_impalabattle_i,
-				rand() % (screen_width - 100) + 100, -200, 70, 150, 0.2, 2, 15, 5, 5));
+				rand() % (screen_width - 100) + 100, -200, 70, 150, 0.2, 2, 15, 0.7, 5));
 				break;
 			case 2:
 				enemies.push_back(new Enemies(enemy_slage_i,
-				rand() % (screen_width - 100) + 100, -300, 142, 295, 0.15, 2, 45, 5, 5));
+				rand() % (screen_width - 100) + 100, -300, 142, 295, 0.15, 2, 45, 2, 15));
 				break;
 			case 3:
 				enemies.push_back(new Enemies(enemy_battlemule_i,
-				rand() % (screen_width - 100) + 100, screen_hight + 200, 90, 150, 0.15, 3, 25, 30, 15));
+				rand() % (screen_width - 100) + 100, screen_hight + 200, 90, 150, 0.15, 3, 25, 0.7, 5));
 				break;
 			case 4:
 				enemies.push_back(new Enemies(enemy_impalabattle_i,
-				rand() % (screen_width - 100) + 100, screen_hight + 200, 70, 150, 0.2, 3, 15, 5, 5));
+				rand() % (screen_width - 100) + 100, screen_hight + 200, 70, 150, 0.2, 3, 15, 0.7, 5));
 				break;
 			case 5:
 				enemies.push_back(new Enemies(enemy_slage_i,
-				rand() % (screen_width - 100) + 100, screen_hight + 200, 142, 295, 0.15, 3, 45, 5, 5));
+				rand() % (screen_width - 100) + 100, screen_hight + 200, 142, 295, 0.15, 3, 45, 2, 15));
 				break;
 			}
 			enemy_generate_probability = 5000 - game_time * 25;
@@ -233,26 +234,6 @@ int main() {
 						e2->health = 0;
 					}
 				}
-			}
-		}
-
-		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end();) {
-			Enemies *e = *it1_enemies;
-			e->update(time);
-			if (e->life == false || e->health <= 0) {
-				if (e->health <= 0) {
-					effects.push_back(new Effects(effects_explosion2_i, e->x,
-						e->y, 151, 150, 0.6, 2, 0.5));
-					it1_enemies = enemies.erase(it1_enemies);
-					delete e;
-				}
-				if (e->life == false) {
-					it1_enemies = enemies.erase(it1_enemies);
-					delete e;
-				}
-			}
-			else {
-				++it1_enemies;
 			}
 		}
 
@@ -298,6 +279,35 @@ int main() {
 			else ++it_bullets;
 		}
 
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end();) {
+			Enemies *e = *it1_enemies;
+			if (e->update(time)) {
+				if (e->direction == 2 || e->direction == 6 || e->direction == 7) {
+					effects.push_back(new Effects(effects_shooting_i, e->x + e->w / 2, e->y + e->h, 35, 36, 0, 8, 0.1));
+					bullets.push_back(new Bullets(bullet_bullet1_i, e->x + e->w / 2, e->y + e->h, 6, 15, 0.5, 2, e->damage));
+				}
+				if (e->direction == 3 || e->direction == 4 || e->direction == 5) {
+					effects.push_back(new Effects(effects_shooting_i, e->x + e->w / 2, e->y - 20, 35, 36, 0, 8, 0.1));
+					bullets.push_back(new Bullets(bullet_bullet1_i, e->x + e->w / 2, e->y - 20, 6, 15, 0.5, 3, e->damage));
+				}
+			}
+			if (e->life == false || e->health <= 0) {
+				if (e->health <= 0) {
+					effects.push_back(new Effects(effects_explosion2_i, e->x,
+						e->y, 151, 150, 0.6, 2, 0.5));
+					it1_enemies = enemies.erase(it1_enemies);
+					delete e;
+				}
+				if (e->life == false) {
+					it1_enemies = enemies.erase(it1_enemies);
+					delete e;
+				}
+			}
+			else {
+				++it1_enemies;
+			}
+		}
+
 		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effects *e = *it_effects;
 			e->update(time);
@@ -335,7 +345,7 @@ int main() {
 		std::ostringstream player_health_string;
 		player_health_string << player.health;
 		text.setString("Score:" + playerScoreString.str() + "\nHealth:" + player_health_string.str());
-		text.setPosition(1200, 780);
+		text.setPosition(screen_width - 400, screen_hight - 120);
 		window.draw(text);
 
 		window.display();

@@ -1,4 +1,3 @@
-#include "Entity.h"
 #include "Interface.h"
 
 int Interface::update(float time) {

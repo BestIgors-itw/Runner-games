@@ -1,9 +1,4 @@
-#include "Entity.h"
 #include "Player.h"
-#include "Direction.h"
-
-#define screen_width 1600
-#define screen_hight 900
 
 void Player::control() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
