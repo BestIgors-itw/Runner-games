@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "Interface.h"
 #include "Entity.h"
 
 #define screen_width 1600
@@ -6,10 +7,7 @@
 
 using namespace sf;
 
-int Entity::update(float time) {
-	return 0;
-}
-
-	FloatRect Entity::getRect() {
-		return FloatRect(x, y, w, h);
-	}
+	int Interface::update(float time) {
+		sprite.setPosition(x + w / 2, y + h / 2);
+		return 0;
+	};

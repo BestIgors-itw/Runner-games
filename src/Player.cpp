@@ -1,123 +1,125 @@
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
 #include "Player.h"
+#include "Entity.h"
+#include "Direction.h"
 
 #define screen_width 1600
 #define screen_hight 900
+
+extern Clock clock1, game_timer, background_timer, enemy_timer;
 
 using namespace sf;
 
 	void Player::control() {
 		if (Keyboard::isKeyPressed(Keyboard::Right)) {
 			if (x + w / 2 < screen_width) {
-				dir = 0;
+				direction = 0;
 			}
 			else {
-				dir = 8;
+				direction = 8;
 			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Left)) {
 			if (x - w / 2 > 0) {
-				dir = 1;
+				direction = 1;
 			}
 			else {
-				dir = 8;
+				direction = 8;
 			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Down)) {
 			if (y < screen_hight) {
-				dir = 2;
+				direction = 2;
 			}
 			else {
-				dir = 8;
+				direction = 8;
 			}
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::Up)) {
 			if (y - h / 2 > 0) {
-				dir = 3;
+				direction = 3;
 			}
 			else {
-				dir = 8;
+				direction = 8;
 			}
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Left)) {
+		if (Keyboard::isKeyPressed(Keyboard::Up)
+			&& Keyboard::isKeyPressed(Keyboard::Left)) {
 			if (y - h / 2 > 0) {
-				dir = 3;
+				direction = 3;
 			}
 			if (x - w / 2 > 0) {
-				dir = 1;
+				direction = 1;
 			}
 			if (x - w / 2 > 0 && y - h / 2 > 0) {
-				dir = 4;
+				direction = 4;
 			}
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Up) && Keyboard::isKeyPressed(Keyboard::Right)) {
+		if (Keyboard::isKeyPressed(Keyboard::Up)
+			&& Keyboard::isKeyPressed(Keyboard::Right)) {
 			if (x + w / 2 < screen_width) {
-				dir = 0;
+				direction = 0;
 			}
 			if (y - h / 2 > 0) {
-				dir = 3;
+				direction = 3;
 			}
 			if (x + w / 2 < screen_width && y - h / 2 > 0) {
-				dir = 5;
+				direction = 5;
 			}
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Right)) {
+		if (Keyboard::isKeyPressed(Keyboard::Down)
+			&& Keyboard::isKeyPressed(Keyboard::Right)) {
 			if (y < screen_hight) {
-				dir = 2;
+				direction = 2;
 			}
 			if (x + w / 2 < screen_width) {
-				dir = 0;
+				direction = 0;
 			}
 			if (x + w / 2 < screen_width && y < screen_hight) {
-				dir = 6;
+				direction = 6;
 			}
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Down) && Keyboard::isKeyPressed(Keyboard::Left)) {
+		if (Keyboard::isKeyPressed(Keyboard::Down)
+			&& Keyboard::isKeyPressed(Keyboard::Left)) {
 			if (y < screen_hight) {
-				dir = 2;
+				direction = 2;
 			}
 			if (x - w / 2 > 0) {
-				dir = 1;
+				direction = 1;
 			}
 			if (x - w / 2 > 0 && y < screen_hight) {
-				dir = 7;
+				direction = 7;
 			}
 		}
 
-		if (!(Keyboard::isKeyPressed(Keyboard::Right)) && !(Keyboard::isKeyPressed(Keyboard::Left)) && !(Keyboard::isKeyPressed(Keyboard::Up))
+		if (!(Keyboard::isKeyPressed(Keyboard::Right))
+			&& !(Keyboard::isKeyPressed(Keyboard::Left))
+			&& !(Keyboard::isKeyPressed(Keyboard::Up))
 			&& !(Keyboard::isKeyPressed(Keyboard::Down))) {
-			dir = 8;
+			direction = 8;
 		}
 	}
 
 	int Player::update(float time) {
 		control();
-		switch (dir) {
-		case 0: dx = speed; dy = 0; break;
-		case 1: dx = -speed; dy = 0; break;
-		case 2: dy = speed; dx = 0; break;
-		case 3: dy = -speed; dx = 0; break;
-		case 4: dx = -speed; dy = -speed; break;
-		case 5: dx = speed; dy = -speed; break;
-		case 6: dx = speed; dy = speed; break;
-		case 7: dx = -speed; dy = speed; break;
-		case 8: dx = 0; dy = 0; break;
-		}
+		Direction_convert(direction, dx, dy, speed);
 		x += dx * time;
 		y += dy * time;
 
 		sprite.setPosition(x, y);
+
+		if (game_timer.getElapsedTime().asSeconds() - attack_frequency_timer > time_between_attack) {
+			shooting_available = true;
+		}
 		if (health <= 0) {
 			return 1;
 		}
-
 		return 0;
 	}
