@@ -1,4 +1,6 @@
-﻿D:\VS\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (ScrollShooter.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+﻿D:\VS\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (Runner games.vcxproj, ScrollShooter.vcxproj, ScrollShooter.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   main.cpp
-  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\Race билд4 столкновения вкл\x64\Debug\Race.exe
-  ScrollShooter.vcxproj -> C:\Users\Вячеслав Горохов\AppData\Roaming\Skype\My Skype Received Files\Race билд4 столкновения вкл\x64\Debug\Race.pdb (Partial PDB)
+  Enemies.cpp
+  Создание кода...
+  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\Race.exe
+  ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\Race.pdb (Partial PDB)

@@ -3,97 +3,133 @@
 #include <vector>
 #include <sstream>
 #include <ctime>
+#include "Background.h"
+#include "Direction.h"
+#include "Effects.h"
+#include "Enemies.h"
 #include "Entity.h"
-#include "Object.h"
+#include "Interface.h"
 #include "Player.h"
 
 #define screen_width 1600
 #define screen_hight 900
 
-using namespace sf;
+sf::Clock game_timer;
+sf::Clock animation_timer;
+sf::Clock background_timer;
+sf::Clock hedge_timer;
 
 int main() {
-	Clock game_timer;
-	Clock clock;
-	Clock background_timer;
-	Clock hedge_timer;
+	sf::Image player_i;
+	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
+		return 0;
+	}
 
-	Image player_i;
-	player_i.loadFromFile("res/images/unit/chevroletbattle.png");
+	sf::Image background_rocksand1_i;
+	if (!background_rocksand1_i.loadFromFile("res/images/background/rocksand1.png")) {
+	return 0;
+	}
 
-	Image background_rocksand1_i;
-	background_rocksand1_i.loadFromFile("res/images/background/rocksand1.png");
+	sf::Image background_rocksand2_i;
+	if (!background_rocksand2_i.loadFromFile("res/images/background/rocksand2.png")) {
+		return 0;
+	}
 
-	Image background_rocksand2_i;
-	background_rocksand2_i.loadFromFile("res/images/background/rocksand2.png");
+	sf::Image background_rockgray1_i;
+	if (!background_rockgray1_i.loadFromFile("res/images/background/rockgray1.png")) {
+		return 0;
+	}
 
-	Image background_rockgray1_i;
-	background_rockgray1_i.loadFromFile("res/images/background/rockgray1.png");
+	sf::Image hedges_deadcars1_i;
+	if (!hedges_deadcars1_i.loadFromFile("res/images/hedges/deadcars1.png")) {
+		return 0;
+	}
 
-	Image hedges_deadcars1_i;
-	hedges_deadcars1_i.loadFromFile("res/images/hedges/deadcars1.png");
+	sf::Image hedges_deadcars2_i;
+	if (!hedges_deadcars2_i.loadFromFile("res/images/hedges/deadcars2.png")) {
+		return 0;
+	}
 
-	Image hedges_deadcars2_i;
-	hedges_deadcars2_i.loadFromFile("res/images/hedges/deadcars2.png");
+	sf::Image effects_explosion2_i;
+	if (!effects_explosion2_i.loadFromFile("res/images/effects/explosion2.png")) {
+		return 0;
+	}
 
-	Image effects_explosion2_i;
-	effects_explosion2_i.loadFromFile("res/images/effects/explosion2.png");
+	sf::Image background_i;
+	if (!background_i.loadFromFile("res/images/background/sandbackground.png")) {
+		return 0;
+	}
+	sf::Texture background_t;
+	background_t.loadFromImage(background_i);
 
-	Image interface_button_i;
+	sf::Sprite background_s;
+	background_s.setTexture(background_t);
+	background_s.setScale(5.8181, 4.9180);
+
+	sf::Image interface_button_i;
 	interface_button_i.loadFromFile("res/images/interface/button.png");
 
-	Font font;
-	font.loadFromFile("res/images/interface/beer_money.ttf");
-	Text text("", font, 50);
-	text.setColor(Color::Black);
+	sf::Font font;
+	font.loadFromFile("res/font/beer_money.ttf");
+	sf::Text text("", font, 50);
+	text.setColor(sf::Color::Black);
 
 
-	Player player(player_i, 750, 650, 70, 150, 0.5, 100, "Player");
-	Object interface_health_and_score_bar(interface_button_i, 1152, 792, 448, 108, 0, 0, "Interface");
+	Player player(player_i, 750, 650, 70, 150, 0.5, 100, 0.25, 20);
+	Interface interface_health_and_score_bar(interface_button_i, screen_width - 448, screen_hight - 108, 448, 108);
 
-	std::list<Entity*>  entities;
-	std::list<Entity*>::iterator it;
+	std::list<Background*>  background_objects;
+	std::list<Background*>::iterator it_background;
+
+	std::list<Effects*>  effects;
+	std::list<Effects*>::iterator it_effects;
+
+	std::list<Enemies*>  enemies;
+	std::list<Enemies*>::iterator it1_enemies, it2_enemies;
 
 	srand(time(NULL));
 
 	float game_time = game_timer.getElapsedTime().asSeconds();
 	float score_time = game_time;
 	float hedge_generate_probability = 2000;
-	float back_object_generate_probability = 3000;
+	float background_object_generate_probability = 3000;
 	float bk_time;
 	float hedge_time;
 
-	RenderWindow window(sf::VideoMode(screen_width, 800), "Race", Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(screen_width, screen_hight), "Race", sf::Style::Fullscreen);
+
+	window.setFramerateLimit(60);
 
 	while (window.isOpen()){
-		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
 
-		float time = clock.getElapsedTime().asMicroseconds();
-		clock.restart();
+		float time = animation_timer.getElapsedTime().asMicroseconds();
+		animation_timer.restart();
 		time = time / 800;
 
 		if (player.update(time)) {
 			break;
 		}
 
-		window.clear(Color(250, 228, 153));
+		window.clear();
+		window.draw(background_s);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 		bk_time = background_timer.getElapsedTime().asSeconds();
 		hedge_time = hedge_timer.getElapsedTime().asSeconds();
 
-		back_object_generate_probability = back_object_generate_probability - bk_time * 100 - rand() % 100;
+		background_object_generate_probability = background_object_generate_probability - bk_time * 100 - rand() % 100;
 
-		if (back_object_generate_probability < 0) {
+		if (background_object_generate_probability < 0) {
 			int r = rand() % 3;
 			switch (r) {
-			case 0: entities.push_back(new Object(background_rocksand1_i, rand() % screen_width, -200, 113, 127, 0, 0, "Background")); break;
-			case 1: entities.push_back(new Object(background_rocksand2_i, rand() % screen_width, -200, 78, 70, 0, 0, "Background")); break;
-			case 2: entities.push_back(new Object(background_rockgray1_i, rand() % screen_width, -200, 93, 65, 0, 0, "Background")); break;
+			case 0: background_objects.push_back(new Background(background_rocksand1_i, rand() % screen_width, -200, 113, 127)); break;
+			case 1: background_objects.push_back(new Background(background_rocksand2_i, rand() % screen_width, -200, 78, 70)); break;
+			case 2: background_objects.push_back(new Background(background_rockgray1_i, rand() % screen_width, -200, 93, 65)); break;
 			}
-			back_object_generate_probability = 2000;
+			background_object_generate_probability = 2000;
 			background_timer.restart();
 		}
 
@@ -102,8 +138,8 @@ int main() {
 		if (hedge_generate_probability < 0) {
 			int r = rand() % 2;
 			switch (r) {
-			case 0: entities.push_back(new Object(hedges_deadcars1_i, rand() % screen_width, -200, 96, 111, 0, 0, "Hedge")); break;
-			case 1: entities.push_back(new Object(hedges_deadcars2_i, rand() % screen_width, -200, 96, 111, 0, 0, "Hedge")); break;
+			case 0: enemies.push_back(new Enemies(hedges_deadcars1_i, rand() % screen_width, -200, 96, 111, 0.6, 2, 10, 1, 10)); break;
+			case 1: enemies.push_back(new Enemies(hedges_deadcars2_i, rand() % screen_width, -200, 96, 111, 0.6, 2, 20, 1, 20)); break;
 			}
 			hedge_generate_probability = 3000 - game_time * 25;
 			if (hedge_generate_probability < 500) {
@@ -115,39 +151,80 @@ int main() {
 		player.score = player.score + game_time - score_time;
 		score_time = game_time;
 
-		for (it = entities.begin(); it != entities.end();){
-			Entity *b = *it;
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
+		{
+			Background *b = *it_background;
 			b->update(time);
+		}
+
+		for (it_background = background_objects.begin(); it_background != background_objects.end();)
+		{
+			Background *b = *it_background;
 			if (b->life == false) {
-				it = entities.erase(it);
+				it_background = background_objects.erase(it_background);
 				delete b;
 			}
-			else ++it;
-		}
-
-		for (it = entities.begin(); it != entities.end(); it++)
-		{
-			if ((*it)->getRect().intersects(player.getRect()))
-			{
-				if ((*it)->name == "Hedge") {
-					player.health -= 10;
-					(*it)->life = false;
-					entities.push_back(new Object(effects_explosion2_i, (*it)->x, (*it)->y, 67, 69, 0, 100, "Effect"));
-					interface_health_and_score_bar.health = 500;
-					if (player.score > 5) {
-						player.score -= 5;
-					}
-					else {
-						player.score = 5;
-					}
-				}
+			else {
+				++it_background;
 			}
 		}
 
-		for (it = entities.begin(); it != entities.end(); ++it) {
-			window.draw((*it)->sprite);
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end(); ++it1_enemies)
+		{
+			Enemies *e = *it1_enemies;
+			e->update(time);
 		}
+
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end(); ++it1_enemies)
+		{
+			Enemies *e = *it1_enemies;
+			if (e->getRect().intersects(player.getRect())) {
+				e->life = false;
+				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, 67, 69, 0.6, 2, 0.1));
+				player.health -= e->health;
+				player.score -= 5;
+			}
+		}
+
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end();)
+		{
+			Enemies *e = *it1_enemies;
+			if (e->life == false) {
+				it1_enemies = enemies.erase(it1_enemies);
+				delete e;
+			}
+			else ++it1_enemies;
+		}
+
+		for (it_effects = effects.begin(); it_effects != effects.end();  ++it_effects)
+		{
+			Effects *e = *it_effects;
+			e->update(time);
+		}
+
+		for (it_effects = effects.begin(); it_effects != effects.end();)
+		{
+			Effects *e = *it_effects;
+			if (e->life == false) {
+				it_effects = effects.erase(it_effects);
+				delete e;
+			}
+			else ++it_effects;
+		}
+
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
+			window.draw((*it_background)->sprite);
+		}
+
+		for (it1_enemies = enemies.begin(); it1_enemies != enemies.end(); ++it1_enemies) {
+			window.draw((*it1_enemies)->sprite);
+		}
+
 		window.draw(player.sprite);
+
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
+			window.draw((*it_effects)->sprite);
+		}
 
 		interface_health_and_score_bar.update(time);
 		window.draw(interface_health_and_score_bar.sprite);
