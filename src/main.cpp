@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Interface.h"
 #include "Player.h"
+#include "Hedges.h"
 
 #define screen_width 1600
 #define screen_hight 900
@@ -78,14 +79,14 @@ int main() {
 	Player player(player_i, 750, 650, 70, 150, 0.5, 100, 0.25, 20);
 	Interface interface_health_and_score_bar(interface_button_i, screen_width - 448, screen_hight - 108, 448, 108);
 
-	std::list<Background*>  background_objects;
+	std::list<Background*> background_objects;
 	std::list<Background*>::iterator it_background;
 
-	std::list<Effects*>  effects;
+	std::list<Effects*> effects;
 	std::list<Effects*>::iterator it_effects;
 
-	std::list<Enemies*>  enemies;
-	std::list<Enemies*>::iterator it1_enemies, it2_enemies;
+	std::list<Hedges*> enemies;
+	std::list<Hedges*>::iterator it1_enemies, it2_enemies;
 
 	srand(time(NULL));
 
@@ -138,8 +139,8 @@ int main() {
 		if (hedge_generate_probability < 0) {
 			int r = rand() % 2;
 			switch (r) {
-			case 0: enemies.push_back(new Enemies(hedges_deadcars1_i, rand() % screen_width, -200, 96, 111, 0.6, 2, 10, 1, 10)); break;
-			case 1: enemies.push_back(new Enemies(hedges_deadcars2_i, rand() % screen_width, -200, 96, 111, 0.6, 2, 20, 1, 20)); break;
+			case 0: enemies.push_back(new Hedges(hedges_deadcars1_i, rand() % screen_width, -200, 96, 111, 2, 10)); break;
+			case 1: enemies.push_back(new Hedges(hedges_deadcars2_i, rand() % screen_width, -200, 96, 111, 2, 20)); break;
 			}
 			hedge_generate_probability = 3000 - game_time * 25;
 			if (hedge_generate_probability < 500) {

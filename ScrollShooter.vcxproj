@@ -24,6 +24,7 @@
     <ClInclude Include="src\Effects.h" />
     <ClInclude Include="src\Enemies.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Hedges.h" />
     <ClInclude Include="src\Interface.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\resource.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="src\Effects.cpp" />
     <ClCompile Include="src\Enemies.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Hedges.cpp" />
     <ClCompile Include="src\Interface.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
