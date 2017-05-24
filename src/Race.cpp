@@ -174,7 +174,10 @@ int Race(sf::RenderWindow & window) {
 				e->life = false;
 				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, 67, 69, 0.6, 2, 0.1));
 				player.health -= e->health;
-				player.score -= 5;
+				if (player.score > 5) {
+					player.score -= 5;
+				}
+				player.score = 0;
 			}
 		}
 

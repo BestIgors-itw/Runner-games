@@ -33,16 +33,16 @@ int Enemies_cars::update(float time) {
 
 		moving_timer = game_timer.getElapsedTime().asSeconds();
 	}
-	if (x < 0 && (direction == 2 || direction == 6 || direction == 7)) {
+	if (x < 0 && (direction == 2 || direction == 7)) {
 		direction = 6;
 	}
-	if (x + w > screen_width && (direction == 2 || direction == 6 || direction == 7)) {
+	if (x + w > screen_width && (direction == 2 || direction == 6)) {
 		direction = 7;
 	}
-	if (x < 0 && (direction == 3 || direction == 4 || direction == 5)) {
+	if (x < 0 && (direction == 3 || direction == 4)) {
 		direction = 5;
 	}
-	if (x + w > screen_width && (direction == 3 || direction == 4 || direction == 5)) {
+	if (x + w > screen_width && (direction == 3 || direction == 5)) {
 		direction = 4;
 	}
 
@@ -54,8 +54,9 @@ int Enemies_cars::update(float time) {
 	x += dx * time;
 	y += dy * time;
 	sprite.setPosition(x + w / 2, y + h / 2);
-	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_timer > time_between_attack) {
-		attack_frequency_timer = game_timer.getElapsedTime().asSeconds();
+
+	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {
+		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 		return 1;
 	}
 	return 0;

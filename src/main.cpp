@@ -5,6 +5,7 @@
 #include <ctime>
 #include "Race.h"
 #include "Scroll_Shooter.h"
+#include "Shooter.h"
 
 #define screen_width 1600
 #define screen_hight 900
@@ -67,9 +68,23 @@ int menu(sf::RenderWindow & window) {
 
 		window.draw(button_s);
 
+		button_s.setPosition(0, screen_hight - 108 - 3 * 110);
+
+		window.draw(button_s);
+
 		text.setString("Scroll Shooter");
-		text.setPosition(180, screen_hight - 108 - 2 * 110 + 20);
+		text.setPosition(100, screen_hight - 108 - 3 * 110 + 20);
 		if (mode == 0) {
+			text.setColor(sf::Color::Blue);
+		}
+		else {
+			text.setColor(sf::Color::Black);
+		}
+		window.draw(text);
+
+		text.setString("Shooter");
+		text.setPosition(150, screen_hight - 108 - 2 * 110 + 20);
+		if (mode == 1) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -79,7 +94,7 @@ int menu(sf::RenderWindow & window) {
 
 		text.setString("Race");
 		text.setPosition(180, screen_hight - 108 - 110 + 20);
-		if (mode == 1) {
+		if (mode == 2) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -89,7 +104,7 @@ int menu(sf::RenderWindow & window) {
 
 		text.setString("Exit");
 		text.setPosition(180, screen_hight - 108 + 20);
-		if (mode == 2) {
+		if (mode == 3) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -107,7 +122,7 @@ int menu(sf::RenderWindow & window) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && is_pressed == false) {
 			is_pressed = true;
 			button_press_time = game_timer.getElapsedTime().asSeconds();
-			if (mode < 2) {
+			if (mode < 3) {
 				++mode;
 			}
 			else {
@@ -122,18 +137,21 @@ int menu(sf::RenderWindow & window) {
 				--mode;
 			}
 			else {
-				mode = 2;
+				mode = 3;
 			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 			switch (mode) {
 			case 0:
-				return 2;
+				return 3;
 				break;
 			case 1:
-				return 1;
+				return 2;
 				break;
 			case 2:
+				return 1;
+				break;
+			case 3:
 				return 0;
 				break;
 			}
@@ -155,6 +173,9 @@ int main() {
 			Race(window);
 			break;
 		case 2:
+			Shooter(window);
+			break;
+		case 3:
 			Scroll_Shooter(window);
 			break;
 		default:

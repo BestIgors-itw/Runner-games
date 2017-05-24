@@ -22,7 +22,7 @@ void Player::control() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (y + h < screen_hight) {
+		if (y + h / 2 < screen_hight) {
 			direction = DOWN;
 		}
 		else {
@@ -86,7 +86,7 @@ void Player::control() {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (y + h < screen_hight) {
+		if (y + h / 2 < screen_hight) {
 			direction = DOWN;
 			sprite.setRotation(0);
 		}
@@ -116,9 +116,9 @@ int Player::update(float time) {
 
 	sprite.setPosition(x, y);
 
-	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_timer > time_between_attack) {
-		is_shot = true;
-		attack_frequency_timer = game_timer.getElapsedTime().asSeconds();
+	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {
+		is_shot_available = true;
+		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 	}
 
 	if (health <= 0) {

@@ -11,7 +11,7 @@ extern sf::Clock game_timer;
 
 class Enemies_cars : public Entity {
 public:
-	float speed, direction, health, moving_timer, attack_frequency_timer, time_between_attack;
+	float speed, direction, health, moving_timer, attack_frequency_time, time_between_attack;
 	int damage;
 	Enemies_cars(sf::Image &image, float X, float Y, int W, int H, float Speed,
 		float Direction, float Health, float Time_between_attack, int Damage)
@@ -20,8 +20,8 @@ public:
 
 		time_between_attack = Time_between_attack;
 		damage = Damage;
-		attack_frequency_timer = game_timer.getElapsedTime().asSeconds();
-		moving_timer = attack_frequency_timer;
+		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
+		moving_timer = attack_frequency_time;
 
 		direction = Direction;
 		speed = Speed;

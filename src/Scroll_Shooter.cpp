@@ -81,7 +81,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 	text.setColor(sf::Color::Black);
 
 
-	Player player(player_i, 750, 650, 69, 100, 0.7, 100, 0.25, 20);
+	Player player(player_i, 750, 650, 69, 150, 0.7, 100, 0.25, 20);
 	Interface interface_health_and_score_bar(button_i, 1152, 792, 448, 108);
 
 	std::list<Background*>  background_objects;
@@ -183,12 +183,13 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			enemy_timer.restart();
 		}
 
-		if (player.is_shot) {
+		if (player.is_shot_available == true) {
 			effects.push_back(new Effects(effects_shooting_i, player.x - 20, player.y - player.h / 2, 35, 36, 0, 8, 0.1));
 			bullets.push_back(new Bullets(bullet_bullet_i, player.x - 20, player.y - player.h / 2, 6, 15, 1, 3, player.damage));
 			effects.push_back(new Effects(effects_shooting_i, player.x + 20, player.y - player.h / 2, 35, 36, 0, 8, 0.1));
 			bullets.push_back(new Bullets(bullet_bullet_i, player.x + 20, player.y - player.h / 2, 6, 15, 1, 3, player.damage));
-			player.is_shot = false;
+			player.is_shot_available = false;
+			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 		}
 
 		game_time = game_timer.getElapsedTime().asSeconds();

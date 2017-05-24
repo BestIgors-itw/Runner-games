@@ -31,6 +31,8 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\Scroll_Shooter.h" />
+    <ClInclude Include="src\Shooter.h" />
+    <ClInclude Include="src\Shooter_enemies_cars.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\ScrollShooter.rc" />
@@ -48,6 +50,8 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Race.cpp" />
     <ClCompile Include="src\Scroll_Shooter.cpp" />
+    <ClCompile Include="src\Shooter.cpp" />
+    <ClCompile Include="src\Shooter_enemies_cars.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
