@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class Entity {
+class Entity{
 public:
 	float x, y, dx, dy;
 	int w, h;

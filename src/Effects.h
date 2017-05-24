@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Direction.h"
 
-extern sf::Clock clock1, game_timer, background_timer;
+extern sf::Clock game_timer;
 
 class Effects : public Entity {
 public:
