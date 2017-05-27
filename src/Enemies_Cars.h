@@ -32,5 +32,7 @@ public:
 		}
 	}
 
+	virtual ~Enemies_cars() {}
+
 	int update(float time);
 };

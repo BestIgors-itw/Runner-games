@@ -15,5 +15,7 @@ public:
 		damage = Damage;
 	}
 
+	virtual ~Bullets() {}
+
 	int update(float time);
 };
