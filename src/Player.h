@@ -29,6 +29,8 @@ public:
 
 	void control();
 
+	virtual ~Player() {}
+
 	int update(float time);
 
 };

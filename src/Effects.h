@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Direction.h"
 
@@ -14,6 +14,8 @@ public:
 		timer = game_timer.getElapsedTime().asSeconds();
 		exist_time = Exist_time;
 	}
+
+	virtual ~Effects() {}
 
 	int update(float time);
 };

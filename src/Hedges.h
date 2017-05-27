@@ -20,6 +20,8 @@ public:
 		Direction_convert(direction, dx, dy, speed);
 	}
 
+	virtual ~Hedges() {}
+
 	int update(float time);
 };
 

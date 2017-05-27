@@ -9,8 +9,8 @@ OBJECTS = build/main.o build/Background.o build/Bullets.o build/Direction.o buil
 all :
 	make bin/Runner-games
 
-bin/Runner-games : 
-	g++ build/main.o src/Background.o src/Bullets.o src/Direction.o src/Effects.o src/Enemies_Cars.o src/Entity.o src/Hedges.o src/Interface.o src/Player.o src/Race.o src/Scroll_Shooter.o src/Shooter.o src/Shooter_enemies_cars.o -o bin/Runner-games $(CFLAGS) $(SFMLLINK) $(LDFLAGS)
+bin/Runner-games : $(OBJECTS)
+	g++ build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o -o bin/Runner-games $(CFLAGS) $(SFMLLINK)
 
 build/main.o : src/main.cpp src/Background.cpp src/Bullets.cpp src/Direction.cpp src/Effects.cpp src/Enemies_Cars.cpp src/Entity.cpp src/Hedges.cpp src/Interface.cpp src/Player.cpp src/Race.cpp src/Scroll_Shooter.cpp src/Shooter.cpp src/Shooter_enemies_cars.cpp
 	g++ -c src/main.cpp -o build/main.o $(CFLAGS) $(SFMLLINK)

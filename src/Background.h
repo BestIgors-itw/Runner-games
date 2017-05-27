@@ -12,5 +12,7 @@ public:
 		dy = 0.6;
 	}
 
+	virtual ~Background() {}
+
 	int update(float time);
 };
