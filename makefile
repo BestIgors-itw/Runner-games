@@ -1,7 +1,8 @@
 CFLAGS = -Wall -Werror
 SOURCES = src/main.cpp src/Entity.cpp src/Player.cpp src/Background.cpp src/Hedges.cpp src/Direction.cpp src/Effects.cpp src/Enemies.cpp src/Interface.cpp
 LDFLAGS = src/Background.h src/Bullets.h src/Direction.h src/Effects.h src/Enemies_Cars.h src/Entity.h src/Hedges.h src/Interface.h src/Player.h src/Race.h src/Scroll_Shooter.h src/Shooter.h src/Shooter_enemies_cars.h
-SFMLLINK = sfml-app -lsfml-graphics -lsfml-window -lsfml-system
+SFMLLINK = -lsfml-graphics -lsfml-window -lsfml-system
+OBJECTS = build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o
 
 .PHONY: clean all Runner-games test
 
