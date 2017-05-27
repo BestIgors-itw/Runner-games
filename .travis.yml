@@ -1,3 +1,8 @@
-language: c
+language: c++
 script: make && make test
+dist: trusty
+sudo: required
 install: true
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq libsfml-dev
