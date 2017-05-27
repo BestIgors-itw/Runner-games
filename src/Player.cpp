@@ -79,7 +79,7 @@ void Player::control() {
 			direction = RIGHT;
 			sprite.setRotation(2.5);
 		}
-		if (x + w / 2 < screen_width && y + h < screen_hight) {
+		if (x + w / 2 < screen_width && y + h / 2 < screen_hight) {
 			direction = DOWN_RIGHT;
 		}
 	}
@@ -94,7 +94,7 @@ void Player::control() {
 			direction = LEFT;
 			sprite.setRotation(-2.5);
 		}
-		if (x - w / 2 > 0 && y + h < screen_hight) {
+		if (x - w / 2 > 0 && y + h / 2 < screen_hight) {
 			direction = DOWN_LEFT;
 		}
 	}
