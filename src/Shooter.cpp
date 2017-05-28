@@ -115,9 +115,18 @@ int Shooter(sf::RenderWindow & window) {
 		if (back_object_generate_probability < 0) {
 			int r = rand() % 3;
 			switch (r) {
-			case 0: background_objects.push_back(new Background(background_rocksand1_i, 1800, rand() % 350 + 550, 113, 127)); break;
-			case 1: background_objects.push_back(new Background(background_rocksand2_i, 1800, rand() % 350 + 550, 78, 70)); break;
-			case 2: background_objects.push_back(new Background(background_rockgray1_i, 1800, rand() % 350 + 550, 93, 65)); break;
+			case 0:
+				background_objects.push_back(new Background(background_rocksand1_i,
+					1800, rand() % 350 + 550, 113, 127, 1));
+				break;
+			case 1:
+				background_objects.push_back(new Background(background_rocksand2_i,
+					1800, rand() % 350 + 550, 78, 70, 1));
+				break;
+			case 2:
+				background_objects.push_back(new Background(background_rockgray1_i,
+					1800, rand() % 350 + 550, 93, 65, 1));
+				break;
 			}
 			back_object_generate_probability = 6000;
 			background_timer.restart();
@@ -131,9 +140,18 @@ int Shooter(sf::RenderWindow & window) {
 			++enemy_number;
 			int r = rand() % 3;
 			switch (r) {
-			case 0: enemies.push_back(new Shooter_enemies_cars(enemy_copsjups_i, -200, rand() % 350 + 500, 198, 109, 0.3, 0, 35, 10, 10)); break;
-			case 1: enemies.push_back(new Shooter_enemies_cars(enemy_hammer_i, -200, rand() % 350 + 500, 198, 109, 0.3, 0, 25, 10, 15)); break;
-			case 2: enemies.push_back(new Shooter_enemies_cars(enemy_lapdcar_i, -200, rand() % 350 + 500, 198, 109, 0.4, 0, 15, 5, 5)); break;
+			case 0:
+				enemies.push_back(new Shooter_enemies_cars(enemy_copsjups_i,
+					-200, rand() % 350 + 450, 198, 109, 0.3, 0, 35, 10, 10));
+				break;
+			case 1:
+				enemies.push_back(new Shooter_enemies_cars(enemy_hammer_i,
+					-200, rand() % 350 + 450, 198, 109, 0.3, 0, 25, 10, 15));
+				break;
+			case 2:
+				enemies.push_back(new Shooter_enemies_cars(enemy_lapdcar_i,
+					-200, rand() % 350 + 450, 198, 109, 0.4, 0, 15, 5, 5));
+				break;
 			}
 			enemy_generate_probability = 50000 - game_time * 25;
 			if (enemy_generate_probability < 1000) {

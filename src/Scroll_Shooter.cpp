@@ -130,14 +130,14 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			switch (r) {
 			case 0:
 				background_objects.push_back(new Background(background_rocksand1_i,
-					rand() % (screen_width - 100) + 100, -200, 113, 127));
+					rand() % (screen_width - 100) + 100, -200, 113, 127, 2));
 				break;
 			case 1:
 				background_objects.push_back(new Background(background_rocksand2_i,
-					rand() % (screen_width - 100) + 100, -200, 78, 70));
+					rand() % (screen_width - 100) + 100, -200, 78, 70, 2));
 				break;
 			case 2: background_objects.push_back(new Background(background_rockgray1_i,
-				rand() % (screen_width - 100) + 100, -200, 93, 65));
+				rand() % (screen_width - 100) + 100, -200, 93, 65, 2));
 				break;
 			}
 			back_object_generate_probability = 3000;
