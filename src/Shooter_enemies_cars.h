@@ -28,5 +28,7 @@ public:
 
 	};
 
+	virtual ~Shooter_enemies_cars (){}
+
 	int update(float time);
 };
