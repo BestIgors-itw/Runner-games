@@ -13,10 +13,8 @@
 #include "Entity.h"
 #include "Interface.h"
 #include "Player.h"
+#include "Aliases.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
-extern sf::Clock game_timer, animation_timer, background_timer, enemy_timer;
+extern sf::Clock game_timer, Compensating_for_performance_losses_timer, background_timer, enemy_timer;
 
 int Scroll_Shooter(sf::RenderWindow & window);

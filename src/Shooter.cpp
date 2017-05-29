@@ -87,7 +87,7 @@ int Shooter(sf::RenderWindow & window) {
 	float game_time = game_timer.getElapsedTime().asSeconds();
 	float score_time = game_time;
 	float enemy_generate_probability = 50000;
-	float back_object_generate_probability = 6000;
+	float background_object_generate_probability = 6000;
 	float background_time;
 	float enemy_time;
 	int enemy_number = 0;
@@ -97,11 +97,11 @@ int Shooter(sf::RenderWindow & window) {
 			break;
 		}
 
-		float animation_time = animation_timer.getElapsedTime().asMicroseconds();
-		animation_timer.restart();
-		animation_time = animation_time / 800;
+		float Compensating_for_performance_losses_time = Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
+		Compensating_for_performance_losses_timer.restart();
+		Compensating_for_performance_losses_time = Compensating_for_performance_losses_time / 800;
 
-		if (player.update(animation_time)) {
+		if (player.update(Compensating_for_performance_losses_time)) {
 			break;
 		}
 
@@ -110,9 +110,9 @@ int Shooter(sf::RenderWindow & window) {
 
 		background_time = background_timer.getElapsedTime().asSeconds();
 
-		back_object_generate_probability = back_object_generate_probability - background_time * 100 - rand() % 100;
+		background_object_generate_probability = background_object_generate_probability - background_time * 100 - rand() % 100;
 
-		if (back_object_generate_probability < 0) {
+		if (background_object_generate_probability < 0) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
@@ -128,7 +128,7 @@ int Shooter(sf::RenderWindow & window) {
 					1800, rand() % 350 + 550, 93, 65, 1));
 				break;
 			}
-			back_object_generate_probability = 6000;
+			background_object_generate_probability = 6000;
 			background_timer.restart();
 		}
 
@@ -166,7 +166,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end();) {
 			Background *b = *it_background;
-			b->update(animation_time);
+			b->update(Compensating_for_performance_losses_time);
 			if (b->life == false) {
 				it_background = background_objects.erase(it_background);
 				delete b;
@@ -176,7 +176,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		for (it_enemies = enemies.begin(); it_enemies != enemies.end();) {
 			Shooter_enemies_cars *e = *it_enemies;
-			if (e->update(animation_time)) {
+			if (e->update(Compensating_for_performance_losses_time)) {
 				player.health -= e->damage;
 				if (player.score > 5) {
 					player.score -= 5;
@@ -225,7 +225,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effects *e = *it_effects;
-			e->update(animation_time);
+			e->update(Compensating_for_performance_losses_time);
 			if (e->life == false) {
 				it_effects = effects.erase(it_effects);
 				delete e;

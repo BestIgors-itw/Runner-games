@@ -72,9 +72,9 @@ int Race(sf::RenderWindow & window) {
 
 	float game_time = game_timer.getElapsedTime().asSeconds();
 	float score_time = game_time;
-	float hedge_generate_probability = 2000;
-	float background_object_generate_probability = 3000;
-	float bk_time;
+	float hedge_generate_probability = Race_game_difficulty;
+	float background_object_generate_probability = Race_background_object_probability;
+	float background_time;
 	float hedge_time;
 
 	while (window.isOpen()) {
@@ -82,8 +82,8 @@ int Race(sf::RenderWindow & window) {
 			break;
 		}
 
-		float animation_time = animation_timer.getElapsedTime().asMicroseconds();
-		animation_timer.restart();
+		float animation_time = Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
+		Compensating_for_performance_losses_timer.restart();
 		animation_time = animation_time / 800;
 
 		if (player.update(animation_time)) {
@@ -94,10 +94,10 @@ int Race(sf::RenderWindow & window) {
 		window.draw(background_s);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
-		bk_time = background_timer.getElapsedTime().asSeconds();
+		background_time = background_timer.getElapsedTime().asSeconds();
 		hedge_time = hedge_timer.getElapsedTime().asSeconds();
 
-		background_object_generate_probability = background_object_generate_probability - bk_time * 100 - rand() % 100;
+		background_object_generate_probability = background_object_generate_probability - background_time * 100 - rand() % 100;
 
 		if (background_object_generate_probability < 0) {
 			int r = rand() % 3;

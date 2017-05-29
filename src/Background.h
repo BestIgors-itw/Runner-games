@@ -4,8 +4,6 @@
 #include "Entity.h"
 #include "Direction.h"
 
-#define screen_width 1600
-#define screen_hight 900
 
 class Background : public Entity {
 public:

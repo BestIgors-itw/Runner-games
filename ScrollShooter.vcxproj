@@ -25,6 +25,7 @@
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Effects.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Aliases.h" />
     <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Race.h" />
     <ClInclude Include="src\Hedges.h" />

@@ -4,9 +4,6 @@
 #include "Entity.h"
 #include "Direction.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
 extern sf::Clock game_timer;
 
 class Enemies_cars : public Entity {

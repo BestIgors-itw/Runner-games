@@ -6,13 +6,11 @@
 #include "Race.h"
 #include "Scroll_Shooter.h"
 #include "Shooter.h"
+#include "Aliases.h"
 #include "Menu.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
 sf::Clock game_timer;
-sf::Clock animation_timer;
+sf::Clock Compensating_for_performance_losses_timer;
 sf::Clock background_timer;
 sf::Clock hedge_timer;
 sf::Clock enemy_timer;
