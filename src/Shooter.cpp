@@ -187,7 +187,8 @@ int Shooter(sf::RenderWindow & window) {
 			}
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
-					effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, 151, 150, 0.6, 1, 0.5));
+					effects.push_back(new Effects(effects_explosion2_i,
+						e->x, e->y, 151, 150, 0.6, 1, 0.5));
 					it_enemies = enemies.erase(it_enemies);
 					delete e;
 					--enemy_number;
@@ -204,7 +205,8 @@ int Shooter(sf::RenderWindow & window) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.is_shot_available) {
 			player.is_shot_available = false;
 			player.is_shot = true;
-			effects.push_back(new Effects(effects_shooting_i, player.x, player.y, 181, 166, 0, 8, 0.1));
+			effects.push_back(new Effects(effects_shooting_i,
+				player.x, player.y, 181, 166, 0, 8, 0.1));
 			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 		}
 
@@ -213,8 +215,9 @@ int Shooter(sf::RenderWindow & window) {
 
 			if (e->getRect().intersects(player.getRect()) && player.is_shot) {
 				e->health -= player.damage;
-				effects.push_back(new Effects(effects_explosion1_i, e->x, e->y, 67, 69, 0.6, 1, 0.2));
-				player.score += 1;
+				effects.push_back(new Effects(effects_explosion1_i,
+					e->x, e->y, 67, 69, 0.6, 1, 0.2));
+				player.score += 5;
 			}
 		}
 
@@ -250,7 +253,7 @@ int Shooter(sf::RenderWindow & window) {
 		std::ostringstream player_health_string;
 		player_health_string << player.health;
 		text.setString("Score:" + playerScoreString.str() + "\nHealth:" + player_health_string.str());
-		text.setPosition(1200, 780);
+		text.setPosition(screen_width - 400, screen_hight - 120);
 		window.draw(text);
 
 		window.display();

@@ -128,8 +128,9 @@ int Race(sf::RenderWindow & window) {
 				hedges.push_back(new Hedges(hedges_deadcars1_i, rand() % screen_width,
 					-200, 96, 111, 2, 10));
 				break;
-			case 1: hedges.push_back(new Hedges(hedges_deadcars2_i, rand() % screen_width,
-				-200, 96, 111, 2, 20));
+			case 1:
+				hedges.push_back(new Hedges(hedges_deadcars2_i, rand() % screen_width,
+					-200, 96, 111, 2, 20));
 				break;
 			}
 
@@ -234,5 +235,6 @@ int Race(sf::RenderWindow & window) {
 
 		window.display();
 	}
+
 	return 0;
 }
