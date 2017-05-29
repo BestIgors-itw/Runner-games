@@ -25,6 +25,7 @@
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Effects.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Race.h" />
     <ClInclude Include="src\Hedges.h" />
     <ClInclude Include="src\Interface.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="src\Hedges.cpp" />
     <ClCompile Include="src\Interface.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Race.cpp" />
     <ClCompile Include="src\Scroll_Shooter.cpp" />

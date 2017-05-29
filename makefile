@@ -1,7 +1,7 @@
 CFLAGS = -Wall -Werror
-SOURCES = src/main.cpp src/Entity.cpp src/Player.cpp src/Background.cpp src/Hedges.cpp src/Direction.cpp src/Effects.cpp src/Enemies.cpp src/Interface.cpp
+SOURCES = src/main.cpp src/Entity.cpp src/Player.cpp src/Background.cpp src/Hedges.cpp src/Direction.cpp src/Effects.cpp src/Enemies_Cars.cpp src/Interface.cpp src/Bullets.cpp src/Race.cpp src/Scroll_Shooter.cpp src/Shooter.cpp src/Shooter_enemies_cars.cpp src/Menu.cpp
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-OBJECTS = build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o
+OBJECTS = build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o build/Menu.o
 
 .PHONY: clean all Runner-games test
 
@@ -9,9 +9,9 @@ all :
 	make bin/Runner-games
 
 bin/Runner-games : $(OBJECTS)
-	g++ build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o -o bin/Runner-games $(CFLAGS) $(LDFLAGS)
+	g++ build/main.o build/Background.o build/Bullets.o build/Direction.o build/Effects.o build/Enemies_Cars.o build/Entity.o build/Hedges.o build/Interface.o build/Player.o build/Race.o build/Scroll_Shooter.o build/Shooter.o build/Shooter_enemies_cars.o build/Menu.o -o bin/Runner-games $(CFLAGS) $(LDFLAGS)
 
-build/main.o : src/main.cpp src/Background.cpp src/Bullets.cpp src/Direction.cpp src/Effects.cpp src/Enemies_Cars.cpp src/Entity.cpp src/Hedges.cpp src/Interface.cpp src/Player.cpp src/Race.cpp src/Scroll_Shooter.cpp src/Shooter.cpp src/Shooter_enemies_cars.cpp
+build/main.o : src/main.cpp src/Background.cpp src/Bullets.cpp src/Direction.cpp src/Effects.cpp src/Enemies_Cars.cpp src/Entity.cpp src/Hedges.cpp src/Interface.cpp src/Player.cpp src/Race.cpp src/Scroll_Shooter.cpp src/Shooter.cpp src/Shooter_enemies_cars.cpp src/Menu.cpp
 	g++ -c src/main.cpp -o build/main.o $(CFLAGS) $(LDFLAGS)
 
 build/Entity.o : src/Entity.cpp src/Entity.h
@@ -53,6 +53,8 @@ build/Shooter.o : src/Shooter.cpp src/Shooter.h
 build/Shooter_enemies_cars.o : src/Shooter_enemies_cars.cpp src/Shooter_enemies_cars.h
 	g++ -c src/Shooter_enemies_cars.cpp -o build/Shooter_enemies_cars.o $(CFLAGS) $(LDFLAGS)
 
+build/Menu.o : src/Menu.cpp src/Menu.h
+	g++ -c src/Menu.cpp -o build/Menu.o $(CFLAGS) $(LDFLAGS)
 
 clean : 
 	@rm -rf build/*.o build/test/*.o
