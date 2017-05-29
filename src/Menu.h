@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SFML/graphics.hpp"
+#include <SFML/Graphics.hpp>
 
 #define screen_width 1600
 #define screen_hight 900
