@@ -3,8 +3,22 @@
 #define screen_width 1600
 #define screen_hight 900
 
+#define menu_plate_x 0
+#define menu_plate_y screen_hight - 108 - i * 110
+#define menu_text_y menu_plate_y + 20
+
+#define pause_between_press 0.25
+
+#define Scroll_Shooter_text 4
+#define Race_text 3
+#define Shooter_text 2
+#define Control_text 1
+#define Exit_text 0
+
 #define Scroll_Shooter_background_scale_x float(screen_width) / 275
 #define Scroll_Shooter_background_scale_y float(screen_hight) / 183
+#define Race_background_scale_x float(screen_width) / 275
+#define Race_background_scale_y float(screen_hight) / 183
 #define Shooter_background_scale_x float(screen_width) / 3574
 #define Shooter_background_scale_y float(screen_hight) / 1494
 
@@ -71,8 +85,8 @@
 #define Scroll_Shooter_max_game_difficulty 1000							//
 #define Scroll_Shooter_background_object_probability 3000				//
 #define Race_game_difficulty 2000										//
+#define Race_max_game_difficulty 1000									//
 #define Race_background_object_probability 3000							//„ем выше значени€ тем реже по€вл€ютс€ объекты
-#define Race_max_game_difficulty 500									//
 #define Shooter_game_difficulty 50000									//
 #define Shooter_background_object_probability 6000						//
 #define Shooter_max_game_difficulty 5000								//
@@ -81,7 +95,8 @@
 
 #define Scroll_Shooter_background_object_spawn_x rand() % screen_width
 #define Scroll_Shooter_background_object_spawn_y -200
-
+#define Race_background_object_spawn_x rand() % screen_width
+#define Race_background_object_spawn_y -200
 #define Shooter_background_object_spawn_x screen_width + 200
 #define Shooter_background_object_spawn_y rand() % 350 + 550
 

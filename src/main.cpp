@@ -22,19 +22,19 @@ int main() {
 
 	while (1) {
 		switch (menu(window)) {
-		case 0:
+		case 4:
 			Scroll_Shooter(window);
 			break;
-		case 1:
-			Shooter(window);
-			break;
-		case 2:
+		case 3:
 			Race(window);
 			break;
-		case 3:
+		case 2:
+			Shooter(window);
+			break;
+		case 1:
 			Control_page(window);
 			break;
-		case 4:
+		case 0:
 			return 0;
 			break;
 		default:

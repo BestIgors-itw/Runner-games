@@ -2,48 +2,48 @@
 
 int Enemies_cars::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 1) {
-		if (direction == 2 || direction == 6 || direction == 7) {
+		if (direction == DOWN || direction == DOWN_LEFT || direction == DOWN_RIGHT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
-				direction = 6;
+				direction = DOWN_RIGHT;
 				break;
 			case 1:
-				direction = 7;
+				direction = DOWN_LEFT;
 				break;
 			case 2:
-				direction = 2;
+				direction = DOWN;
 				break;
 			}
 		}
-		if (direction == 3 || direction == 4 || direction == 5) {
+		if (direction == UP || direction == UP_LEFT || direction == UP_RIGHT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
-				direction = 4;
+				direction = UP_LEFT;
 				break;
 			case 1:
-				direction = 5;
+				direction = UP_RIGHT;
 				break;
 			case 2:
-				direction = 3;
+				direction = UP;
 				break;
 			}
 		}
 
 		moving_timer = game_timer.getElapsedTime().asSeconds();
 	}
-	if (x < 0 && (direction == 2 || direction == 7)) {
-		direction = 6;
+	if (x < 0 && (direction == DOWN || direction == DOWN_LEFT)) {
+		direction = DOWN_RIGHT;
 	}
-	if (x + w > screen_width && (direction == 2 || direction == 6)) {
-		direction = 7;
+	if (x + w > screen_width && (direction == DOWN || direction == DOWN_RIGHT)) {
+		direction = DOWN_LEFT;
 	}
-	if (x < 0 && (direction == 3 || direction == 4)) {
-		direction = 5;
+	if (x < 0 && (direction == UP || direction == UP_RIGHT)) {
+		direction = UP_RIGHT;
 	}
-	if (x + w > screen_width && (direction == 3 || direction == 5)) {
-		direction = 4;
+	if (x + w > screen_width && (direction == UP || direction == UP_RIGHT)) {
+		direction = UP_LEFT;
 	}
 
 	if (y - h / 2 > screen_hight + 300 || y + h / 2 < -300) {

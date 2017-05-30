@@ -72,7 +72,8 @@ int Shooter(sf::RenderWindow & window) {
 
 
 	Player player(aim_i, player_spawn_x, player_spawn_y, aim_width, aim_hight,
-		player_speed, player_health, Shooter_player_time_between_shots, Shooter_player_damage_per_shot);
+		player_speed, player_health, Shooter_player_time_between_shots,
+		Shooter_player_damage_per_shot);
 
 	std::list<Background*>  background_objects;
 	std::list<Background*>::iterator it_background;

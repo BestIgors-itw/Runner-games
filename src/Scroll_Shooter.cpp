@@ -67,8 +67,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		return 0;
 	}
 
-	sf::Image button_i;
-	if (!button_i.loadFromFile("res/images/interface/button.png")) {
+	sf::Image plate_i;
+	if (!plate_i.loadFromFile("res/images/interface/button.png")) {
 		return 0;
 	}
 
@@ -82,8 +82,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 
 	Player player(player_i, player_spawn_x, player_spawn_y, player_width, player_hight,
-		player_speed, player_health, Scroll_Shooter_player_time_between_shots, Scroll_Shooter_player_damage_per_shot);
-	Interface interface_health_and_score_bar(button_i, interface_plate_x,
+		player_speed, player_health, Scroll_Shooter_player_time_between_shots,
+		Scroll_Shooter_player_damage_per_shot);
+	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
 		interface_plate_y, interface_plate_width, interface_plate_hight);
 
 	std::list<Background*>  background_objects;
