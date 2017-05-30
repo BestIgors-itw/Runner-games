@@ -3,6 +3,11 @@
 #define screen_width 1600
 #define screen_hight 900
 
+#define Scroll_Shooter_background_scale_x float(screen_width) / 275
+#define Scroll_Shooter_background_scale_y float(screen_hight) / 183
+#define Shooter_background_scale_x float(screen_width) / 3574
+#define Shooter_background_scale_y float(screen_hight) / 1494
+
 #define background_speed 0.6
 
 #define RIGHT 0
@@ -15,14 +20,19 @@
 #define DOWN_LEFT 7
 #define STAY 8
 
+#define aim_width 69
+#define aim_hight 100
+
 #define player_spawn_x 750
 #define player_spawn_y 650
 #define player_width 70
 #define player_hight 150
 #define player_speed 0.7
 #define player_health 100
-#define player_time_between_shots 0.25
-#define player_damage_per_shot 20
+#define Scroll_Shooter_player_time_between_shots 0.25
+#define Shooter_player_time_between_shots 0.5
+#define Scroll_Shooter_player_damage_per_shot 20
+#define Shooter_player_damage_per_shot 20
 #define player_shot_1point_x player.x + 15
 #define player_shot_2point_x player.x + 50
 #define player_shot_1point_y player.y - bullet_hight
@@ -32,18 +42,23 @@
 #define bullet_width 6
 #define bullet_hight 15
 
-#define effects_shooting_width 35
-#define effects_shooting_hight 36
-#define effects_shooting_speed 0
-#define effects_shooting_time_exist 0.1
+#define Scroll_Shooter_effects_shooting_width 35
+#define Scroll_Shooter_effects_shooting_hight 36
+#define Scroll_Shooter_effects_shooting_speed 0
+#define Scroll_Shooter_effects_shooting_exist_time 0.1
+
+#define Shooter_effects_shooting_width 181
+#define Shooter_effects_shooting_hight 161
+#define Shooter_effects_shooting_speed 0
+#define Shooter_effects_shooting_exist_time 0.1
 
 #define effects_explosion1_width 67
 #define effects_explosion1_hight 69
-#define effects_explosion1_time_exist 0.1
+#define effects_explosion1_exist_time 0.1
 
 #define effects_explosion2_width 151
 #define effects_explosion2_hight 150
-#define effects_explosion2_time_exist 0.25
+#define effects_explosion2_exist_time 0.25
 
 #define interface_plate_width 448
 #define interface_plate_hight 108
@@ -57,20 +72,25 @@
 #define Scroll_Shooter_background_object_probability 3000				//
 #define Race_game_difficulty 2000										//
 #define Race_background_object_probability 3000							//„ем выше значени€ тем реже по€вл€ютс€ объекты
+#define Race_max_game_difficulty 500									//
 #define Shooter_game_difficulty 50000									//
 #define Shooter_background_object_probability 6000						//
+#define Shooter_max_game_difficulty 5000								//
 
 #define Compensating_for_performance_losses_coefficient Compensating_for_performance_losses_time / 800
 
 #define Scroll_Shooter_background_object_spawn_x rand() % screen_width
 #define Scroll_Shooter_background_object_spawn_y -200
 
-#define background_rocksand1_i_width 113
-#define background_rocksand1_i_hight 127
-#define background_rocksand2_i_width 78
-#define background_rocksand2_i_hight 70
-#define background_rockgray1_i_width 93
-#define background_rockgray1_i_hight 65
+#define Shooter_background_object_spawn_x screen_width + 200
+#define Shooter_background_object_spawn_y rand() % 350 + 550
+
+#define background_rocksand1_width 113
+#define background_rocksand1_hight 127
+#define background_rocksand2_width 78
+#define background_rocksand2_hight 70
+#define background_rockgray1_width 93
+#define background_rockgray1_hight 65
 
 #define Scroll_Shooter_enemy_up_spawn_x rand() % (screen_width - 100) + 100
 #define Scroll_Shooter_enemy_up_spawn_y -300
@@ -114,6 +134,9 @@
 #define Race_hedges_deadcars2_width 96
 #define Race_hedges_deadcars2_hight 111
 #define Race_hedges_deadcars2_health 10
+
+#define Shooter_enemy_spawn_x -200
+#define Shooter_enemy_spawn_y rand() % 350 + 450
 
 #define Shooter_enemy_copsjups_width 198
 #define Shooter_enemy_copsjups_hight 109

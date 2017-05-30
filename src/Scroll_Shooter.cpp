@@ -60,7 +60,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
-	background_s.setScale(5.8181, 4.9180);
+	background_s.setScale(Scroll_Shooter_background_scale_x, Scroll_Shooter_background_scale_y);
 
 	sf::Image bullet_bullet_i;
 	if (!bullet_bullet_i.loadFromFile("res/images/bullets/bullet.png")) {
@@ -82,7 +82,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 
 	Player player(player_i, player_spawn_x, player_spawn_y, player_width, player_hight,
-		player_speed, player_health, player_time_between_shots, player_damage_per_shot);
+		player_speed, player_health, Scroll_Shooter_player_time_between_shots, Scroll_Shooter_player_damage_per_shot);
 	Interface interface_health_and_score_bar(button_i, interface_plate_x,
 		interface_plate_y, interface_plate_width, interface_plate_hight);
 
@@ -107,7 +107,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 	float background_time;
 	float enemy_time;
 
-	while (window.isOpen()) {
+	while (window.isOpen())
+	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
@@ -134,18 +135,18 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 				background_objects.push_back(new Background(background_rocksand1_i,
 					Scroll_Shooter_background_object_spawn_x,
 					Scroll_Shooter_background_object_spawn_y,
-					background_rocksand1_i_width, background_rocksand1_i_hight, DOWN));
+					background_rocksand1_width, background_rocksand1_hight, DOWN));
 				break;
 			case 1:
 				background_objects.push_back(new Background(background_rocksand2_i,
 					Scroll_Shooter_background_object_spawn_x,
 					Scroll_Shooter_background_object_spawn_y,
-					background_rocksand2_i_width, background_rocksand2_i_hight, DOWN));
+					background_rocksand2_width, background_rocksand2_hight, DOWN));
 				break;
 			case 2: background_objects.push_back(new Background(background_rockgray1_i,
 				Scroll_Shooter_background_object_spawn_x,
 				Scroll_Shooter_background_object_spawn_y,
-				background_rockgray1_i_width, background_rockgray1_i_hight, DOWN));
+				background_rockgray1_width, background_rockgray1_hight, DOWN));
 				break;
 			}
 			background_object_generate_probability = Scroll_Shooter_background_object_probability;
@@ -223,16 +224,16 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		if (player.is_shot_available == true) {
 			effects.push_back(new Effects(effects_shooting_i,
-				player_shot_1point_x, player_shot_1point_y, effects_shooting_width,
-				effects_shooting_hight, effects_shooting_speed, STAY,
-				effects_shooting_time_exist));
+				player_shot_1point_x, player_shot_1point_y, Scroll_Shooter_effects_shooting_width,
+				Scroll_Shooter_effects_shooting_hight, Scroll_Shooter_effects_shooting_speed, STAY,
+				Scroll_Shooter_effects_shooting_exist_time));
 			bullets.push_back(new Bullets(bullet_bullet_i,
 				player_shot_1point_x, player_shot_1point_y, bullet_width, bullet_hight,
 				player_bullet_speed, UP, player.damage));
 			effects.push_back(new Effects(effects_shooting_i,
-				player_shot_2point_x, player_shot_2point_y, effects_shooting_width,
-				effects_shooting_hight, effects_shooting_speed, STAY,
-				effects_shooting_time_exist));
+				player_shot_2point_x, player_shot_2point_y, Scroll_Shooter_effects_shooting_width,
+				Scroll_Shooter_effects_shooting_hight, Scroll_Shooter_effects_shooting_speed, STAY,
+				Scroll_Shooter_effects_shooting_exist_time));
 			bullets.push_back(new Bullets(bullet_bullet_i,
 				player_shot_2point_x, player_shot_1point_y, bullet_width, bullet_hight,
 				player_bullet_speed, UP, player.damage));
@@ -259,7 +260,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars)
 		{
 			Enemies_cars *e1 = *it1_enemies_cars;
-			for (it2_enemies_cars = enemies_cars.begin(); it2_enemies_cars != enemies_cars.end(); ++it2_enemies_cars) {
+			for (it2_enemies_cars = enemies_cars.begin(); it2_enemies_cars != enemies_cars.end(); ++it2_enemies_cars)
+			{
 				Enemies_cars *e2 = *it2_enemies_cars;
 				if (e1 != e2) {
 					if (e1->getRect().intersects(e2->getRect())) {
@@ -273,13 +275,14 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();)
 		{
 			Bullets *b = *it_bullets;
-			for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
+			for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars)
+			{
 				Enemies_cars *e = *it1_enemies_cars;
 				if (b->getRect().intersects(e->getRect())) {
 					e->health -= b->damage;
 
 					effects.push_back(new Effects(effects_explosion1_i, b->x, b->y, effects_explosion1_width,
-						effects_explosion1_hight, background_speed, DOWN, effects_explosion1_time_exist));
+						effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 					player.score += 1;
 					it_bullets = bullets.erase(it_bullets);
@@ -297,7 +300,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Bullets *b = *it_bullets;
 			if (b->getRect().intersects(player.getRect())) {
 				effects.push_back(new Effects(effects_explosion1_i, b->x, b->y, effects_explosion1_width,
-					effects_explosion1_hight, background_speed, DOWN, effects_explosion1_time_exist));
+					effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 				player.health -= b->damage;
 
@@ -319,7 +322,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Enemies_cars *e = *it1_enemies_cars;
 			if (e->getRect().intersects(player.getRect())) {
 				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, effects_explosion2_width,
-					effects_explosion2_hight, background_speed, DOWN, effects_explosion2_time_exist));
+					effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 
 				player.health -= e->health;
 
@@ -347,20 +350,21 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			else ++it_bullets;
 		}
 
-		for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end();) {
+		for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end();)
+		{
 			Enemies_cars *e = *it1_enemies_cars;
 			if (e->update(Compensating_for_performance_losses_time)) {
 				if (e->direction == DOWN || e->direction == DOWN_LEFT || e->direction == DOWN_LEFT) {
 					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
-						enemy_shot_down_point_y, effects_shooting_width, effects_shooting_hight,
-						effects_shooting_speed, STAY, effects_shooting_time_exist));
+						enemy_shot_down_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
+						Scroll_Shooter_effects_shooting_speed, STAY, Scroll_Shooter_effects_shooting_exist_time));
 					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_down_point_y, bullet_width, bullet_hight, enemy_bullet_speed, DOWN, e->damage));
 				}
 				if (e->direction == UP || e->direction == UP_LEFT || e->direction == UP_RIGHT) {
 					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
-						enemy_shot_up_point_y, effects_shooting_width, effects_shooting_hight,
-						effects_shooting_speed, STAY, effects_shooting_time_exist));
+						enemy_shot_up_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
+						Scroll_Shooter_effects_shooting_speed, STAY, Scroll_Shooter_effects_shooting_exist_time));
 					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_up_point_y, bullet_width, bullet_hight, enemy_bullet_speed, UP, e->damage));
 				}
@@ -368,7 +372,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
 					effects.push_back(new Effects(effects_explosion2_i, e->x,
-						e->y, effects_explosion2_width, effects_explosion2_hight, background_speed, DOWN, effects_explosion2_time_exist));
+						e->y, effects_explosion2_width, effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
 					delete e;
 				}
@@ -382,7 +386,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			}
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end();) {
+		for (it_effects = effects.begin(); it_effects != effects.end();)
+		{
 			Effects *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
 			if (e->life == false) {
@@ -392,19 +397,23 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			else ++it_effects;
 		}
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
+		{
 			window.draw((*it_background)->sprite);
 		}
 
-		for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
+		for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars)
+		{
 			window.draw((*it1_enemies_cars)->sprite);
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
+		{
 			window.draw((*it_effects)->sprite);
 		}
 
-		for (it_bullets = bullets.begin(); it_bullets != bullets.end(); ++it_bullets) {
+		for (it_bullets = bullets.begin(); it_bullets != bullets.end(); ++it_bullets)
+		{
 			window.draw((*it_bullets)->sprite);
 		}
 

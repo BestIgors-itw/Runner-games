@@ -13,7 +13,6 @@
 #include "Entity.h"
 #include "Interface.h"
 #include "Player.h"
-#include "Aliases.h"
 
 extern sf::Clock game_timer, Compensating_for_performance_losses_timer, background_timer, hedge_timer;
 

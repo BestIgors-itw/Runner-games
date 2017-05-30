@@ -8,8 +8,8 @@ extern sf::Clock game_timer;
 
 class Enemies_cars : public Entity {
 public:
-	float speed, direction, health, moving_timer, attack_frequency_time, time_between_attack;
-	int damage;
+	float speed, health, moving_timer, attack_frequency_time, time_between_attack;
+	int direction, damage;
 	Enemies_cars(sf::Image &image, float X, float Y, int W, int H, float Speed,
 		float Direction, float Health, float Time_between_attack, int Damage)
 		:Entity(image, X, Y, W, H) {
