@@ -1,9 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
-#define screen_width 1600
-#define screen_hight 900
+#include "Aliases.h"
 
 extern sf::Clock game_timer;
 

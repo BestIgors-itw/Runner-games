@@ -6,13 +6,11 @@
 #include "Race.h"
 #include "Scroll_Shooter.h"
 #include "Shooter.h"
+#include "Aliases.h"
 #include "Menu.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
 sf::Clock game_timer;
-sf::Clock animation_timer;
+sf::Clock Compensating_for_performance_losses_timer;
 sf::Clock background_timer;
 sf::Clock hedge_timer;
 sf::Clock enemy_timer;
@@ -24,19 +22,19 @@ int main() {
 
 	while (1) {
 		switch (menu(window)) {
-		case 0:
+		case 4:
 			Scroll_Shooter(window);
 			break;
-		case 1:
-			Shooter(window);
-			break;
-		case 2:
+		case 3:
 			Race(window);
 			break;
-		case 3:
+		case 2:
+			Shooter(window);
+			break;
+		case 1:
 			Control_page(window);
 			break;
-		case 4:
+		case 0:
 			return 0;
 			break;
 		default:

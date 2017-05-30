@@ -3,8 +3,8 @@
 int Bullets::update(float time) {
 	x += dx * time;
 	y += dy * time;
-	sprite.setPosition(x, y);
-	if (x - 20 < 0 || x > screen_width + 20 || y - 20 < 0 || y > screen_hight + 20) {
+	sprite.setPosition(x + w / 2, y + h / 2);
+	if (x + bullet_width < 0 || x - bullet_width > screen_width || y + bullet_hight < 0 || y - bullet_hight > screen_hight) {
 		life = false;
 	}
 	return 0;

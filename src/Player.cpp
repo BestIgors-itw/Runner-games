@@ -2,7 +2,7 @@
 
 void Player::control() {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (x + w / 2 < screen_width) {
+		if (x + w < screen_width) {
 			direction = RIGHT;
 			sprite.setRotation(2.5);
 		}
@@ -12,7 +12,7 @@ void Player::control() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (x - w / 2 > 0) {
+		if (x > 0) {
 			direction = LEFT;
 			sprite.setRotation(-2.5);
 		}
@@ -22,7 +22,7 @@ void Player::control() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-		if (y + h / 2 < screen_hight) {
+		if (y + h < screen_hight) {
 			direction = DOWN;
 		}
 		else {
@@ -31,7 +31,7 @@ void Player::control() {
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		if (y - h / 2 > 0) {
+		if (y > 0) {
 			direction = UP;
 		}
 		else {
@@ -41,60 +41,60 @@ void Player::control() {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (y - h / 2 > 0) {
+		if (y > 0) {
 			direction = UP;
 			sprite.setRotation(0);
 		}
-		if (x - w / 2 > 0) {
+		if (x > 0) {
 			direction = LEFT;
 			sprite.setRotation(-2.5);
 		}
-		if (x - w / 2 > 0 && y - h / 2 > 0) {
+		if (x > 0 && y > 0) {
 			direction = UP_LEFT;
 		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (x + w / 2 < screen_width) {
+		if (x + w < screen_width) {
 			direction = RIGHT;
 			sprite.setRotation(2.5);
 		}
-		if (y - h / 2 > 0) {
+		if (y > 0) {
 			direction = UP;
 			sprite.setRotation(0);
 		}
-		if (x + w / 2 < screen_width && y - h / 2 > 0) {
+		if (x + w < screen_width && y > 0) {
 			direction = UP_RIGHT;
 		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		if (y + h / 2 < screen_hight) {
+		if (y + h < screen_hight) {
 			direction = DOWN;
 			sprite.setRotation(0);
 		}
-		if (x + w / 2 < screen_width) {
+		if (x + w < screen_width) {
 			direction = RIGHT;
 			sprite.setRotation(2.5);
 		}
-		if (x + w / 2 < screen_width && y + h / 2 < screen_hight) {
+		if (x + w < screen_width && y + h < screen_hight) {
 			direction = DOWN_RIGHT;
 		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
 		&& sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		if (y + h / 2 < screen_hight) {
+		if (y + h < screen_hight) {
 			direction = DOWN;
 			sprite.setRotation(0);
 		}
-		if (x - w / 2 > 0) {
+		if (x > 0) {
 			direction = LEFT;
 			sprite.setRotation(-2.5);
 		}
-		if (x - w / 2 > 0 && y + h / 2 < screen_hight) {
+		if (x > 0 && y + h < screen_hight) {
 			direction = DOWN_LEFT;
 		}
 	}
@@ -114,7 +114,7 @@ int Player::update(float time) {
 	x += dx * time;
 	y += dy * time;
 
-	sprite.setPosition(x, y);
+	sprite.setPosition(x + w / 2, y + h / 2);
 
 	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {
 		is_shot_available = true;

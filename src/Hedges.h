@@ -4,9 +4,6 @@
 #include "Direction.h"
 #include "Entity.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
 class Hedges : public Entity {
 public:
 	float speed, health;

@@ -45,10 +45,10 @@ int Race(sf::RenderWindow & window) {
 
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
-	background_s.setScale(5.8181, 4.9180);
+	background_s.setScale(Race_background_scale_x, Race_background_scale_y);
 
-	sf::Image interface_button_i;
-	interface_button_i.loadFromFile("res/images/interface/button.png");
+	sf::Image plate_i;
+	plate_i.loadFromFile("res/images/interface/button.png");
 
 	sf::Font font;
 	font.loadFromFile("res/font/beer_money.ttf");
@@ -56,8 +56,11 @@ int Race(sf::RenderWindow & window) {
 	text.setColor(sf::Color::Black);
 
 
-	Player player(player_i, 750, 650, 70, 150, 0.5, 100, 0.25, 20);
-	Interface interface_health_and_score_bar(interface_button_i, screen_width - 448, screen_hight - 108, 448, 108);
+	Player player(player_i, player_spawn_x, player_spawn_y, player_width, player_hight,
+		player_speed, player_health, Scroll_Shooter_player_time_between_shots,
+		Scroll_Shooter_player_damage_per_shot);
+	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
+		interface_plate_y, interface_plate_width, interface_plate_hight);
 
 	std::list<Background*> background_objects;
 	std::list<Background*>::iterator it_background;
@@ -72,9 +75,9 @@ int Race(sf::RenderWindow & window) {
 
 	float game_time = game_timer.getElapsedTime().asSeconds();
 	float score_time = game_time;
-	float hedge_generate_probability = 2000;
-	float background_object_generate_probability = 3000;
-	float bk_time;
+	float hedge_generate_probability = Race_game_difficulty;
+	float background_object_generate_probability = Race_background_object_probability;
+	float background_time;
 	float hedge_time;
 
 	while (window.isOpen()) {
@@ -82,11 +85,11 @@ int Race(sf::RenderWindow & window) {
 			break;
 		}
 
-		float animation_time = animation_timer.getElapsedTime().asMicroseconds();
-		animation_timer.restart();
-		animation_time = animation_time / 800;
+		float Compensating_for_performance_losses_time = Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
+		Compensating_for_performance_losses_timer.restart();
+		Compensating_for_performance_losses_time = Compensating_for_performance_losses_coefficient;
 
-		if (player.update(animation_time)) {
+		if (player.update(Compensating_for_performance_losses_time)) {
 			break;
 		}
 
@@ -94,28 +97,31 @@ int Race(sf::RenderWindow & window) {
 		window.draw(background_s);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
-		bk_time = background_timer.getElapsedTime().asSeconds();
+		background_time = background_timer.getElapsedTime().asSeconds();
 		hedge_time = hedge_timer.getElapsedTime().asSeconds();
 
-		background_object_generate_probability = background_object_generate_probability - bk_time * 100 - rand() % 100;
+		background_object_generate_probability = background_object_generate_probability - background_time * 100 - rand() % 100;
 
 		if (background_object_generate_probability < 0) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
 				background_objects.push_back(new Background(background_rocksand1_i,
-					rand() % screen_width, -200, 113, 127, 2));
+					Race_background_object_spawn_x, Race_background_object_spawn_y,
+					background_rocksand1_width, background_rocksand1_hight, DOWN));
 				break;
 			case 1:
 				background_objects.push_back(new Background(background_rocksand2_i,
-					rand() % screen_width, -200, 78, 70, 2));
+					Race_background_object_spawn_x, Race_background_object_spawn_y,
+					background_rocksand2_width, background_rocksand2_hight, DOWN));
 				break;
 			case 2:
 				background_objects.push_back(new Background(background_rockgray1_i,
-					rand() % screen_width, -200, 93, 65, 2));
+					Race_background_object_spawn_x, Race_background_object_spawn_y,
+					background_rockgray1_width, background_rockgray1_hight, DOWN));
 				break;
 			}
-			background_object_generate_probability = 2000;
+			background_object_generate_probability = Race_background_object_probability;
 			background_timer.restart();
 		}
 
@@ -125,18 +131,22 @@ int Race(sf::RenderWindow & window) {
 			int r = rand() % 2;
 			switch (r) {
 			case 0:
-				hedges.push_back(new Hedges(hedges_deadcars1_i, rand() % screen_width,
-					-200, 96, 111, 2, 10));
+				hedges.push_back(new Hedges(hedges_deadcars1_i,
+					Race_enemy_spawn_x, Race_enemy_spawn_y,
+					Race_hedges_deadcars1_width, Race_hedges_deadcars1_hight,
+					DOWN, Race_hedges_deadcars1_health));
 				break;
 			case 1:
-				hedges.push_back(new Hedges(hedges_deadcars2_i, rand() % screen_width,
-					-200, 96, 111, 2, 20));
+				hedges.push_back(new Hedges(hedges_deadcars2_i,
+					Race_enemy_spawn_x, Race_enemy_spawn_y,
+					Race_hedges_deadcars2_width, Race_hedges_deadcars2_hight,
+					DOWN, Race_hedges_deadcars2_health));
 				break;
 			}
 
-			hedge_generate_probability = 3000 - game_time * 25;
-			if (hedge_generate_probability < 500) {
-				hedge_generate_probability = 500;
+			hedge_generate_probability = Race_game_difficulty - game_time * 25;
+			if (hedge_generate_probability < Race_max_game_difficulty) {
+				hedge_generate_probability = Race_max_game_difficulty;
 			}
 			hedge_timer.restart();
 		}
@@ -147,7 +157,7 @@ int Race(sf::RenderWindow & window) {
 		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
 		{
 			Background *b = *it_background;
-			b->update(animation_time);
+			b->update(Compensating_for_performance_losses_time);
 		}
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end();)
@@ -165,7 +175,7 @@ int Race(sf::RenderWindow & window) {
 		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
 		{
 			Hedges *e = *it1_hedges;
-			e->update(animation_time);
+			e->update(Compensating_for_performance_losses_time);
 		}
 
 		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
@@ -173,8 +183,12 @@ int Race(sf::RenderWindow & window) {
 			Hedges *e = *it1_hedges;
 			if (e->getRect().intersects(player.getRect())) {
 				e->life = false;
-				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, 67, 69, 0.6, 2, 0.1));
+				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y,
+					effects_explosion2_width, effects_explosion2_hight,
+					background_speed, DOWN, effects_explosion2_exist_time));
+
 				player.health -= e->health;
+				
 				if (player.score > 5) {
 					player.score -= 5;
 				}
@@ -195,7 +209,7 @@ int Race(sf::RenderWindow & window) {
 		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
 		{
 			Effects *e = *it_effects;
-			e->update(animation_time);
+			e->update(Compensating_for_performance_losses_time);
 		}
 
 		for (it_effects = effects.begin(); it_effects != effects.end();)
@@ -208,21 +222,24 @@ int Race(sf::RenderWindow & window) {
 			else ++it_effects;
 		}
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
+		{
 			window.draw((*it_background)->sprite);
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
+		{
 			window.draw((*it1_hedges)->sprite);
 		}
 
 		window.draw(player.sprite);
 
-		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
+		{
 			window.draw((*it_effects)->sprite);
 		}
 
-		interface_health_and_score_bar.update(animation_time);
+		interface_health_and_score_bar.update(Compensating_for_performance_losses_time);
 		window.draw(interface_health_and_score_bar.sprite);
 
 		std::ostringstream playerScoreString;
@@ -230,7 +247,7 @@ int Race(sf::RenderWindow & window) {
 		std::ostringstream player_health_string;
 		player_health_string << player.health;
 		text.setString("Score:" + playerScoreString.str() + "\nHealth:" + player_health_string.str());
-		text.setPosition(screen_width - 400, screen_hight - 120);
+		text.setPosition(interface_text_x, interface_text_y);
 		window.draw(text);
 
 		window.display();

@@ -5,55 +5,55 @@
 
 int Shooter_enemies_cars::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 2) {
-		if (direction == 1 || direction == 5 || direction == 6) {
+		if (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
-				direction = 1;
+				direction = RIGHT;
 				break;
 			case 1:
-				direction = 5;
+				direction = UP_RIGHT;
 				break;
 			case 2:
-				direction = 6;
+				direction = DOWN_RIGHT;
 				break;
 			}
 		}
-		if (direction == 1 || direction == 4 || direction == 7) {
+		if (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
-				direction = 1;
+				direction = LEFT;
 				break;
 			case 1:
-				direction = 4;
+				direction = UP_LEFT;
 				break;
 			case 2:
-				direction = 7;
+				direction = DOWN_LEFT;
 				break;
 			}
 		}
 
 		moving_timer = game_timer.getElapsedTime().asSeconds();
 	}
-	if (y + h > screen_hight && (direction == 2 || direction == 5 || direction == 6)) {
-		direction = 5;
+	if (y + h > screen_hight && (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT)) {
+		direction = UP_RIGHT;
 	}
-	if (y < screen_hight - 400 && (direction == 2 || direction == 5 || direction == 6)) {
-		direction = 6;
+	if (y < screen_hight - 400 && (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT)) {
+		direction = DOWN_RIGHT;
 	}
-	if (y + h > screen_hight && (direction == 1 || direction == 4 || direction == 7)) {
-		direction = 4;
+	if (y + h > screen_hight && (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT)) {
+		direction = UP_LEFT;
 	}
-	if (y < screen_hight - 400 && (direction == 1 || direction == 4 || direction == 7)) {
-		direction = 7;
+	if (y < screen_hight - 400 && (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT)) {
+		direction = DOWN_LEFT;
 	}
 
 	if (x < 0) {
-		direction = 0;
+		direction = RIGHT;
 	}
 	if (x + w > screen_width) {
-		direction = 1;
+		direction = LEFT;
 	}
 
 	Direction_convert(direction, dx, dy, speed);

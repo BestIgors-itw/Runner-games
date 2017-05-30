@@ -31,38 +31,28 @@ int menu(sf::RenderWindow & window) {
 	sf::Text text("", font, 50);
 	text.setColor(sf::Color::Black);
 
-	int mode = 0;
+	int mode = 4;
 	float button_press_time = game_timer.getElapsedTime().asSeconds();
 	bool is_pressed = false;
+
+	int i;
 
 	while (1) {
 		window.clear();
 
 		window.draw(background_s);
 
-		button_s.setPosition(0, screen_hight - 108);
+		for (i = 0; i < 5; ++i)
+		{
+			button_s.setPosition(menu_plate_x, menu_plate_y);
 
-		window.draw(button_s);
+			window.draw(button_s);
+		}
 
-		button_s.setPosition(0, screen_hight - 108 - 110);
-
-		window.draw(button_s);
-
-		button_s.setPosition(0, screen_hight - 108 - 2 * 110);
-
-		window.draw(button_s);
-
-		button_s.setPosition(0, screen_hight - 108 - 3 * 110);
-
-		window.draw(button_s);
-
-		button_s.setPosition(0, screen_hight - 108 - 4 * 110);
-
-		window.draw(button_s);
-
+		i = Scroll_Shooter_text;
 		text.setString("Scroll Shooter");
-		text.setPosition(100, screen_hight - 108 - 4 * 110 + 20);
-		if (mode == 0) {
+		text.setPosition(100, menu_text_y);
+		if (mode == Scroll_Shooter_text) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -70,9 +60,10 @@ int menu(sf::RenderWindow & window) {
 		}
 		window.draw(text);
 
+		i = Shooter_text;
 		text.setString("Shooter");
-		text.setPosition(150, screen_hight - 108 - 3 * 110 + 20);
-		if (mode == 1) {
+		text.setPosition(150, menu_text_y);
+		if (mode == Shooter_text) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -80,9 +71,10 @@ int menu(sf::RenderWindow & window) {
 		}
 		window.draw(text);
 
+		i = Race_text;
 		text.setString("Race");
-		text.setPosition(180, screen_hight - 108 - 2 * 110 + 20);
-		if (mode == 2) {
+		text.setPosition(180, menu_text_y);
+		if (mode == Race_text) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -90,9 +82,10 @@ int menu(sf::RenderWindow & window) {
 		}
 		window.draw(text);
 
+		i = Control_text;
 		text.setString("Control");
-		text.setPosition(180, screen_hight - 108 - 110 + 20);
-		if (mode == 3) {
+		text.setPosition(180, menu_text_y);
+		if (mode == Control_text) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -100,9 +93,10 @@ int menu(sf::RenderWindow & window) {
 		}
 		window.draw(text);
 
+		i = Exit_text;
 		text.setString("Exit");
-		text.setPosition(180, screen_hight - 108 + 20);
-		if (mode == 4) {
+		text.setPosition(180, menu_text_y);
+		if (mode == Exit_text) {
 			text.setColor(sf::Color::Blue);
 		}
 		else {
@@ -112,7 +106,7 @@ int menu(sf::RenderWindow & window) {
 
 		window.display();
 
-		if (game_timer.getElapsedTime().asSeconds() - button_press_time > 0.25) {
+		if (game_timer.getElapsedTime().asSeconds() - button_press_time > pause_between_press) {
 			is_pressed = false;
 			button_press_time = game_timer.getElapsedTime().asSeconds();
 		}
@@ -120,22 +114,22 @@ int menu(sf::RenderWindow & window) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && is_pressed == false) {
 			is_pressed = true;
 			button_press_time = game_timer.getElapsedTime().asSeconds();
-			if (mode < 4) {
-				++mode;
+			if (mode > Exit_text) {
+				--mode;
 			}
 			else {
-				mode = 0;
+				mode = Scroll_Shooter_text;
 			}
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && is_pressed == false) {
 			is_pressed = true;
 			button_press_time = game_timer.getElapsedTime().asSeconds();
-			if (mode > 0) {
-				--mode;
+			if (mode < Scroll_Shooter_text) {
+				++mode;
 			}
 			else {
-				mode = 4;
+				mode = Exit_text;
 			}
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {

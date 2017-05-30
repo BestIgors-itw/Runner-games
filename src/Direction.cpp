@@ -2,47 +2,47 @@
 
 void Direction_convert(int Direction, float &dx, float &dy, float speed) {
 	switch (Direction) {
-	case 0:
+	case RIGHT:
 		dx = speed;
 		dy = 0;
 		break;
 
-	case 1:
+	case LEFT:
 		dx = -speed;
 		dy = 0;
 		break;
 
-	case 2:
+	case DOWN:
 		dy = speed;
 		dx = 0;
 		break;
 
-	case 3:
+	case UP:
 		dy = -speed;
 		dx = 0;
 		break;
 
-	case 4:
+	case UP_LEFT:
 		dx = -speed;
 		dy = -speed;
 		break;
 
-	case 5:
+	case UP_RIGHT:
 		dx = speed;
 		dy = -speed;
 		break;
 
-	case 6:
+	case DOWN_RIGHT:
 		dx = speed;
 		dy = speed;
 		break;
 
-	case 7:
+	case DOWN_LEFT:
 		dx = -speed;
 		dy = speed;
 		break;
 
-	case 8:
+	case STAY:
 		dx = 0;
 		dy = 0;
 		break;

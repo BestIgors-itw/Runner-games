@@ -4,9 +4,9 @@ int Background::update(float time) {
 	x += dx * time;
 	y += dy * time;
 
-	sprite.setPosition(x, y);
+	sprite.setPosition(x + w / 2, y + h / 2);
 
-	if (y > screen_hight || x + w / 2 < 0) {
+	if (y - h / 2 > screen_hight || x + w / 2 < 0) {
 		life = false;
 	}
 

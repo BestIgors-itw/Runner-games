@@ -4,16 +4,13 @@
 #include "Entity.h"
 #include "Direction.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
 extern sf::Clock game_timer;
 
 class Player : public Entity {
 public:
 	float score, speed, attack_frequency_time, time_between_attack;
 	int health, damage;
-	enum { RIGHT, LEFT, DOWN, UP, UP_LEFT, UP_RIGHT, DOWN_RIGHT, DOWN_LEFT, STAY } direction;
+	int direction;
 	bool is_shot_available, is_shot;
 	Player(sf::Image &image, float X, float Y, int W, int H, float Speed,
 		int Health, float Time_between_attack, int Damage) :

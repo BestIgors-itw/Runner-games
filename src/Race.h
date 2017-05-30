@@ -14,9 +14,6 @@
 #include "Interface.h"
 #include "Player.h"
 
-#define screen_width 1600
-#define screen_hight 900
-
-extern sf::Clock game_timer, animation_timer, background_timer, hedge_timer;
+extern sf::Clock game_timer, Compensating_for_performance_losses_timer, background_timer, hedge_timer;
 
 int Race(sf::RenderWindow & window);
