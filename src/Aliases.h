@@ -15,12 +15,12 @@
 #define Control_text 1
 #define Exit_text 0
 
-#define Scroll_Shooter_background_scale_x float(screen_width) / 275
-#define Scroll_Shooter_background_scale_y float(screen_hight) / 183
-#define Race_background_scale_x float(screen_width) / 275
-#define Race_background_scale_y float(screen_hight) / 183
-#define Shooter_background_scale_x float(screen_width) / 3574
-#define Shooter_background_scale_y float(screen_hight) / 1494
+#define Scroll_Shooter_background_scale_x float(screen_width) / 275.0
+#define Scroll_Shooter_background_scale_y float(screen_hight) / 183.0
+#define Race_background_scale_x float(screen_width) / 275.0
+#define Race_background_scale_y float(screen_hight) / 183.0
+#define Shooter_background_scale_x float(screen_width) / 3574.0
+#define Shooter_background_scale_y float(screen_hight) / 1494.0
 
 #define background_speed 0.6
 
@@ -37,6 +37,9 @@
 #define aim_width 69
 #define aim_hight 100
 
+#define bullet_width 6
+#define bullet_hight 15
+
 #define player_spawn_x 750
 #define player_spawn_y 650
 #define player_width 70
@@ -47,14 +50,13 @@
 #define Shooter_player_time_between_shots 0.5
 #define Scroll_Shooter_player_damage_per_shot 20
 #define Shooter_player_damage_per_shot 20
+#define Effects_player_spawn_x player.x + player.w / 2
+#define Effects_player_spawn_y player.y + player.h / 2
 #define player_shot_1point_x player.x + 15
-#define player_shot_2point_x player.x + 50
+#define player_shot_2point_x player.x + 55 - bullet_width
 #define player_shot_1point_y player.y - bullet_hight
 #define player_shot_2point_y player.y - bullet_hight
 #define player_bullet_speed 1
-
-#define bullet_width 6
-#define bullet_hight 15
 
 #define Scroll_Shooter_effects_shooting_width 35
 #define Scroll_Shooter_effects_shooting_hight 36
@@ -62,9 +64,12 @@
 #define Scroll_Shooter_effects_shooting_exist_time 0.1
 
 #define Shooter_effects_shooting_width 181
-#define Shooter_effects_shooting_hight 161
+#define Shooter_effects_shooting_hight 166
 #define Shooter_effects_shooting_speed 0
 #define Shooter_effects_shooting_exist_time 0.1
+
+#define Effects_spawn_x e->x + e->w / 2
+#define Effects_spawn_y e->y + e->h / 2
 
 #define effects_explosion1_width 67
 #define effects_explosion1_hight 69

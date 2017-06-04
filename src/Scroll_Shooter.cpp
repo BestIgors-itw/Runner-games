@@ -282,7 +282,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 				if (b->getRect().intersects(e->getRect())) {
 					e->health -= b->damage;
 
-					effects.push_back(new Effects(effects_explosion1_i, b->x, b->y, effects_explosion1_width,
+					effects.push_back(new Effects(effects_explosion1_i, b->x + b->w / 2, b->y + b->h / 2, effects_explosion1_width,
 						effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 					player.score += 1;
@@ -300,7 +300,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		{
 			Bullets *b = *it_bullets;
 			if (b->getRect().intersects(player.getRect())) {
-				effects.push_back(new Effects(effects_explosion1_i, b->x, b->y, effects_explosion1_width,
+				effects.push_back(new Effects(effects_explosion1_i, b->x + b->w / 2, b->y + b->h / 2, effects_explosion1_width,
 					effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 				player.health -= b->damage;
@@ -322,7 +322,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		{
 			Enemies_cars *e = *it1_enemies_cars;
 			if (e->getRect().intersects(player.getRect())) {
-				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y, effects_explosion2_width,
+				effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y, effects_explosion2_width,
 					effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 
 				player.health -= e->health;
@@ -372,8 +372,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			}
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
-					effects.push_back(new Effects(effects_explosion2_i, e->x,
-						e->y, effects_explosion2_width, effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
+					effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x,
+						Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
 					delete e;
 				}
