@@ -240,7 +240,7 @@ int Shooter(sf::RenderWindow & window) {
 			if (e->getRect().intersects(player.getRect()) && player.is_shot) {
 				e->health -= player.damage;
 				effects.push_back(new Effects(effects_explosion1_i,
-					Effects_spawn_x, Effects_spawn_y, effects_explosion1_width, effects_explosion1_hight,
+					Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
 					background_speed, LEFT, effects_explosion1_exist_time));
 			}
 		}
