@@ -144,6 +144,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		if (enemy_generate_probability < 0 && enemy_number < 7) {
 			++enemy_number;
+
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
@@ -205,7 +206,7 @@ int Shooter(sf::RenderWindow & window) {
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
 					effects.push_back(new Effects(effects_explosion2_i,
-						e->x, e->y, effects_explosion2_width, effects_explosion2_hight,
+						Effects_spawn_x, Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight,
 						background_speed, LEFT, effects_explosion2_exist_time));
 
 					player.score += 5;
@@ -227,7 +228,7 @@ int Shooter(sf::RenderWindow & window) {
 			player.is_shot_available = false;
 			player.is_shot = true;
 			effects.push_back(new Effects(effects_shooting_i,
-				player.x, player.y, Shooter_effects_shooting_width, Shooter_effects_shooting_hight,
+				Effects_player_spawn_x, Effects_player_spawn_y, Shooter_effects_shooting_width, Shooter_effects_shooting_hight,
 				Shooter_effects_shooting_speed, STAY, Shooter_effects_shooting_exist_time));
 			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 		}
@@ -239,7 +240,7 @@ int Shooter(sf::RenderWindow & window) {
 			if (e->getRect().intersects(player.getRect()) && player.is_shot) {
 				e->health -= player.damage;
 				effects.push_back(new Effects(effects_explosion1_i,
-					e->x, e->y, effects_explosion1_width, effects_explosion1_hight,
+					Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
 					background_speed, LEFT, effects_explosion1_exist_time));
 			}
 		}

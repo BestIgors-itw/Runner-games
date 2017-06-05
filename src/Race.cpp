@@ -183,7 +183,7 @@ int Race(sf::RenderWindow & window) {
 			Hedges *e = *it1_hedges;
 			if (e->getRect().intersects(player.getRect())) {
 				e->life = false;
-				effects.push_back(new Effects(effects_explosion2_i, e->x, e->y,
+				effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y,
 					effects_explosion2_width, effects_explosion2_hight,
 					background_speed, DOWN, effects_explosion2_exist_time));
 

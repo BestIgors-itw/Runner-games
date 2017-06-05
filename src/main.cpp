@@ -20,6 +20,10 @@ int main() {
 
 	window.setFramerateLimit(60);
 
+	window.setVerticalSyncEnabled(1);
+
+	window.setMouseCursorVisible(0);
+
 	while (1) {
 		switch (menu(window)) {
 		case 4:
