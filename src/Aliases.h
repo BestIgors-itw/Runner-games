@@ -34,6 +34,9 @@
 #define DOWN_LEFT 7
 #define STAY 8
 
+#define player_side 1
+#define enemies_side 0
+
 #define aim_width 69
 #define aim_hight 100
 
@@ -54,8 +57,8 @@
 #define Effects_player_spawn_y player.y + player.h / 2
 #define player_shot_1point_x player.x + 15
 #define player_shot_2point_x player.x + 55 - bullet_width
-#define player_shot_1point_y player.y - bullet_hight
-#define player_shot_2point_y player.y - bullet_hight
+#define player_shot_1point_y player.y
+#define player_shot_2point_y player.y
 #define player_bullet_speed 1
 
 #define Scroll_Shooter_effects_shooting_width 35
@@ -70,6 +73,9 @@
 
 #define Effects_spawn_x e->x + e->w / 2
 #define Effects_spawn_y e->y + e->h / 2
+
+#define Effects_bullets_spawn_x b->x + b->w / 2
+#define Effects_bullets_spawn_y b->y + b->h / 2
 
 #define effects_explosion1_width 67
 #define effects_explosion1_hight 69
