@@ -19,7 +19,7 @@
 #define Scroll_Shooter_background_scale_y float(screen_hight) / 183.0
 #define Race_background_scale_x float(screen_width) / 275.0
 #define Race_background_scale_y float(screen_hight) / 183.0
-#define Shooter_background_scale_x float(screen_width) / 3574.0
+#define Shooter_background_scale_x float(screen_width) / 3542.0
 #define Shooter_background_scale_y float(screen_hight) / 1494.0
 
 #define background_speed 0.6
