@@ -64,7 +64,7 @@
 #define Scroll_Shooter_effects_shooting_width 35
 #define Scroll_Shooter_effects_shooting_hight 36
 #define Scroll_Shooter_effects_shooting_speed 0
-#define Scroll_Shooter_effects_shooting_exist_time 0.1
+#define Scroll_Shooter_effects_shooting_exist_time 0.03
 
 #define Shooter_effects_shooting_width 181
 #define Shooter_effects_shooting_hight 166
@@ -146,8 +146,8 @@
 #define Scroll_Shooter_enemy_slage_damage 15
 
 #define enemy_shot_point_x e->x + e->w / 2
-#define enemy_shot_down_point_y e->y + e->h + bullet_hight
-#define enemy_shot_up_point_y e->y - bullet_hight
+#define enemy_shot_down_point_y e->y + e->h
+#define enemy_shot_up_point_y e->y
 #define enemy_bullet_speed 0.5
 
 #define Race_enemy_spawn_x rand() % screen_width

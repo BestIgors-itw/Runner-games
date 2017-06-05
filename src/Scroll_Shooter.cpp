@@ -358,14 +358,14 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 				if (e->direction == DOWN || e->direction == DOWN_LEFT || e->direction == DOWN_LEFT) {
 					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
 						enemy_shot_down_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
-						Scroll_Shooter_effects_shooting_speed, STAY, Scroll_Shooter_effects_shooting_exist_time));
+						Scroll_Shooter_effects_shooting_speed, DOWN, Scroll_Shooter_effects_shooting_exist_time));
 					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_down_point_y, bullet_width, bullet_hight, enemy_bullet_speed, DOWN, e->damage, enemies_side));
 				}
 				if (e->direction == UP || e->direction == UP_LEFT || e->direction == UP_RIGHT) {
 					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
 						enemy_shot_up_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
-						Scroll_Shooter_effects_shooting_speed, STAY, Scroll_Shooter_effects_shooting_exist_time));
+						Scroll_Shooter_effects_shooting_speed, UP, Scroll_Shooter_effects_shooting_exist_time));
 					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_up_point_y, bullet_width, bullet_hight, enemy_bullet_speed, UP, e->damage, enemies_side));
 				}
