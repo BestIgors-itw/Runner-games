@@ -2,13 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
+#include <sstream>
+#include "Player.h"
 
 class Interface : public Entity {
+private:
+	sf::Text text;
 public:
-	Interface(sf::Image &image, float X, float Y, int W, int H) :Entity(image, X, Y, W, H) {
+	Interface(sf::Image &IMAGE, float X, float Y, int W, int H, sf::Text TEXT) :Entity(IMAGE, X, Y, W, H) {
+		sprite.setPosition(x + w / 2, y + h / 2);
+		text = TEXT;
 	}
 
-	virtual ~Interface() {}
-
-	int update(float time);
+	int update(float TIME);
+	int update(float PLAYER_SCORE, float PLAYER_HEALTH, sf::RenderWindow & WINDOW);
 };
+

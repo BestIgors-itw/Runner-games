@@ -62,11 +62,11 @@ int Shooter(sf::RenderWindow & window) {
 	background_s.setTexture(background_t);
 	background_s.setScale(Shooter_background_scale_x, Shooter_background_scale_y);
 
-	sf::Font font;
-	if (!font.loadFromFile("res/font/beer_money.ttf")) {
-		return 0;
-	}
+	sf::Image plate_i;
+	plate_i.loadFromFile("res/images/interface/button.png");
 
+	sf::Font font;
+	font.loadFromFile("res/font/beer_money.ttf");
 	sf::Text text("", font, 50);
 	text.setColor(sf::Color::Black);
 
@@ -74,6 +74,8 @@ int Shooter(sf::RenderWindow & window) {
 	Player player(aim_i, player_spawn_x, player_spawn_y, aim_width, aim_hight,
 		player_speed, player_health, Shooter_player_time_between_shots,
 		Shooter_player_damage_per_shot);
+	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
+		interface_plate_y, interface_plate_width, interface_plate_hight, text);
 
 	std::list<Background*>  background_objects;
 	std::list<Background*>::iterator it_background;
@@ -276,13 +278,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		window.draw(player.sprite);
 
-		std::ostringstream playerScoreString;
-		playerScoreString << player.score;
-		std::ostringstream player_health_string;
-		player_health_string << player.health;
-		text.setString("Score:" + playerScoreString.str() + "\nHealth:" + player_health_string.str());
-		text.setPosition(interface_text_x, interface_text_y);
-		window.draw(text);
+		interface_health_and_score_bar.update(player.score, player.health, window);
 
 		window.display();
 	}

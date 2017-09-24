@@ -1,17 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Direction.h"
+#include "Movable.h"
 
 
-class Background : public Entity {
+class Background : public Movable {
 public:
-	Background(sf::Image &image, float X, float Y, int W, int H, int Direction) :Entity(image, X, Y, W, H) {
-		Direction_convert(Direction, dx, dy, background_speed);
-	}
-
-	virtual ~Background() {}
+	Background(sf::Image &IMAGE, float X, float Y, int W, int H, int DIRECTION) 
+		:Movable(IMAGE, X, Y, W, H, background_speed, DIRECTION) {}
 
 	int update(float time);
 };

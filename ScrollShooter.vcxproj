@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="src\Background.h" />
     <ClInclude Include="src\Bullets.h" />
+    <ClInclude Include="src\Movable.h" />
     <ClInclude Include="src\Scroll_Shooter_Enemies_Cars.h" />
     <ClInclude Include="src\Direction.h" />
     <ClInclude Include="src\Effects.h" />
@@ -42,6 +43,7 @@
   <ItemGroup>
     <ClCompile Include="src\Background.cpp" />
     <ClCompile Include="src\Bullets.cpp" />
+    <ClCompile Include="src\Movable.cpp" />
     <ClCompile Include="src\Scroll_Shooter_Enemies_Cars.cpp" />
     <ClCompile Include="src\Direction.cpp" />
     <ClCompile Include="src\Effects.cpp" />

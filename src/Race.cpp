@@ -60,7 +60,7 @@ int Race(sf::RenderWindow & window) {
 		player_speed, player_health, Scroll_Shooter_player_time_between_shots,
 		Scroll_Shooter_player_damage_per_shot);
 	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
-		interface_plate_y, interface_plate_width, interface_plate_hight);
+		interface_plate_y, interface_plate_width, interface_plate_hight, text);
 
 	std::list<Background*> background_objects;
 	std::list<Background*>::iterator it_background;
@@ -239,16 +239,7 @@ int Race(sf::RenderWindow & window) {
 			window.draw((*it_effects)->sprite);
 		}
 
-		interface_health_and_score_bar.update(Compensating_for_performance_losses_time);
-		window.draw(interface_health_and_score_bar.sprite);
-
-		std::ostringstream playerScoreString;
-		playerScoreString << player.score;
-		std::ostringstream player_health_string;
-		player_health_string << player.health;
-		text.setString("Score:" + playerScoreString.str() + "\nHealth:" + player_health_string.str());
-		text.setPosition(interface_text_x, interface_text_y);
-		window.draw(text);
+		interface_health_and_score_bar.update(player.score, player.health, window);
 
 		window.display();
 	}
