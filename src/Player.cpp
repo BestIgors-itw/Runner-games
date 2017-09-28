@@ -108,16 +108,16 @@ void Player::control() {
 	}
 }
 
-int Player::update(float time) {
+int Player::update(float TIME) {
 	control();
 	Direction_convert(direction, dx, dy, speed);
-	x += dx * time;
-	y += dy * time;
+	x += dx * TIME;
+	y += dy * TIME;
 
 	sprite.setPosition(x + w / 2, y + h / 2);
 
 	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {
-		is_shot_available = true;
+		shot_available = true;
 		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 	}
 
@@ -127,8 +127,8 @@ int Player::update(float time) {
 	return 0;
 }
 
-void Player::change_score(float variable) {
-	score += variable;
+void Player::change_score(float VARIABLE) {
+	score += VARIABLE;
 	if (score < 0) {
 		score = 0;
 	}

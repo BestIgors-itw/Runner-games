@@ -7,7 +7,7 @@ int Unit::update(float time) {
 	if (x + w > screen_width && (direction == DOWN || direction == DOWN_RIGHT)) {
 		direction = DOWN_LEFT;
 	}
-	if (x < 0 && (direction == UP || direction == UP_RIGHT)) {
+	if (x < 0 && (direction == UP || direction == UP_LEFT)) {
 		direction = UP_RIGHT;
 	}
 	if (x + w > screen_width && (direction == UP || direction == UP_RIGHT)) {
@@ -37,4 +37,28 @@ int Unit::update(float time) {
 		return 1;
 	}
 	return 0;
+}
+
+void Unit::change_health(float VARIABLE) {
+	health += VARIABLE;
+	if (health < 0) {
+		health = 0;
+	}
+}
+
+int Unit::return_health() {
+	return health;
+}
+
+int Unit::return_damage() {
+	return damage;
+}
+
+void Unit::shoot() {
+	shot_available = false;
+	attack_frequency_time = game_timer.getElapsedTime().asSeconds();
+}
+
+bool Unit::is_shot_available() {
+	return shot_available;
 }

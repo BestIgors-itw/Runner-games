@@ -161,7 +161,7 @@ int Race(sf::RenderWindow & window) {
 					effects_explosion2_width, effects_explosion2_hight,
 					background_speed, DOWN, effects_explosion2_exist_time));
 
-				player.health -= e->return_health();
+				player.change_health(-e->return_health());
 
 				player.change_score(-5);
 			}
@@ -207,7 +207,7 @@ int Race(sf::RenderWindow & window) {
 			window.draw((*it_effects)->sprite);
 		}
 
-		interface_health_and_score_bar.update(player.return_score(), player.health, window);
+		interface_health_and_score_bar.update(player.return_score(), player.return_health(), window);
 
 		window.display();
 	}

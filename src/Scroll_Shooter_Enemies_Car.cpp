@@ -1,6 +1,6 @@
 #include "Scroll_Shooter_Enemies_Car.h"
 
-int Enemies_cars::update(float time) {
+int Enemies_cars::update(float TIME) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 1) {
 		if (direction == DOWN || direction == DOWN_LEFT || direction == DOWN_RIGHT) {
 			int r = rand() % 3;
@@ -39,7 +39,7 @@ int Enemies_cars::update(float time) {
 	if (x + w > screen_width && (direction == DOWN || direction == DOWN_RIGHT)) {
 		direction = DOWN_LEFT;
 	}
-	if (x < 0 && (direction == UP || direction == UP_RIGHT)) {
+	if (x < 0 && (direction == UP || direction == UP_LEFT)) {
 		direction = UP_RIGHT;
 	}
 	if (x + w > screen_width && (direction == UP || direction == UP_RIGHT)) {
@@ -51,8 +51,8 @@ int Enemies_cars::update(float time) {
 	}
 
 	Direction_convert(direction, dx, dy, speed);
-	x += dx * time;
-	y += dy * time;
+	x += dx * TIME;
+	y += dy * TIME;
 	sprite.setPosition(x + w / 2, y + h / 2);
 
 	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {

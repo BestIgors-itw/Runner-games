@@ -7,14 +7,14 @@
 extern sf::Clock game_timer;
 
 class Unit : public Movable {
-public:
-	float attack_frequency_time, time_between_attack;
+protected:
 	int health, damage;
-	bool is_shot_available, is_shot;
+	bool shot_available;
+	float attack_frequency_time, time_between_attack;
+public:
 	Unit(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
 		float DIRECTION, int HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
-		:Movable(IMAGE, X, Y, W, H, SPEED, DIRECTION), is_shot_available(true),
-		is_shot(false) {
+		:Movable(IMAGE, X, Y, W, H, SPEED, DIRECTION), shot_available(true) {
 		health = HEALTH;
 
 		time_between_attack = TIME_BETWEEN_ATTACK;
@@ -23,4 +23,14 @@ public:
 	}
 
 	int update(float time);
+
+	void change_health(float VARIABLE);
+
+	int return_health();
+
+	int return_damage();
+
+	void shoot();
+
+	bool is_shot_available();
 };

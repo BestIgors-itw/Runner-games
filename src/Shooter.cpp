@@ -96,8 +96,7 @@ int Shooter(sf::RenderWindow & window) {
 	float enemy_time;
 	int enemy_number = 0;
 
-	while (window.isOpen())
-	{
+	while (window.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
@@ -181,8 +180,7 @@ int Shooter(sf::RenderWindow & window) {
 		player.change_score(game_time - score_time);
 		score_time = game_time;
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end();)
-		{
+		for (it_background = background_objects.begin(); it_background != background_objects.end();) {
 			Background *b = *it_background;
 			b->update(Compensating_for_performance_losses_time);
 			if (b->life == false) {
@@ -192,15 +190,14 @@ int Shooter(sf::RenderWindow & window) {
 			else ++it_background;
 		}
 
-		for (it_enemies = enemies.begin(); it_enemies != enemies.end();)
-		{
+		for (it_enemies = enemies.begin(); it_enemies != enemies.end();) {
 			Shooter_enemies_cars *e = *it_enemies;
 			if (e->update(Compensating_for_performance_losses_time)) {
-				player.health -= e->damage;
+				player.change_health(-e->return_damage());
 				player.change_score(-5);
 			}
-			if (e->life == false || e->health <= 0) {
-				if (e->health <= 0) {
+			if (e->life == false || e->return_health() <= 0) {
+				if (e->return_health() <= 0) {
 					effects.push_back(new Effect(effects_explosion2_i,
 						Effects_spawn_x, Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight,
 						background_speed, LEFT, effects_explosion2_exist_time));
@@ -220,31 +217,26 @@ int Shooter(sf::RenderWindow & window) {
 			else ++it_enemies;
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.is_shot_available) {
-			player.is_shot_available = false;
-			player.is_shot = true;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.is_shot_available()) {
+			player.shoot();
+
 			effects.push_back(new Effect(effects_shooting_i,
 				Effects_player_spawn_x, Effects_player_spawn_y, Shooter_effects_shooting_width, Shooter_effects_shooting_hight,
 				Shooter_effects_shooting_speed, STAY, Shooter_effects_shooting_exist_time));
-			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
-		}
+			
+			for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies) {
+				Shooter_enemies_cars *e = *it_enemies;
 
-		for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies)
-		{
-			Shooter_enemies_cars *e = *it_enemies;
-
-			if (e->getRect().intersects(player.getRect()) && player.is_shot) {
-				e->health -= player.damage;
-				effects.push_back(new Effect(effects_explosion1_i,
-					Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
-					background_speed, LEFT, effects_explosion1_exist_time));
+				if (e->getRect().intersects(player.getRect())) {
+					e->change_health(-player.return_damage());
+					effects.push_back(new Effect(effects_explosion1_i,
+						Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
+						background_speed, LEFT, effects_explosion1_exist_time));
+				}
 			}
 		}
 
-		player.is_shot = false;
-
-		for (it_effects = effects.begin(); it_effects != effects.end();)
-		{
+		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effect *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
 			if (e->life == false) {
@@ -255,24 +247,21 @@ int Shooter(sf::RenderWindow & window) {
 		}
 
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
-		{
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
 			window.draw((*it_background)->sprite);
 		}
 
-		for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies)
-		{
+		for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies) {
 			window.draw((*it_enemies)->sprite);
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
-		{
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
 			window.draw((*it_effects)->sprite);
 		}
 
 		window.draw(player.sprite);
 
-		interface_health_and_score_bar.update(player.return_score(), player.health, window);
+		interface_health_and_score_bar.update(player.return_score(), player.return_health(), window);
 
 		window.display();
 	}
