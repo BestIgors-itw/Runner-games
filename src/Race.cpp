@@ -130,7 +130,7 @@ int Race(sf::RenderWindow & window) {
 
 		generate_hedge(hedge_generate_probability, hedges, game_time, hedge_timer, hedges_deadcars1_i, hedges_deadcars2_i);
 
-		player.score = player.score + game_time - score_time;
+		player.change_score(game_time - score_time);
 		score_time = game_time;
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
@@ -163,10 +163,7 @@ int Race(sf::RenderWindow & window) {
 
 				player.health -= e->return_health();
 
-				if (player.score > 5) {
-					player.score -= 5;
-				}
-				player.score = 0;
+				player.change_score(-5);
 			}
 		}
 
@@ -210,7 +207,7 @@ int Race(sf::RenderWindow & window) {
 			window.draw((*it_effects)->sprite);
 		}
 
-		interface_health_and_score_bar.update(player.score, player.health, window);
+		interface_health_and_score_bar.update(player.return_score(), player.health, window);
 
 		window.display();
 	}

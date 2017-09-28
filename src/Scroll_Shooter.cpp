@@ -243,8 +243,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 		}
 
-		game_time = game_timer.getElapsedTime().asSeconds();
-		player.score = player.score + game_time - score_time;
+		player.change_score(game_time - score_time);
 		score_time = game_time;
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end();)
@@ -285,7 +284,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					effects.push_back(new Effect(effects_explosion1_i, Effects_bullets_spawn_x, Effects_bullets_spawn_y, effects_explosion1_width,
 						effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
-					player.score += 1;
+					player.change_score(1);
 					it_bullets = bullets.erase(it_bullets);
 					delete b;
 					break;
@@ -305,10 +304,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 				player.health -= b->damage;
 
-				if (player.score > 5) {
-					player.score -= 5;
-				}
-				player.score = 0;
+				player.change_score(-5);
 
 				it_bullets = bullets.erase(it_bullets);
 				delete b;
@@ -327,10 +323,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 				player.health -= e->health;
 
-				if (player.score > 5) {
-					player.score -= 5;
-				}
-				player.score = 0;
+				player.change_score(-5);
 
 				it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
 				delete e;
@@ -420,7 +413,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		window.draw(player.sprite);
 
-		interface_health_and_score_bar.update(player.score, player.health, window);
+		interface_health_and_score_bar.update(player.return_score(), player.health, window);
 
 		window.display();
 	}

@@ -6,8 +6,9 @@
 extern sf::Clock game_timer;
 
 class Player : public Unit {
-public:
+private:
 	float score;
+public:
 	Player(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
 		int HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
 		:Unit(IMAGE, X, Y, W, H, SPEED, STAY, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE),
@@ -18,4 +19,7 @@ public:
 
 	int update(float time);
 
+	void change_score(float variable);
+
+	float return_score();
 };

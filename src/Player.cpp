@@ -126,3 +126,14 @@ int Player::update(float time) {
 	}
 	return 0;
 }
+
+void Player::change_score(float variable) {
+	score += variable;
+	if (score < 0) {
+		score = 0;
+	}
+}
+
+float Player::return_score() {
+	return score;
+}

@@ -178,8 +178,7 @@ int Shooter(sf::RenderWindow & window) {
 			enemy_timer.restart();
 		}
 
-		game_time = game_timer.getElapsedTime().asSeconds();
-		player.score = player.score + game_time - score_time;
+		player.change_score(game_time - score_time);
 		score_time = game_time;
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end();)
@@ -198,12 +197,7 @@ int Shooter(sf::RenderWindow & window) {
 			Shooter_enemies_cars *e = *it_enemies;
 			if (e->update(Compensating_for_performance_losses_time)) {
 				player.health -= e->damage;
-				if (player.score > 5) {
-					player.score -= 5;
-				}
-				else {
-					player.score = 0;
-				}
+				player.change_score(-5);
 			}
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
@@ -211,7 +205,7 @@ int Shooter(sf::RenderWindow & window) {
 						Effects_spawn_x, Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight,
 						background_speed, LEFT, effects_explosion2_exist_time));
 
-					player.score += 5;
+					player.change_score(5);
 
 					it_enemies = enemies.erase(it_enemies);
 					delete e;
@@ -278,7 +272,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		window.draw(player.sprite);
 
-		interface_health_and_score_bar.update(player.score, player.health, window);
+		interface_health_and_score_bar.update(player.return_score(), player.health, window);
 
 		window.display();
 	}
