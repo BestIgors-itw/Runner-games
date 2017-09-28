@@ -6,8 +6,9 @@
 extern sf::Clock game_timer;
 
 class Enemies_cars : public Unit {
-public:
+private:
 	float moving_timer;
+public:
 	Enemies_cars(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
 		float DIRECTION, float HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
 		:Unit(IMAGE, X, Y, W, H, SPEED, DIRECTION, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE) {

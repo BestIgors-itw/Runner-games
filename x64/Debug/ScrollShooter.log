@@ -2,13 +2,12 @@
   Scroll_Shooter.cpp
   Создание кода...
   Компиляция...
-  Shooter.cpp
+  main.cpp
+  Scroll_Shooter_Enemies_Car.cpp
   Создание кода...
   Компиляция...
-  main.cpp
   Shooter_enemies_car.cpp
+  Shooter.cpp
   Создание кода...
-  Пропуск... (изменения не обнаружены)
-  Scroll_Shooter_Enemies_Car.cpp
   ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\Runner games.exe
   ScrollShooter.vcxproj -> D:\Runner-games\x64\Debug\Runner games.pdb (Partial PDB)
