@@ -1,6 +1,6 @@
-#include "Effects.h"
+#include "Effect.h"
 
-int Effects::update(float time) {
+int Effect::update(float time) {
 	x += dx * time;
 	y += dy * time;
 	sprite.setPosition(x, y);

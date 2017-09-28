@@ -82,7 +82,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 
 	Player player(player_i, player_spawn_x, player_spawn_y, player_width, player_hight,
-		player_speed, player_health, Scroll_Shooter_player_time_between_shots,
+		player_speed, player_spawn_health, Scroll_Shooter_player_time_between_shots,
 		Scroll_Shooter_player_damage_per_shot);
 	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
 		interface_plate_y, interface_plate_width, interface_plate_hight, text);
@@ -90,11 +90,11 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 	std::list<Background*>  background_objects;
 	std::list<Background*>::iterator it_background;
 
-	std::list<Effects*>  effects;
-	std::list<Effects*>::iterator it_effects;
+	std::list<Effect*>  effects;
+	std::list<Effect*>::iterator it_effects;
 
-	std::list<Bullets*>  bullets;
-	std::list<Bullets*>::iterator it_bullets;
+	std::list<Bullet*>  bullets;
+	std::list<Bullet*>::iterator it_bullets;
 
 	std::list<Enemies_cars*>  enemies_cars;
 	std::list<Enemies_cars*>::iterator it1_enemies_cars, it2_enemies_cars;
@@ -224,18 +224,18 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		}
 
 		if (player.is_shot_available == true) {
-			effects.push_back(new Effects(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_i,
 				player_shot_1point_x, player_shot_1point_y, Scroll_Shooter_effects_shooting_width,
 				Scroll_Shooter_effects_shooting_hight, Scroll_Shooter_effects_shooting_speed, STAY,
 				Scroll_Shooter_effects_shooting_exist_time));
-			bullets.push_back(new Bullets(bullet_bullet_i,
+			bullets.push_back(new Bullet(bullet_bullet_i,
 				player_shot_1point_x, player_shot_1point_y, bullet_width, bullet_hight,
 				player_bullet_speed, UP, player.damage, player_side));
-			effects.push_back(new Effects(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_i,
 				player_shot_2point_x, player_shot_2point_y, Scroll_Shooter_effects_shooting_width,
 				Scroll_Shooter_effects_shooting_hight, Scroll_Shooter_effects_shooting_speed, STAY,
 				Scroll_Shooter_effects_shooting_exist_time));
-			bullets.push_back(new Bullets(bullet_bullet_i,
+			bullets.push_back(new Bullet(bullet_bullet_i,
 				player_shot_2point_x, player_shot_1point_y, bullet_width, bullet_hight,
 				player_bullet_speed, UP, player.damage, player_side));
 
@@ -275,14 +275,14 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();)
 		{
-			Bullets *b = *it_bullets;
+			Bullet *b = *it_bullets;
 			for (it1_enemies_cars = enemies_cars.begin(); it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars)
 			{
 				Enemies_cars *e = *it1_enemies_cars;
 				if (b->getRect().intersects(e->getRect()) && b->side == player_side) {
 					e->health -= b->damage;
 
-					effects.push_back(new Effects(effects_explosion1_i, Effects_bullets_spawn_x, Effects_bullets_spawn_y, effects_explosion1_width,
+					effects.push_back(new Effect(effects_explosion1_i, Effects_bullets_spawn_x, Effects_bullets_spawn_y, effects_explosion1_width,
 						effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 					player.score += 1;
@@ -298,9 +298,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();) 
 		{
-			Bullets *b = *it_bullets;
+			Bullet *b = *it_bullets;
 			if (b->getRect().intersects(player.getRect()) && b->side == enemies_side) {
-				effects.push_back(new Effects(effects_explosion1_i, b->x + b->w / 2, b->y + b->h / 2, effects_explosion1_width,
+				effects.push_back(new Effect(effects_explosion1_i, b->x + b->w / 2, b->y + b->h / 2, effects_explosion1_width,
 					effects_explosion1_hight, background_speed, DOWN, effects_explosion1_exist_time));
 
 				player.health -= b->damage;
@@ -322,7 +322,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		{
 			Enemies_cars *e = *it1_enemies_cars;
 			if (e->getRect().intersects(player.getRect())) {
-				effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y, effects_explosion2_width,
+				effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y, effects_explosion2_width,
 					effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 
 				player.health -= e->health;
@@ -342,7 +342,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();)
 		{
-			Bullets *b = *it_bullets;
+			Bullet *b = *it_bullets;
 			b->update(Compensating_for_performance_losses_time);
 			if (b->life == false) {
 				it_bullets = bullets.erase(it_bullets);
@@ -356,23 +356,23 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Enemies_cars *e = *it1_enemies_cars;
 			if (e->update(Compensating_for_performance_losses_time)) {
 				if (e->direction == DOWN || e->direction == DOWN_LEFT || e->direction == DOWN_LEFT) {
-					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
+					effects.push_back(new Effect(effects_shooting_i, enemy_shot_point_x,
 						enemy_shot_down_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
 						Scroll_Shooter_effects_shooting_speed, DOWN, Scroll_Shooter_effects_shooting_exist_time));
-					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
+					bullets.push_back(new Bullet(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_down_point_y, bullet_width, bullet_hight, enemy_bullet_speed, DOWN, e->damage, enemies_side));
 				}
 				if (e->direction == UP || e->direction == UP_LEFT || e->direction == UP_RIGHT) {
-					effects.push_back(new Effects(effects_shooting_i, enemy_shot_point_x,
+					effects.push_back(new Effect(effects_shooting_i, enemy_shot_point_x,
 						enemy_shot_up_point_y, Scroll_Shooter_effects_shooting_width, Scroll_Shooter_effects_shooting_hight,
 						Scroll_Shooter_effects_shooting_speed, UP, Scroll_Shooter_effects_shooting_exist_time));
-					bullets.push_back(new Bullets(bullet_bullet_i, enemy_shot_point_x,
+					bullets.push_back(new Bullet(bullet_bullet_i, enemy_shot_point_x,
 						enemy_shot_up_point_y, bullet_width, bullet_hight, enemy_bullet_speed, UP, e->damage, enemies_side));
 				}
 			}
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
-					effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x,
+					effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x,
 						Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight, background_speed, DOWN, effects_explosion2_exist_time));
 					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
 					delete e;
@@ -389,7 +389,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		for (it_effects = effects.begin(); it_effects != effects.end();)
 		{
-			Effects *e = *it_effects;
+			Effect *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
 			if (e->life == false) {
 				it_effects = effects.erase(it_effects);

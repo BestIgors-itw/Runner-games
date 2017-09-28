@@ -1,4 +1,4 @@
-#include "Scroll_Shooter_Enemies_Cars.h"
+#include "Scroll_Shooter_Enemies_Car.h"
 
 int Enemies_cars::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 1) {

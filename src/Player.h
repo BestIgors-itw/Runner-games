@@ -1,32 +1,20 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Direction.h"
+#include "Unit.h"
 
 extern sf::Clock game_timer;
 
-class Player : public Entity {
+class Player : public Unit {
 public:
-	float score, speed, attack_frequency_time, time_between_attack;
-	int health, damage;
-	int direction;
-	bool is_shot_available, is_shot;
-	Player(sf::Image &image, float X, float Y, int W, int H, float Speed,
-		int Health, float Time_between_attack, int Damage) :
-		Entity(image, X, Y, W, H),
-		score(0.0), direction(STAY), is_shot_available(true), is_shot(false) {
-		health = Health;
-		speed = Speed;
-
-		time_between_attack = Time_between_attack;
-		damage = Damage;
-		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
+	float score;
+	Player(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
+		int HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
+		:Unit(IMAGE, X, Y, W, H, SPEED, STAY, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE),
+		score(0.0) {
 	}
 
 	void control();
-
-	virtual ~Player() {}
 
 	int update(float time);
 

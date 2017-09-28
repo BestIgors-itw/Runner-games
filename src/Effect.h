@@ -1,21 +1,18 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Direction.h"
+#include "Movable.h"
 
 extern sf::Clock game_timer;
 
-class Effects : public Entity {
+class Effect : public Movable {
 public:
-	float timer, exist_time, dx, dy;
-	Effects(sf::Image &image, float X, float Y, int W, int H, float Speed, float Direction, float Exist_time) :Entity(image, X, Y, W, H) {
-		Direction_convert(Direction, dx, dy, Speed);
+	float timer, exist_time;
+	Effect(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED, float DIRECTION, float EXIST_TIME)
+		:Movable(IMAGE, X, Y, W, H, SPEED, DIRECTION) {
 		timer = game_timer.getElapsedTime().asSeconds();
-		exist_time = Exist_time;
+		exist_time = EXIST_TIME;
 	}
-
-	virtual ~Effects() {}
 
 	int update(float time);
 };

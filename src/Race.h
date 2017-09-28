@@ -6,10 +6,10 @@
 #include <sstream>
 #include <ctime>
 #include "Background.h"
-#include "Bullets.h"
+#include "Bullet.h"
 #include "Direction.h"
-#include "Effects.h"
-#include "Hedges.h"
+#include "Effect.h"
+#include "Hedge.h"
 #include "Entity.h"
 #include "Interface.h"
 #include "Player.h"

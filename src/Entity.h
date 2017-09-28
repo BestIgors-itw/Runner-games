@@ -1,11 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#pragma once
+
+#include <SFML/Graphics.hpp>
+#include <list>
 #include "Aliases.h"
 
-class Entity{
+class Entity {
 public:
-	float x, y, dx, dy;
+	float x, y;
 	int w, h;
 	bool life;
 	sf::Texture texture;
@@ -15,14 +19,14 @@ public:
 		y = Y;
 		w = W;
 		h = H;
-		dx = 0;
-		dy = 0;
 
 		life = true;
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
 		sprite.setOrigin(w / 2, h / 2);
 	}
+
+	virtual ~Entity() {}
 
 	virtual int update(float time) = 0;
 

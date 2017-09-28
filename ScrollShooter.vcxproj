@@ -20,35 +20,36 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Background.h" />
-    <ClInclude Include="src\Bullets.h" />
+    <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Movable.h" />
-    <ClInclude Include="src\Scroll_Shooter_Enemies_Cars.h" />
+    <ClInclude Include="src\Scroll_Shooter_Enemies_Car.h" />
     <ClInclude Include="src\Direction.h" />
-    <ClInclude Include="src\Effects.h" />
+    <ClInclude Include="src\Effect.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\Aliases.h" />
     <ClInclude Include="src\Menu.h" />
     <ClInclude Include="src\Race.h" />
-    <ClInclude Include="src\Hedges.h" />
+    <ClInclude Include="src\Hedge.h" />
     <ClInclude Include="src\Interface.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\Scroll_Shooter.h" />
     <ClInclude Include="src\Shooter.h" />
-    <ClInclude Include="src\Shooter_enemies_cars.h" />
+    <ClInclude Include="src\Shooter_enemies_car.h" />
+    <ClInclude Include="src\Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\ScrollShooter.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Background.cpp" />
-    <ClCompile Include="src\Bullets.cpp" />
+    <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Movable.cpp" />
-    <ClCompile Include="src\Scroll_Shooter_Enemies_Cars.cpp" />
+    <ClCompile Include="src\Scroll_Shooter_Enemies_Car.cpp" />
     <ClCompile Include="src\Direction.cpp" />
-    <ClCompile Include="src\Effects.cpp" />
+    <ClCompile Include="src\Effect.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Hedges.cpp" />
+    <ClCompile Include="src\Hedge.cpp" />
     <ClCompile Include="src\Interface.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Menu.cpp" />
@@ -56,7 +57,8 @@
     <ClCompile Include="src\Race.cpp" />
     <ClCompile Include="src\Scroll_Shooter.cpp" />
     <ClCompile Include="src\Shooter.cpp" />
-    <ClCompile Include="src\Shooter_enemies_cars.cpp" />
+    <ClCompile Include="src\Shooter_enemies_car.cpp" />
+    <ClCompile Include="src\Unit.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

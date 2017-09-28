@@ -72,7 +72,7 @@ int Shooter(sf::RenderWindow & window) {
 
 
 	Player player(aim_i, player_spawn_x, player_spawn_y, aim_width, aim_hight,
-		player_speed, player_health, Shooter_player_time_between_shots,
+		player_speed, player_spawn_health, Shooter_player_time_between_shots,
 		Shooter_player_damage_per_shot);
 	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
 		interface_plate_y, interface_plate_width, interface_plate_hight, text);
@@ -80,8 +80,8 @@ int Shooter(sf::RenderWindow & window) {
 	std::list<Background*>  background_objects;
 	std::list<Background*>::iterator it_background;
 
-	std::list<Effects*>  effects;
-	std::list<Effects*>::iterator it_effects;
+	std::list<Effect*>  effects;
+	std::list<Effect*>::iterator it_effects;
 
 	std::list<Shooter_enemies_cars*>  enemies;
 	std::list<Shooter_enemies_cars*>::iterator it_enemies;
@@ -207,7 +207,7 @@ int Shooter(sf::RenderWindow & window) {
 			}
 			if (e->life == false || e->health <= 0) {
 				if (e->health <= 0) {
-					effects.push_back(new Effects(effects_explosion2_i,
+					effects.push_back(new Effect(effects_explosion2_i,
 						Effects_spawn_x, Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight,
 						background_speed, LEFT, effects_explosion2_exist_time));
 
@@ -229,7 +229,7 @@ int Shooter(sf::RenderWindow & window) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && player.is_shot_available) {
 			player.is_shot_available = false;
 			player.is_shot = true;
-			effects.push_back(new Effects(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_i,
 				Effects_player_spawn_x, Effects_player_spawn_y, Shooter_effects_shooting_width, Shooter_effects_shooting_hight,
 				Shooter_effects_shooting_speed, STAY, Shooter_effects_shooting_exist_time));
 			player.attack_frequency_time = game_timer.getElapsedTime().asSeconds();
@@ -241,7 +241,7 @@ int Shooter(sf::RenderWindow & window) {
 
 			if (e->getRect().intersects(player.getRect()) && player.is_shot) {
 				e->health -= player.damage;
-				effects.push_back(new Effects(effects_explosion1_i,
+				effects.push_back(new Effect(effects_explosion1_i,
 					Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
 					background_speed, LEFT, effects_explosion1_exist_time));
 			}
@@ -251,7 +251,7 @@ int Shooter(sf::RenderWindow & window) {
 
 		for (it_effects = effects.begin(); it_effects != effects.end();)
 		{
-			Effects *e = *it_effects;
+			Effect *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
 			if (e->life == false) {
 				it_effects = effects.erase(it_effects);

@@ -1,34 +1,22 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Direction.h"
+#include "Unit.h"
 
 extern sf::Clock game_timer, moving_timer;
 
-class Shooter_enemies_cars : public Entity {
+class Shooter_enemies_cars : public Unit {
 public:
-	float speed, health, moving_timer, attack_frequency_time, time_between_attack, damage;
-	int direction;
+	float moving_timer;
 
-	Shooter_enemies_cars(sf::Image &image, float X, float Y, int W, int H, float Speed,
-		int Direction, float Health, float Time_between_attack, float Damage)
-		:Entity(image, X, Y, W, H) {
-		direction = Direction;
-		speed = Speed;
-		Direction_convert(direction, dx, dy, speed);
-
-		health = Health;
-
-		time_between_attack = Time_between_attack;
-		damage = Damage;
-		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
+	Shooter_enemies_cars(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
+		int DIRECTION, float HEALTH, float TIME_BETWEEN_ATTACK, float DAMAGE)
+		:Unit(IMAGE, X, Y, W, H, SPEED, DIRECTION, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE) {
 
 		moving_timer = attack_frequency_time;
-
 	};
 
-	virtual ~Shooter_enemies_cars (){}
+	virtual ~Shooter_enemies_cars() {}
 
 	int update(float time);
 };

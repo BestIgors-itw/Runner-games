@@ -1,20 +1,17 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
-#include "Direction.h"
+#include "Movable.h"
 
-class Bullets : public Entity {
+class Bullet : public Movable {
 public:
-	float dx, dy, damage;
+	float damage;
 	bool side;
-	Bullets(sf::Image &image, float X, float Y, int W, int H, float Speed, float Direction, float Damage, bool Side) :Entity(image, X, Y, W, H) {
-		Direction_convert(Direction, dx, dy, Speed);
-		damage = Damage;
-		side = Side;
+	Bullet(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED, float DIRECTION, float DAMAGE, bool SIDE)
+		:Movable(IMAGE, X, Y, W, H, SPEED, DIRECTION) {
+		damage = DAMAGE;
+		side = SIDE;
 	}
-
-	virtual ~Bullets() {}
 
 	int update(float time);
 };

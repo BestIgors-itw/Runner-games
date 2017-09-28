@@ -57,7 +57,7 @@ int Race(sf::RenderWindow & window) {
 
 
 	Player player(player_i, player_spawn_x, player_spawn_y, player_width, player_hight,
-		player_speed, player_health, Scroll_Shooter_player_time_between_shots,
+		player_speed, player_spawn_health, Scroll_Shooter_player_time_between_shots,
 		Scroll_Shooter_player_damage_per_shot);
 	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
 		interface_plate_y, interface_plate_width, interface_plate_hight, text);
@@ -65,36 +65,37 @@ int Race(sf::RenderWindow & window) {
 	std::list<Background*> background_objects;
 	std::list<Background*>::iterator it_background;
 
-	std::list<Effects*> effects;
-	std::list<Effects*>::iterator it_effects;
+	std::list<Effect*> effects;
+	std::list<Effect*>::iterator it_effects;
 
-	std::list<Hedges*> hedges;
-	std::list<Hedges*>::iterator it1_hedges, it2_hedges;
+	std::list<Hedge*> hedges;
+	std::list<Hedge*>::iterator it1_hedges, it2_hedges;
 
 	srand(time(NULL));
 
 	float game_time = game_timer.getElapsedTime().asSeconds();
 	float score_time = game_time;
+
 	float hedge_generate_probability = Race_game_difficulty;
+	float hedge_time;
+
 	float background_object_generate_probability = Race_background_object_probability;
 	float background_time;
-	float hedge_time;
+
+	float Compensating_for_performance_losses_time;
 
 	while (window.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
 
-		float Compensating_for_performance_losses_time = Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
+		Compensating_for_performance_losses_time = Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
 		Compensating_for_performance_losses_timer.restart();
 		Compensating_for_performance_losses_time = Compensating_for_performance_losses_coefficient;
 
 		if (player.update(Compensating_for_performance_losses_time)) {
 			break;
 		}
-
-		window.clear();
-		window.draw(background_s);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 		background_time = background_timer.getElapsedTime().asSeconds();
@@ -127,41 +128,17 @@ int Race(sf::RenderWindow & window) {
 
 		hedge_generate_probability = hedge_generate_probability - hedge_time * 10 - rand() % 100;
 
-		if (hedge_generate_probability < 0) {
-			int r = rand() % 2;
-			switch (r) {
-			case 0:
-				hedges.push_back(new Hedges(hedges_deadcars1_i,
-					Race_enemy_spawn_x, Race_enemy_spawn_y,
-					Race_hedges_deadcars1_width, Race_hedges_deadcars1_hight,
-					DOWN, Race_hedges_deadcars1_health));
-				break;
-			case 1:
-				hedges.push_back(new Hedges(hedges_deadcars2_i,
-					Race_enemy_spawn_x, Race_enemy_spawn_y,
-					Race_hedges_deadcars2_width, Race_hedges_deadcars2_hight,
-					DOWN, Race_hedges_deadcars2_health));
-				break;
-			}
-
-			hedge_generate_probability = Race_game_difficulty - game_time * 25;
-			if (hedge_generate_probability < Race_max_game_difficulty) {
-				hedge_generate_probability = Race_max_game_difficulty;
-			}
-			hedge_timer.restart();
-		}
+		generate_hedge(hedge_generate_probability, hedges, game_time, hedge_timer, hedges_deadcars1_i, hedges_deadcars2_i);
 
 		player.score = player.score + game_time - score_time;
 		score_time = game_time;
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
-		{
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
 			Background *b = *it_background;
 			b->update(Compensating_for_performance_losses_time);
 		}
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end();)
-		{
+		for (it_background = background_objects.begin(); it_background != background_objects.end();) {
 			Background *b = *it_background;
 			if (b->life == false) {
 				it_background = background_objects.erase(it_background);
@@ -172,23 +149,20 @@ int Race(sf::RenderWindow & window) {
 			}
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
-		{
-			Hedges *e = *it1_hedges;
-			e->update(Compensating_for_performance_losses_time);
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
+			(*it1_hedges)->update(Compensating_for_performance_losses_time);
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
-		{
-			Hedges *e = *it1_hedges;
-			if (e->getRect().intersects(player.getRect())) {
-				e->life = false;
-				effects.push_back(new Effects(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y,
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
+			Hedge *e = *it1_hedges;
+			if ((*it1_hedges)->getRect().intersects(player.getRect())) {
+				(*it1_hedges)->life = false;
+				effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y,
 					effects_explosion2_width, effects_explosion2_hight,
 					background_speed, DOWN, effects_explosion2_exist_time));
 
-				player.health -= e->health;
-				
+				player.health -= e->return_health();
+
 				if (player.score > 5) {
 					player.score -= 5;
 				}
@@ -196,9 +170,8 @@ int Race(sf::RenderWindow & window) {
 			}
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();)
-		{
-			Hedges *e = *it1_hedges;
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();) {
+			Hedge *e = *it1_hedges;
 			if (e->life == false) {
 				it1_hedges = hedges.erase(it1_hedges);
 				delete e;
@@ -206,15 +179,13 @@ int Race(sf::RenderWindow & window) {
 			else ++it1_hedges;
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
-		{
-			Effects *e = *it_effects;
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
+			Effect *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end();)
-		{
-			Effects *e = *it_effects;
+		for (it_effects = effects.begin(); it_effects != effects.end();) {
+			Effect *e = *it_effects;
 			if (e->life == false) {
 				it_effects = effects.erase(it_effects);
 				delete e;
@@ -222,20 +193,20 @@ int Race(sf::RenderWindow & window) {
 			else ++it_effects;
 		}
 
-		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background)
-		{
+		window.clear();
+		window.draw(background_s);
+
+		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
 			window.draw((*it_background)->sprite);
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges)
-		{
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
 			window.draw((*it1_hedges)->sprite);
 		}
 
 		window.draw(player.sprite);
 
-		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects)
-		{
+		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
 			window.draw((*it_effects)->sprite);
 		}
 

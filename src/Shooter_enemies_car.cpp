@@ -1,4 +1,4 @@
-#include "Shooter_enemies_cars.h"
+#include "Shooter_enemies_car.h"
 
 #define screen_width 1600
 #define screen_hight 900
@@ -36,16 +36,16 @@ int Shooter_enemies_cars::update(float time) {
 
 		moving_timer = game_timer.getElapsedTime().asSeconds();
 	}
-	if (y + h > screen_hight && (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT)) {
+	if (y + h > screen_hight && (direction == RIGHT || direction == DOWN_RIGHT)) {
 		direction = UP_RIGHT;
 	}
-	if (y < screen_hight - 400 && (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT)) {
+	if (y < screen_hight - 400 && (direction == RIGHT || direction == UP_RIGHT)) {
 		direction = DOWN_RIGHT;
 	}
-	if (y + h > screen_hight && (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT)) {
+	if (y + h > screen_hight && (direction == LEFT || direction == DOWN_LEFT)) {
 		direction = UP_LEFT;
 	}
-	if (y < screen_hight - 400 && (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT)) {
+	if (y < screen_hight - 400 && (direction == LEFT || direction == UP_LEFT)) {
 		direction = DOWN_LEFT;
 	}
 

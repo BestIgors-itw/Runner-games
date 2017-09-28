@@ -1,6 +1,6 @@
-#include "Bullets.h"
+#include "Bullet.h"
 
-int Bullets::update(float time) {
+int Bullet::update(float time) {
 	x += dx * time;
 	y += dy * time;
 	sprite.setPosition(x + w / 2, y + h / 2);

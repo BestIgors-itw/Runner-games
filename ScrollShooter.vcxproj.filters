@@ -30,16 +30,7 @@
     <ClInclude Include="src\Direction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Effects.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Interface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Hedges.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Bullets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Race.h">
@@ -51,19 +42,31 @@
     <ClInclude Include="src\Shooter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Shooter_enemies_cars.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Aliases.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scroll_Shooter_Enemies_Cars.h">
+    <ClInclude Include="src\Movable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Movable.h">
+    <ClInclude Include="src\Hedge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scroll_Shooter_Enemies_Car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shooter_enemies_car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Unit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,16 +86,7 @@
     <ClCompile Include="src\Direction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Effects.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Hedges.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Bullets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Race.cpp">
@@ -104,16 +98,28 @@
     <ClCompile Include="src\Shooter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shooter_enemies_cars.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scroll_Shooter_Enemies_Cars.cpp">
+    <ClCompile Include="src\Movable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Movable.cpp">
+    <ClCompile Include="src\Hedge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scroll_Shooter_Enemies_Car.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shooter_enemies_car.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Unit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

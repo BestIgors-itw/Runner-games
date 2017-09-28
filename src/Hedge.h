@@ -1,25 +1,24 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Direction.h"
-#include "Entity.h"
+#include "Movable.h"
 
-class Hedges : public Entity {
+class Hedge : public Movable {
+private:
+	float health;
 public:
-	float speed, health;
-	int direction;
-	Hedges(sf::Image &image, float X, float Y, int W, int H,
-		float Direction, float Health)
-		:Entity(image, X, Y, W, H) {
-		health = Health;
-		direction = Direction;
-		speed = 0.6;
-		Direction_convert(direction, dx, dy, speed);
+	Hedge(sf::Image &IMAGE, float X, float Y, int W, int H,
+		float DIRECTION, float HEALTH)
+		:Movable(IMAGE, X, Y, W, H, background_speed, DIRECTION) {
+		health = HEALTH;
 	}
 
-	virtual ~Hedges() {}
+	float return_health();
+
+	friend bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
+		std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
+		sf::Image IMAGE1, sf::Image IMAGE2);
 
 	int update(float time);
 };
-
 

@@ -7,8 +7,8 @@
 #include <ctime>
 #include "Background.h"
 #include "Direction.h"
-#include "Effects.h"
-#include "Shooter_enemies_cars.h"
+#include "Effect.h"
+#include "Shooter_enemies_car.h"
 #include "Entity.h"
 #include "Interface.h"
 #include "Player.h"

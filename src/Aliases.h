@@ -48,7 +48,7 @@
 #define player_width 70
 #define player_hight 150
 #define player_speed 0.7
-#define player_health 100
+#define player_spawn_health 100
 #define Scroll_Shooter_player_time_between_shots 0.25
 #define Shooter_player_time_between_shots 0.5
 #define Scroll_Shooter_player_damage_per_shot 20
