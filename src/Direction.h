@@ -2,4 +2,4 @@
 
 #include "Aliases.h"
 
-void Direction_convert(int Direction, float &dx, float &dy, float speed);
+void Direction_convert(int DIRECTION, float &DX, float &DY, float SPEED);

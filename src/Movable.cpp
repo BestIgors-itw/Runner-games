@@ -8,3 +8,7 @@ int Movable::update(float time) {
 
 	return 0;
 }
+
+int Movable::return_direction() {
+	return direction;
+}

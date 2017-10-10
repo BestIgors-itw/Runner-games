@@ -47,7 +47,7 @@ int Enemies_cars::update(float TIME) {
 	}
 
 	if (y - h / 2 > screen_hight + 300 || y + h / 2 < -300) {
-		life = false;
+		alive = false;
 	}
 
 	Direction_convert(direction, dx, dy, speed);

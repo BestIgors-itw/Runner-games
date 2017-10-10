@@ -140,7 +140,7 @@ int Race(sf::RenderWindow & window) {
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end();) {
 			Background *b = *it_background;
-			if (b->life == false) {
+			if (b->is_alive() == false) {
 				it_background = background_objects.erase(it_background);
 				delete b;
 			}
@@ -153,23 +153,24 @@ int Race(sf::RenderWindow & window) {
 			(*it1_hedges)->update(Compensating_for_performance_losses_time);
 		}
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
+		player_collision_hedges(player, hedges, effects, effects_explosion2_i);
+		/*for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
 			Hedge *e = *it1_hedges;
-			if ((*it1_hedges)->getRect().intersects(player.getRect())) {
-				(*it1_hedges)->life = false;
+			if ((*it1_hedges)->get_rect().intersects(player.get_rect())) {
+				(*it1_hedges)->is_alive() = false;
 				effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x, Effects_spawn_y,
 					effects_explosion2_width, effects_explosion2_hight,
 					background_speed, DOWN, effects_explosion2_exist_time));
 
-				player.change_health(-e->return_health());
+				player.change_health(-e->get_health());
 
 				player.change_score(-5);
 			}
-		}
+		}*/
 
 		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();) {
 			Hedge *e = *it1_hedges;
-			if (e->life == false) {
+			if (e->is_alive() == false) {
 				it1_hedges = hedges.erase(it1_hedges);
 				delete e;
 			}
@@ -183,7 +184,7 @@ int Race(sf::RenderWindow & window) {
 
 		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effect *e = *it_effects;
-			if (e->life == false) {
+			if (e->is_alive() == false) {
 				it_effects = effects.erase(it_effects);
 				delete e;
 			}
@@ -194,20 +195,20 @@ int Race(sf::RenderWindow & window) {
 		window.draw(background_s);
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
-			window.draw((*it_background)->sprite);
+			window.draw((*it_background)->get_sprite());
 		}
 
 		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end(); ++it1_hedges) {
-			window.draw((*it1_hedges)->sprite);
+			window.draw((*it1_hedges)->get_sprite());
 		}
 
-		window.draw(player.sprite);
+		window.draw(player.get_sprite());
 
 		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
-			window.draw((*it_effects)->sprite);
+			window.draw((*it_effects)->get_sprite());
 		}
 
-		interface_health_and_score_bar.update(player.return_score(), player.return_health(), window);
+		interface_health_and_score_bar.update(player.return_score(), player.get_health(), window);
 
 		window.display();
 	}

@@ -22,11 +22,11 @@ public:
 		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
 	}
 
-	int update(float time);
+	int update(float);
 
 	void change_health(float VARIABLE);
 
-	int return_health();
+	int get_health();
 
 	int return_damage();
 

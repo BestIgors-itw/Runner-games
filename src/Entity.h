@@ -8,19 +8,20 @@
 #include "Aliases.h"
 
 class Entity {
-public:
+protected:
 	float x, y;
-	int w, h;
-	bool life;
+	unsigned short int w, h;
+	bool alive;
 	sf::Texture texture;
 	sf::Sprite sprite;
+public:
 	Entity(sf::Image &image, float X, float Y, int W, int H) {
 		x = X;
 		y = Y;
 		w = W;
 		h = H;
 
-		life = true;
+		alive = true;
 		texture.loadFromImage(image);
 		sprite.setTexture(texture);
 		sprite.setOrigin(w / 2, h / 2);
@@ -28,7 +29,19 @@ public:
 
 	virtual ~Entity() {}
 
-	virtual int update(float time) = 0;
+	virtual int update(float) = 0;
 
-	sf::FloatRect getRect();
+	sf::FloatRect get_rect();
+
+	bool is_alive();
+
+	unsigned short int get_w();
+	unsigned short int get_h();
+
+	float get_x();
+	float get_y();
+
+	sf::Sprite get_sprite();
+
+	void kill_object();
 };

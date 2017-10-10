@@ -1,50 +1,50 @@
 #include "Direction.h"
 
-void Direction_convert(int Direction, float &dx, float &dy, float speed) {
-	switch (Direction) {
+void Direction_convert(int DIRECTION, float &DX, float &DY, float SPEED) {
+	switch (DIRECTION) {
 	case RIGHT:
-		dx = speed;
-		dy = 0;
+		DX = SPEED;
+		DY = 0;
 		break;
 
 	case LEFT:
-		dx = -speed;
-		dy = 0;
+		DX = -SPEED;
+		DY = 0;
 		break;
 
 	case DOWN:
-		dy = speed;
-		dx = 0;
+		DY = SPEED;
+		DX = 0;
 		break;
 
 	case UP:
-		dy = -speed;
-		dx = 0;
+		DY = -SPEED;
+		DX = 0;
 		break;
 
 	case UP_LEFT:
-		dx = -speed;
-		dy = -speed;
+		DX = -SPEED;
+		DY = -SPEED;
 		break;
 
 	case UP_RIGHT:
-		dx = speed;
-		dy = -speed;
+		DX = SPEED;
+		DY = -SPEED;
 		break;
 
 	case DOWN_RIGHT:
-		dx = speed;
-		dy = speed;
+		DX = SPEED;
+		DY = SPEED;
 		break;
 
 	case DOWN_LEFT:
-		dx = -speed;
-		dy = speed;
+		DX = -SPEED;
+		DY = SPEED;
 		break;
 
 	case STAY:
-		dx = 0;
-		dy = 0;
+		DX = 0;
+		DY = 0;
 		break;
 	}
 }

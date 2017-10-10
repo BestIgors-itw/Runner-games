@@ -7,7 +7,7 @@ int Background::update(float time) {
 	sprite.setPosition(x + w / 2, y + h / 2);
 
 	if (y - h / 2 > screen_hight || x + w / 2 < 0) {
-		life = false;
+		alive = false;
 	}
 
 	return 0;

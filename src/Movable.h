@@ -5,10 +5,11 @@
 #include "Entity.h"
 
 class Movable : public Entity {
-public:
+protected:
 	float dx, dy;
 	float speed;
 	int direction;
+public:
 	Movable(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED, float DIRECTION)
 		:Entity(IMAGE, X, Y, W, H) {
 		speed = SPEED;
@@ -16,5 +17,7 @@ public:
 		Direction_convert(direction, dx, dy, speed);
 	}
 
-	int update(float time);
+	int update(float);
+
+	int return_direction();
 };

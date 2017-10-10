@@ -1,7 +1,23 @@
 #include "Hedge.h"
 
-float Hedge::return_health() {
+#include "Player.h"
+#include "Effect.h"
+
+float Hedge::get_health() {
 	return health;
+}
+
+int Hedge::update(float time) {
+	x += dx * time;
+	y += dy * time;
+
+	if (y - h / 2 > screen_hight + 300 || y + h / 2 < -300 || x - w / 2 > screen_width + 300 || x + w / 2 < -300) {
+		alive = false;
+	}
+
+	sprite.setPosition(x + w / 2, y + h / 2);
+
+	return 0;
 }
 
 bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
@@ -34,15 +50,20 @@ bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 	return false;
 }
 
-int Hedge::update(float time) {
-	x += dx * time;
-	y += dy * time;
+void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
+	std::list<Effect*> &EFFECTS, sf::Image EFFECTS_EXPLOSION_i) {
+	std::list<Hedge*>::iterator it1_hedges;
+	for (it1_hedges = HEDGES.begin(); it1_hedges != HEDGES.end(); ++it1_hedges) {
+		Hedge *e = *it1_hedges;
+		if (e->get_rect().intersects(PLAYER.get_rect())) {
+			e->kill_object();
+			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION_i, Effects_spawn_x, Effects_spawn_y,
+				effects_explosion2_width, effects_explosion2_hight,
+				background_speed, DOWN, effects_explosion2_exist_time));
 
-	if (y - h / 2 > screen_hight + 300 || y + h / 2 < -300 || x - w / 2 > screen_width + 300 || x + w / 2 < -300) {
-		life = false;
+			PLAYER.change_health(-(e->get_health()));
+
+			PLAYER.change_score(-5);
+		}
 	}
-
-	sprite.setPosition(x + w / 2, y + h / 2);
-
-	return 0;
 }

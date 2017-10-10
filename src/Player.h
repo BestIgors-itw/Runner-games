@@ -17,7 +17,7 @@ public:
 
 	void control();
 
-	int update(float TIME);
+	int update(float);
 
 	void change_score(float VARIABLE);
 

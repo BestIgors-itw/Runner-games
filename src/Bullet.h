@@ -13,5 +13,5 @@ public:
 		side = SIDE;
 	}
 
-	int update(float time);
+	int update(float);
 };

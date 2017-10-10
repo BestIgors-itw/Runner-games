@@ -46,7 +46,7 @@ void Unit::change_health(float VARIABLE) {
 	}
 }
 
-int Unit::return_health() {
+int Unit::get_health() {
 	return health;
 }
 

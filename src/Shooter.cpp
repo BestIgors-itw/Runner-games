@@ -183,7 +183,7 @@ int Shooter(sf::RenderWindow & window) {
 		for (it_background = background_objects.begin(); it_background != background_objects.end();) {
 			Background *b = *it_background;
 			b->update(Compensating_for_performance_losses_time);
-			if (b->life == false) {
+			if (b->is_alive() == false) {
 				it_background = background_objects.erase(it_background);
 				delete b;
 			}
@@ -196,8 +196,8 @@ int Shooter(sf::RenderWindow & window) {
 				player.change_health(-e->return_damage());
 				player.change_score(-5);
 			}
-			if (e->life == false || e->return_health() <= 0) {
-				if (e->return_health() <= 0) {
+			if (e->is_alive() == false || e->get_health() <= 0) {
+				if (e->get_health() <= 0) {
 					effects.push_back(new Effect(effects_explosion2_i,
 						Effects_spawn_x, Effects_spawn_y, effects_explosion2_width, effects_explosion2_hight,
 						background_speed, LEFT, effects_explosion2_exist_time));
@@ -208,7 +208,7 @@ int Shooter(sf::RenderWindow & window) {
 					delete e;
 					--enemy_number;
 				}
-				if (e->life == false) {
+				if (e->is_alive() == false) {
 					it_enemies = enemies.erase(it_enemies);
 					delete e;
 					--enemy_number;
@@ -227,7 +227,7 @@ int Shooter(sf::RenderWindow & window) {
 			for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies) {
 				Shooter_enemies_cars *e = *it_enemies;
 
-				if (e->getRect().intersects(player.getRect())) {
+				if (e->get_rect().intersects(player.get_rect())) {
 					e->change_health(-player.return_damage());
 					effects.push_back(new Effect(effects_explosion1_i,
 						Effects_player_spawn_x, Effects_player_spawn_y, effects_explosion1_width, effects_explosion1_hight,
@@ -239,7 +239,7 @@ int Shooter(sf::RenderWindow & window) {
 		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effect *e = *it_effects;
 			e->update(Compensating_for_performance_losses_time);
-			if (e->life == false) {
+			if (e->is_alive() == false) {
 				it_effects = effects.erase(it_effects);
 				delete e;
 			}
@@ -248,20 +248,20 @@ int Shooter(sf::RenderWindow & window) {
 
 
 		for (it_background = background_objects.begin(); it_background != background_objects.end(); ++it_background) {
-			window.draw((*it_background)->sprite);
+			window.draw((*it_background)->get_sprite());
 		}
 
 		for (it_enemies = enemies.begin(); it_enemies != enemies.end(); ++it_enemies) {
-			window.draw((*it_enemies)->sprite);
+			window.draw((*it_enemies)->get_sprite());
 		}
 
 		for (it_effects = effects.begin(); it_effects != effects.end(); ++it_effects) {
-			window.draw((*it_effects)->sprite);
+			window.draw((*it_effects)->get_sprite());
 		}
 
-		window.draw(player.sprite);
+		window.draw(player.get_sprite());
 
-		interface_health_and_score_bar.update(player.return_score(), player.return_health(), window);
+		interface_health_and_score_bar.update(player.return_score(), player.get_health(), window);
 
 		window.display();
 	}
