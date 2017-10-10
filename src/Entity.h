@@ -15,11 +15,13 @@ protected:
 	sf::Texture texture;
 	sf::Sprite sprite;
 public:
-	Entity(sf::Image &image, float X, float Y, int W, int H) {
+	Entity(sf::Image &image, float X, float Y) {
+		sf::Vector2u buffer;
+		buffer = image.getSize();
 		x = X;
 		y = Y;
-		w = W;
-		h = H;
+		w = buffer.x;
+		h = buffer.y;
 
 		alive = true;
 		texture.loadFromImage(image);

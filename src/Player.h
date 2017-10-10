@@ -9,9 +9,9 @@ class Player : public Unit {
 private:
 	float score;
 public:
-	Player(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
+	Player(sf::Image &IMAGE, float X, float Y, float SPEED,
 		int HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
-		:Unit(IMAGE, X, Y, W, H, SPEED, STAY, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE),
+		:Unit(IMAGE, X, Y, SPEED, STAY, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE),
 		score(0.0) {
 	}
 

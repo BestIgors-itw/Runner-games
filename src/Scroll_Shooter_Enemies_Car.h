@@ -9,9 +9,9 @@ class Enemies_cars : public Unit {
 private:
 	float moving_timer;
 public:
-	Enemies_cars(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
+	Enemies_cars(sf::Image &IMAGE, float X, float Y, float SPEED,
 		float DIRECTION, float HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
-		:Unit(IMAGE, X, Y, W, H, SPEED, DIRECTION, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE) {
+		:Unit(IMAGE, X, Y, SPEED, DIRECTION, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE) {
 
 		moving_timer = attack_frequency_time;
 

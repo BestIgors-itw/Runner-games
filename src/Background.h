@@ -6,8 +6,8 @@
 
 class Background : public Movable {
 public:
-	Background(sf::Image &IMAGE, float X, float Y, int W, int H, int DIRECTION) 
-		:Movable(IMAGE, X, Y, W, H, background_speed, DIRECTION) {}
+	Background(sf::Image &IMAGE, float X, float Y, int DIRECTION) 
+		:Movable(IMAGE, X, Y, background_speed, DIRECTION) {}
 
 	int update(float);
 };

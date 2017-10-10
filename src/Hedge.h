@@ -9,9 +9,8 @@ class Hedge : public Movable {
 private:
 	float health;
 public:
-	Hedge(sf::Image &IMAGE, float X, float Y, int W, int H,
-		float DIRECTION, float HEALTH)
-		:Movable(IMAGE, X, Y, W, H, background_speed, DIRECTION) {
+	Hedge(sf::Image &IMAGE, float X, float Y, float DIRECTION, float HEALTH)
+		:Movable(IMAGE, X, Y, background_speed, DIRECTION) {
 		health = HEALTH;
 	}
 

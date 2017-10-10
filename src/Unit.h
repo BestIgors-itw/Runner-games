@@ -12,9 +12,9 @@ protected:
 	bool shot_available;
 	float attack_frequency_time, time_between_attack;
 public:
-	Unit(sf::Image &IMAGE, float X, float Y, int W, int H, float SPEED,
+	Unit(sf::Image &IMAGE, float X, float Y, float SPEED,
 		float DIRECTION, int HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
-		:Movable(IMAGE, X, Y, W, H, SPEED, DIRECTION), shot_available(true) {
+		:Movable(IMAGE, X, Y, SPEED, DIRECTION), shot_available(true) {
 		health = HEALTH;
 
 		time_between_attack = TIME_BETWEEN_ATTACK;
