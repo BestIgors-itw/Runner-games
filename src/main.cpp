@@ -16,7 +16,8 @@ sf::Clock hedge_timer;
 sf::Clock enemy_timer;
 
 int main() {
-	sf::RenderWindow window(sf::VideoMode(screen_width, screen_hight), "Runner games", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(screen_width, screen_height),
+		"Runner games", sf::Style::Fullscreen);
 
 	window.setFramerateLimit(60);
 

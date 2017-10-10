@@ -1,11 +1,12 @@
 #include "Shooter_enemies_car.h"
 
 #define screen_width 1600
-#define screen_hight 900
+#define screen_height 900
 
 int Shooter_enemies_cars::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 2) {
-		if (direction == RIGHT || direction == UP_RIGHT || direction == DOWN_RIGHT) {
+		if (direction == RIGHT || direction == UP_RIGHT
+			|| direction == DOWN_RIGHT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
@@ -19,7 +20,8 @@ int Shooter_enemies_cars::update(float time) {
 				break;
 			}
 		}
-		if (direction == LEFT || direction == UP_LEFT || direction == DOWN_LEFT) {
+		if (direction == LEFT || direction == UP_LEFT
+			|| direction == DOWN_LEFT) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
@@ -36,16 +38,20 @@ int Shooter_enemies_cars::update(float time) {
 
 		moving_timer = game_timer.getElapsedTime().asSeconds();
 	}
-	if (y + h > screen_hight && (direction == RIGHT || direction == DOWN_RIGHT)) {
+	if (y + h > screen_height && (direction == RIGHT
+		|| direction == DOWN_RIGHT)) {
 		direction = UP_RIGHT;
 	}
-	if (y < screen_hight - 400 && (direction == RIGHT || direction == UP_RIGHT)) {
+	if (y < screen_height - 400 && (direction == RIGHT
+		|| direction == UP_RIGHT)) {
 		direction = DOWN_RIGHT;
 	}
-	if (y + h > screen_hight && (direction == LEFT || direction == DOWN_LEFT)) {
+	if (y + h > screen_height && (direction == LEFT
+		|| direction == DOWN_LEFT)) {
 		direction = UP_LEFT;
 	}
-	if (y < screen_hight - 400 && (direction == LEFT || direction == UP_LEFT)) {
+	if (y < screen_height - 400 && (direction == LEFT
+		|| direction == UP_LEFT)) {
 		direction = DOWN_LEFT;
 	}
 
@@ -61,9 +67,12 @@ int Shooter_enemies_cars::update(float time) {
 	y += dy * time;
 	sprite.setPosition(x + w / 2, y + h / 2);
 
-	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time > time_between_attack) {
+	if (game_timer.getElapsedTime().asSeconds() - attack_frequency_time
+		> time_between_attack) {
 		attack_frequency_time = game_timer.getElapsedTime().asSeconds();
+
 		return 1;
 	}
+
 	return 0;
 }

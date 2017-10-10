@@ -62,7 +62,7 @@ int menu(sf::RenderWindow & window) {
 
 		i = Shooter_text;
 		text.setString("Shooter");
-		text.setPosition(150, menu_text_y);
+		text.setPosition(160, menu_text_y);
 		if (mode == Shooter_text) {
 			text.setColor(sf::Color::Blue);
 		}
@@ -84,7 +84,7 @@ int menu(sf::RenderWindow & window) {
 
 		i = Control_text;
 		text.setString("Control");
-		text.setPosition(180, menu_text_y);
+		text.setPosition(160, menu_text_y);
 		if (mode == Control_text) {
 			text.setColor(sf::Color::Blue);
 		}
@@ -162,7 +162,7 @@ int Control_page(sf::RenderWindow & window){
 	sf::Text text("", font, 100);
 
 	text.setString("Fire");
-	text.setPosition(270, screen_hight - 165);
+	text.setPosition(270, screen_height - 165);
 	text.setColor(sf::Color::Blue);
 
 	window.draw(text);
@@ -170,12 +170,12 @@ int Control_page(sf::RenderWindow & window){
 	text.setCharacterSize(70);
 
 	text.setString("Movement");
-	text.setPosition(230, screen_hight - 550);
+	text.setPosition(230, screen_height - 550);
 
 	window.draw(text);
 
 	text.setString("Press Enter to return");
-	text.setPosition(800, screen_hight - 100);
+	text.setPosition(800, screen_height - 100);
 	text.setColor(sf::Color::Green);
 
 	window.draw(text);
@@ -183,7 +183,7 @@ int Control_page(sf::RenderWindow & window){
 	text.setCharacterSize(50);
 
 	text.setString("In shooter mode");
-	text.setPosition(200, screen_hight - 280);
+	text.setPosition(200, screen_height - 280);
 	text.setColor(sf::Color::Black);
 
 	window.draw(text);

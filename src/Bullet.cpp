@@ -4,7 +4,8 @@ int Bullet::update(float time) {
 	x += dx * time;
 	y += dy * time;
 	sprite.setPosition(x + w / 2, y + h / 2);
-	if (x + bullet_width < 0 || x - bullet_width > screen_width || y + bullet_hight < 0 || y - bullet_hight > screen_hight) {
+	if (x + w < 0 || x - w > screen_width
+		|| y + h < 0 || y - h > screen_height) {
 		alive = false;
 	}
 	return 0;
