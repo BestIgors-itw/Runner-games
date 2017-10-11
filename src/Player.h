@@ -21,5 +21,5 @@ public:
 
 	void change_score(float VARIABLE);
 
-	float return_score();
+	float get_score();
 };

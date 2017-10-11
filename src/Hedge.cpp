@@ -21,7 +21,7 @@ int Hedge::update(float time) {
 	return 0;
 }
 
-bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
+void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 	std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
 	sf::Image IMAGE1, sf::Image IMAGE2) {
 	if (HEDGE_GENERATE_PROBABILITY < 0) {
@@ -45,8 +45,6 @@ bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 		}
 		HEDGE_TIMER.restart();
 	}
-
-	return false;
 }
 
 void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,

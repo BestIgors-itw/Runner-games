@@ -9,6 +9,6 @@ int Movable::update(float time) {
 	return 0;
 }
 
-int Movable::return_direction() {
+unsigned short int Movable::get_direction() {
 	return direction;
 }

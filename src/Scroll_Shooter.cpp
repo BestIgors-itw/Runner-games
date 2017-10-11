@@ -142,9 +142,6 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			break;
 		}
 
-		window.clear();
-		window.draw(background_s);
-
 		background_time = background_timer.getElapsedTime().asSeconds();
 
 		background_object_generate_probability
@@ -381,8 +378,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Enemies_cars *e = *it1_enemies_cars;
 			
 			if (e->update(Compensating_for_performance_losses_time)) {
-				if (e->return_direction() == DOWN || e->return_direction()
-					== DOWN_LEFT || e->return_direction() == DOWN_LEFT) {
+				if (e->get_direction() == DOWN || e->get_direction()
+					== DOWN_LEFT || e->get_direction() == DOWN_LEFT) {
 					effects.push_back(new Effect(effects_shooting_i,
 						enemy_shot_point_x, enemy_shot_down_point_y,
 						Scroll_Shooter_effects_shooting_speed, DOWN,
@@ -392,8 +389,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 						enemy_bullet_speed, DOWN, e->return_damage(),
 						enemies_side));
 				}
-				if (e->return_direction() == UP || e->return_direction()
-					== UP_LEFT || e->return_direction() == UP_RIGHT) {
+				if (e->get_direction() == UP || e->get_direction()
+					== UP_LEFT || e->get_direction() == UP_RIGHT) {
 					effects.push_back(new Effect(effects_shooting_i,
 						enemy_shot_point_x, enemy_shot_up_point_y,
 						Scroll_Shooter_effects_shooting_speed, UP,
@@ -432,6 +429,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			}
 			else ++it_effects;
 		}
+		
+		window.draw(background_s);
 
 		for (it_background = background_objects.begin();
 			it_background != background_objects.end(); ++it_background) {
@@ -455,7 +454,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		window.draw(player.get_sprite());
 
-		interface_health_and_score_bar.update(player.return_score(),
+		interface_health_and_score_bar.update(player.get_score(),
 			player.get_health(), window);
 
 		window.display();

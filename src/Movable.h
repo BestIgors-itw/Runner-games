@@ -8,9 +8,9 @@ class Movable : public Entity {
 protected:
 	float dx, dy;
 	float speed;
-	int direction;
+	unsigned short int direction;
 public:
-	Movable(sf::Image &IMAGE, float X, float Y, float SPEED, float DIRECTION)
+	Movable(sf::Image &IMAGE, float X, float Y, float SPEED, unsigned short int DIRECTION)
 		:Entity(IMAGE, X, Y) {
 		speed = SPEED;
 		direction = DIRECTION;
@@ -19,5 +19,5 @@ public:
 
 	int update(float);
 
-	int return_direction();
+	unsigned short int get_direction();
 };

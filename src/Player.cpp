@@ -135,6 +135,6 @@ void Player::change_score(float VARIABLE) {
 	}
 }
 
-float Player::return_score() {
+float Player::get_score() {
 	return score;
 }

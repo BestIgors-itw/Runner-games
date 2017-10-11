@@ -18,11 +18,10 @@ public:
 
 	float get_health();
 
-	friend bool generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
-		std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
-		sf::Image IMAGE1, sf::Image IMAGE2);
-
 	friend void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
 		std::list<Effect*> &EFFECTS, sf::Image EFFECTS_EXPLOSION_i);
 };
 
+void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
+	std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
+	sf::Image IMAGE1, sf::Image IMAGE2);

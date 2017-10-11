@@ -208,7 +208,6 @@ int Race(sf::RenderWindow & window) {
 			else ++it_effects;
 		}
 
-		window.clear();
 		window.draw(background_s);
 
 		for (it_background = background_objects.begin();
@@ -228,7 +227,7 @@ int Race(sf::RenderWindow & window) {
 			window.draw((*it_effects)->get_sprite());
 		}
 
-		interface_health_and_score_bar.update(player.return_score(),
+		interface_health_and_score_bar.update(player.get_score(),
 			player.get_health(), window);
 
 		window.display();
