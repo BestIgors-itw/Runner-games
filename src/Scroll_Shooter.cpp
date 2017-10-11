@@ -138,17 +138,17 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		Compensating_for_performance_losses_time
 			= Compensating_for_performance_losses_coefficient;
 
-		if (player.update(Compensating_for_performance_losses_time)) {
-			break;
-		}
-
 		background_time = background_timer.getElapsedTime().asSeconds();
 
 		background_object_generate_probability
 			= background_object_generate_probability - background_time
 			* 100 - rand() % 100;
 
-		generate_background_objects(background_object_generate_probability,
+		generate_background_objects(DOWN,
+			Scroll_Shooter_background_object_spawn_x,
+			Scroll_Shooter_background_object_spawn_y,
+			Scroll_Shooter_background_object_probability,
+			background_object_generate_probability,
 			background_objects, background_timer, background_rockgray1_i,
 			background_rocksand1_i, background_rocksand2_i);
 
@@ -245,16 +245,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		player.change_score(game_time - score_time);
 		score_time = game_time;
 
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end();) {
-			Background *b = *it_background;
-			b->update(Compensating_for_performance_losses_time);
-			if (b->is_alive() == false) {
-				it_background = background_objects.erase(it_background);
-				delete b;
-			}
-			else ++it_background;
-		}
+		background_garbage_collector(background_objects);
 
 		for (it1_enemies_cars = enemies_cars.begin();
 			it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
@@ -322,7 +313,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		for (it1_enemies_cars = enemies_cars.begin();
 			it1_enemies_cars != enemies_cars.end();) {
 			Enemies_cars *e = *it1_enemies_cars;
-			
+
 			if (e->get_rect().intersects(player.get_rect())) {
 				effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x,
 					Effects_spawn_y, background_speed, DOWN,
@@ -338,6 +329,15 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			else {
 				++it1_enemies_cars;
 			}
+		}
+
+		if (player.update(Compensating_for_performance_losses_time)) {
+			break;
+		}
+
+		for (it_background = background_objects.begin();
+			it_background != background_objects.end(); ++it_background) {
+			(*it_background)->update(Compensating_for_performance_losses_time);
 		}
 
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();) {

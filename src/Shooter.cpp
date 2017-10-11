@@ -133,7 +133,10 @@ int Shooter(sf::RenderWindow & window) {
 			= background_object_generate_probability - background_time * 100
 			- rand() % 100;
 
-		generate_background_objects(background_object_generate_probability,
+		generate_background_objects(LEFT, Shooter_background_object_spawn_x,
+			Shooter_background_object_spawn_y,
+			Shooter_background_object_probability,
+			background_object_generate_probability,
 			background_objects, background_timer, background_rockgray1_i,
 			background_rocksand1_i, background_rocksand2_i);
 

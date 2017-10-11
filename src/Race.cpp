@@ -108,53 +108,31 @@ int Race(sf::RenderWindow & window) {
 		Compensating_for_performance_losses_time
 			= Compensating_for_performance_losses_coefficient;
 
-		if (player.update(Compensating_for_performance_losses_time)) {
-			break;
-		}
-
 		game_time = game_timer.getElapsedTime().asSeconds();
+
+		player.change_score(game_time - score_time);
+		score_time = game_time;
+
 		background_time = background_timer.getElapsedTime().asSeconds();
-		hedge_time = hedge_timer.getElapsedTime().asSeconds();
 
 		background_object_generate_probability
 			= background_object_generate_probability - background_time * 100
 			- rand() % 100;
 
-		generate_background_objects(background_object_generate_probability,
+		generate_background_objects(DOWN, Race_background_object_spawn_x,
+			Race_background_object_spawn_y, Race_background_object_probability,
+			background_object_generate_probability,
 			background_objects, background_timer, background_rockgray1_i,
 			background_rocksand1_i, background_rocksand2_i);
 
+		hedge_time = hedge_timer.getElapsedTime().asSeconds();
 		hedge_generate_probability = hedge_generate_probability - hedge_time
 			* 10 - rand() % 100;
 
 		generate_hedge(hedge_generate_probability, hedges, game_time,
 			hedge_timer, hedges_deadcars1_i, hedges_deadcars2_i);
 
-		player.change_score(game_time - score_time);
-		score_time = game_time;
-
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end(); ++it_background) {
-			Background *b = *it_background;
-			b->update(Compensating_for_performance_losses_time);
-		}
-
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end();) {
-			Background *b = *it_background;
-			if (b->is_alive() == false) {
-				it_background = background_objects.erase(it_background);
-				delete b;
-			}
-			else {
-				++it_background;
-			}
-		}
-
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();
-			++it1_hedges) {
-			(*it1_hedges)->update(Compensating_for_performance_losses_time);
-		}
+		background_garbage_collector(background_objects);
 
 		player_collision_hedges(player, hedges, effects, effects_explosion2_i);
 
@@ -167,12 +145,6 @@ int Race(sf::RenderWindow & window) {
 			else ++it1_hedges;
 		}
 
-		for (it_effects = effects.begin(); it_effects != effects.end();
-			++it_effects) {
-			Effect *e = *it_effects;
-			e->update(Compensating_for_performance_losses_time);
-		}
-
 		for (it_effects = effects.begin(); it_effects != effects.end();) {
 			Effect *e = *it_effects;
 			if (e->is_alive() == false) {
@@ -180,6 +152,25 @@ int Race(sf::RenderWindow & window) {
 				delete e;
 			}
 			else ++it_effects;
+		}
+
+		if (player.update(Compensating_for_performance_losses_time)) {
+			break;
+		}
+
+		for (it_background = background_objects.begin();
+			it_background != background_objects.end(); ++it_background) {
+			(*it_background)->update(Compensating_for_performance_losses_time);
+		}
+
+		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();
+			++it1_hedges) {
+			(*it1_hedges)->update(Compensating_for_performance_losses_time);
+		}
+
+		for (it_effects = effects.begin(); it_effects != effects.end();
+			++it_effects) {
+			(*it_effects)->update(Compensating_for_performance_losses_time);
 		}
 
 		window.draw(background_s);
