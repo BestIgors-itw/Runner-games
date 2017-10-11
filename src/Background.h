@@ -11,3 +11,7 @@ public:
 
 	int update(float);
 };
+
+void generate_background_objects(float &GENERATE_PROBABILITY,
+	std::list<Background*> &BACKGROUND_OBJECTS, sf::Clock &TIMER,
+	sf::Image IMAGE1, sf::Image IMAGE2, sf::Image IMAGE3);

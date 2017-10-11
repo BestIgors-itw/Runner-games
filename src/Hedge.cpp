@@ -54,12 +54,12 @@ void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
 		++it1_hedges) {
 		Hedge *e = *it1_hedges;
 		if (e->get_rect().intersects(PLAYER.get_rect())) {
-			e->kill_object();
+			e->alive = false;
 			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION_i,
 				Effects_spawn_x, Effects_spawn_y,
 				background_speed, DOWN, effects_explosion2_exist_time));
 
-			PLAYER.change_health(-(e->get_health()));
+			PLAYER.change_health(-(e->health));
 
 			PLAYER.change_score(-5);
 		}

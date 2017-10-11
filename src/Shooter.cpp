@@ -133,34 +133,9 @@ int Shooter(sf::RenderWindow & window) {
 			= background_object_generate_probability - background_time * 100
 			- rand() % 100;
 
-		if (background_object_generate_probability < 0) {
-			int r = rand() % 3;
-			switch (r) {
-			case 0:
-				background_objects.push_back(new Background
-					(background_rocksand1_i,
-					Shooter_background_object_spawn_x,
-					Shooter_background_object_spawn_y,
-					LEFT));
-				break;
-			case 1:
-				background_objects.push_back(new Background
-					(background_rocksand2_i,
-					Shooter_background_object_spawn_x,
-					Shooter_background_object_spawn_y,
-					LEFT));
-				break;
-			case 2:
-				background_objects.push_back(new Background
-					(background_rockgray1_i,
-					Shooter_background_object_spawn_x,
-					Shooter_background_object_spawn_y,
-					LEFT));
-				break;
-			}
-			background_object_generate_probability = Shooter_game_difficulty;
-			background_timer.restart();
-		}
+		generate_background_objects(background_object_generate_probability,
+			background_objects, background_timer, background_rockgray1_i,
+			background_rocksand1_i, background_rocksand2_i);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 		enemy_time = enemy_timer.getElapsedTime().asSeconds();

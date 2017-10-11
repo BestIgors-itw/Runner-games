@@ -120,35 +120,9 @@ int Race(sf::RenderWindow & window) {
 			= background_object_generate_probability - background_time * 100
 			- rand() % 100;
 
-		if (background_object_generate_probability < 0) {
-			int r = rand() % 3;
-			switch (r) {
-			case 0:
-				background_objects.push_back(new Background
-					(background_rocksand1_i,
-					Race_background_object_spawn_x,
-						Race_background_object_spawn_y,
-					DOWN));
-				break;
-			case 1:
-				background_objects.push_back(new Background
-					(background_rocksand2_i,
-					Race_background_object_spawn_x,
-						Race_background_object_spawn_y,
-					DOWN));
-				break;
-			case 2:
-				background_objects.push_back(new Background
-					(background_rockgray1_i,
-					Race_background_object_spawn_x,
-					Race_background_object_spawn_y,
-					DOWN));
-				break;
-			}
-			background_object_generate_probability
-				= Race_background_object_probability;
-			background_timer.restart();
-		}
+		generate_background_objects(background_object_generate_probability,
+			background_objects, background_timer, background_rockgray1_i,
+			background_rocksand1_i, background_rocksand2_i);
 
 		hedge_generate_probability = hedge_generate_probability - hedge_time
 			* 10 - rand() % 100;
