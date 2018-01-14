@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <list>
-#include <vector>
 #include <sstream>
 #include <ctime>
 #include "Background.h"

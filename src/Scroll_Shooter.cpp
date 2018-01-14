@@ -1,88 +1,86 @@
 #include "Scroll_Shooter.h"
 
 int Scroll_Shooter(sf::RenderWindow & window) {
-	sf::Image player_i;
+	sf::Texture player_i;
 	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
 		return 0;
 	}
 
-	sf::Image background_rocksand1_i;
-	if (!background_rocksand1_i.loadFromFile
+	sf::Texture background_rocksand1_t;
+	if (!background_rocksand1_t.loadFromFile
 		("res/images/background/rocksand1.png")) {
 
 		return 0;
 	}
 
-	sf::Image background_rocksand2_i;
-	if (!background_rocksand2_i.loadFromFile
+	sf::Texture background_rocksand2_t;
+	if (!background_rocksand2_t.loadFromFile
 		("res/images/background/rocksand2.png")) {
 
 		return 0;
 	}
 
-	sf::Image background_rockgray1_i;
-	if (!background_rockgray1_i.loadFromFile
+	sf::Texture background_rockgray1_t;
+	if (!background_rockgray1_t.loadFromFile
 		("res/images/background/rockgray1.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_explosion1_i;
-	if (!effects_explosion1_i.loadFromFile
+	sf::Texture effects_explosion1_t;
+	if (!effects_explosion1_t.loadFromFile
 		("res/images/effects/explosion1.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_explosion2_i;
-	if (!effects_explosion2_i.loadFromFile
+	sf::Texture effects_explosion2_t;
+	if (!effects_explosion2_t.loadFromFile
 		("res/images/effects/explosion2.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_shooting_i;
-	if (!effects_shooting_i.loadFromFile("res/images/effects/shooting.png")) {
+	sf::Texture effects_shooting_t;
+	if (!effects_shooting_t.loadFromFile("res/images/effects/shooting.png")) {
 		return 0;
 	}
 
-	sf::Image enemy_battlemule_i;
-	if (!enemy_battlemule_i.loadFromFile("res/images/enemy/battlemule.png")) {
+	sf::Texture enemy_battlemule_t;
+	if (!enemy_battlemule_t.loadFromFile("res/images/enemy/battlemule.png")) {
 		return 0;
 	}
 
-	sf::Image enemy_impalabattle_i;
-	if (!enemy_impalabattle_i.loadFromFile
+	sf::Texture enemy_impalabattle_t;
+	if (!enemy_impalabattle_t.loadFromFile
 		("res/images/enemy/impalabattle.png")) {
 
 		return 0;
 	}
 
-	sf::Image enemy_slage_i;
-	if (!enemy_slage_i.loadFromFile("res/images/enemy/slage.png")) {
+	sf::Texture enemy_slage_t;
+	if (!enemy_slage_t.loadFromFile("res/images/enemy/slage.png")) {
 		return 0;
 	}
 
-	sf::Image background_i;
-	if (!background_i.loadFromFile
+	sf::Texture background_t;
+	if (!background_t.loadFromFile
 		("res/images/background/sandbackground.png")) {
 
 		return 0;
 	}
-	sf::Texture background_t;
-	background_t.loadFromImage(background_i);
 
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
 	background_s.setScale(Scroll_Shooter_background_scale_x,
 		Scroll_Shooter_background_scale_y);
 
-	sf::Image bullet_bullet_i;
+	sf::Texture bullet_bullet_i;
 	if (!bullet_bullet_i.loadFromFile("res/images/bullets/bullet.png")) {
 		return 0;
 	}
 
-	sf::Image plate_i;
+	sf::Texture plate_i;
 	if (!plate_i.loadFromFile("res/images/interface/button.png")) {
 		return 0;
 	}
@@ -149,8 +147,8 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Scroll_Shooter_background_object_spawn_y,
 			Scroll_Shooter_background_object_probability,
 			background_object_generate_probability,
-			background_objects, background_timer, background_rockgray1_i,
-			background_rocksand1_i, background_rocksand2_i);
+			background_objects, background_timer, background_rockgray1_t,
+			background_rocksand1_t, background_rocksand2_t);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 		enemy_time = enemy_timer.getElapsedTime().asSeconds();
@@ -161,7 +159,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			int r = rand() % 8;
 			switch (r) {
 			case 0:
-				enemies_cars.push_back(new Enemies_cars(enemy_battlemule_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_battlemule_t,
 					Scroll_Shooter_enemy_up_spawn_x,
 					Scroll_Shooter_enemy_up_spawn_y,
 					Scroll_Shooter_enemy_battlemule_speed,
@@ -170,7 +168,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					Scroll_Shooter_enemy_battlemule_damage));
 				break;
 			case 1:
-				enemies_cars.push_back(new Enemies_cars(enemy_impalabattle_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_impalabattle_t,
 					Scroll_Shooter_enemy_up_spawn_x,
 					Scroll_Shooter_enemy_up_spawn_y,
 					Scroll_Shooter_enemy_impalabattle_speed,
@@ -179,7 +177,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					Scroll_Shooter_enemy_impalabattle_damage));
 				break;
 			case 2:
-				enemies_cars.push_back(new Enemies_cars(enemy_slage_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_slage_t,
 					Scroll_Shooter_enemy_up_spawn_x,
 					Scroll_Shooter_enemy_up_spawn_y,					
 					Scroll_Shooter_enemy_slage_speed,
@@ -188,7 +186,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					Scroll_Shooter_enemy_slage_damage));
 				break;
 			case 3:
-				enemies_cars.push_back(new Enemies_cars(enemy_battlemule_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_battlemule_t,
 					Scroll_Shooter_enemy_down_spawn_x,
 					Scroll_Shooter_enemy_down_spawn_y,				
 					Scroll_Shooter_enemy_battlemule_speed,
@@ -197,7 +195,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					Scroll_Shooter_enemy_battlemule_damage));
 				break;
 			case 4:
-				enemies_cars.push_back(new Enemies_cars(enemy_impalabattle_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_impalabattle_t,
 					Scroll_Shooter_enemy_down_spawn_x,
 					Scroll_Shooter_enemy_down_spawn_y,					
 					Scroll_Shooter_enemy_impalabattle_speed,
@@ -206,7 +204,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					Scroll_Shooter_enemy_impalabattle_damage));
 				break;
 			case 5:
-				enemies_cars.push_back(new Enemies_cars(enemy_slage_i,
+				enemies_cars.push_back(new Enemies_cars(enemy_slage_t,
 					Scroll_Shooter_enemy_down_spawn_x,
 					Scroll_Shooter_enemy_down_spawn_y,					
 					Scroll_Shooter_enemy_slage_speed,
@@ -224,14 +222,14 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		}
 
 		if (player.is_shot_available() == true) {
-			effects.push_back(new Effect(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_t,
 				player_shot_1point_x, player_shot_1point_y,
 				Scroll_Shooter_effects_shooting_speed, STAY,
 				Scroll_Shooter_effects_shooting_exist_time));
 			bullets.push_back(new Bullet(bullet_bullet_i,
 				player_shot_1point_x, player_shot_1point_y,
 				player_bullet_speed, UP, player.return_damage(), player_side));
-			effects.push_back(new Effect(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_t,
 				player_shot_2point_x, player_shot_2point_y,
 				Scroll_Shooter_effects_shooting_speed, STAY,
 				Scroll_Shooter_effects_shooting_exist_time));
@@ -274,7 +272,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 				if (b->get_rect().intersects(e->get_rect()) && b->side == player_side) {
 					e->change_health(-b->damage);
 
-					effects.push_back(new Effect(effects_explosion1_i,
+					effects.push_back(new Effect(effects_explosion1_t,
 						Effects_bullets_spawn_x, Effects_bullets_spawn_y,
 						background_speed, DOWN, effects_explosion1_exist_time));
 
@@ -294,7 +292,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 			if (b->get_rect().intersects(player.get_rect())
 				&& b->side == enemies_side) {
-				effects.push_back(new Effect(effects_explosion1_i,
+				effects.push_back(new Effect(effects_explosion1_t,
 					b->get_x() + b->get_w() / 2, b->get_y() + b->get_h() / 2,
 					background_speed, DOWN, effects_explosion1_exist_time));
 
@@ -315,7 +313,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			Enemies_cars *e = *it1_enemies_cars;
 
 			if (e->get_rect().intersects(player.get_rect())) {
-				effects.push_back(new Effect(effects_explosion2_i, Effects_spawn_x,
+				effects.push_back(new Effect(effects_explosion2_t, Effects_spawn_x,
 					Effects_spawn_y, background_speed, DOWN,
 					effects_explosion2_exist_time));
 
@@ -358,7 +356,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			if (e->update(Compensating_for_performance_losses_time)) {
 				if (e->get_direction() == DOWN || e->get_direction()
 					== DOWN_LEFT || e->get_direction() == DOWN_LEFT) {
-					effects.push_back(new Effect(effects_shooting_i,
+					effects.push_back(new Effect(effects_shooting_t,
 						enemy_shot_point_x, enemy_shot_down_point_y,
 						Scroll_Shooter_effects_shooting_speed, DOWN,
 						Scroll_Shooter_effects_shooting_exist_time));
@@ -369,7 +367,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 				}
 				if (e->get_direction() == UP || e->get_direction()
 					== UP_LEFT || e->get_direction() == UP_RIGHT) {
-					effects.push_back(new Effect(effects_shooting_i,
+					effects.push_back(new Effect(effects_shooting_t,
 						enemy_shot_point_x, enemy_shot_up_point_y,
 						Scroll_Shooter_effects_shooting_speed, UP,
 						Scroll_Shooter_effects_shooting_exist_time));
@@ -381,7 +379,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			}
 			if (e->is_alive() == false || e->get_health() <= 0) {
 				if (e->get_health() <= 0) {
-					effects.push_back(new Effect(effects_explosion2_i,
+					effects.push_back(new Effect(effects_explosion2_t,
 						Effects_spawn_x, Effects_spawn_y, background_speed,
 						DOWN, effects_explosion2_exist_time));
 					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);

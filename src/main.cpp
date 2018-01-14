@@ -1,6 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <list>
-#include <vector>
 #include <sstream>
 #include <ctime>
 #include "Race.h"
@@ -18,8 +16,6 @@ sf::Clock enemy_timer;
 int main() {
 	sf::RenderWindow window(sf::VideoMode(screen_width, screen_height),
 		"Runner games", sf::Style::Fullscreen);
-
-	window.setFramerateLimit(60);
 
 	window.setVerticalSyncEnabled(1);
 

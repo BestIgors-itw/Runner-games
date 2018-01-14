@@ -9,8 +9,8 @@ class Hedge : public Movable {
 private:
 	float health;
 public:
-	Hedge(sf::Image &IMAGE, float X, float Y, float DIRECTION, float HEALTH)
-		:Movable(IMAGE, X, Y, background_speed, DIRECTION) {
+	Hedge(sf::Texture &TEXTURE, float X, float Y, float DIRECTION, float HEALTH)
+		:Movable(TEXTURE, X, Y, background_speed, DIRECTION) {
 		health = HEALTH;
 	}
 
@@ -18,10 +18,12 @@ public:
 
 	float get_health();
 
+	friend void hedges_garbage_collector(std::list<Hedge*>&);
+
 	friend void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
-		std::list<Effect*> &EFFECTS, sf::Image EFFECTS_EXPLOSION_i);
+		std::list<Effect*> &EFFECTS, sf::Texture &EFFECTS_EXPLOSION_T);
 };
 
 void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 	std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
-	sf::Image IMAGE1, sf::Image IMAGE2);
+	sf::Texture &HEDGES_DEADCARS1, sf::Texture &HEDGES_DEADCARS2);

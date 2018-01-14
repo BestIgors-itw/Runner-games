@@ -9,8 +9,8 @@ class Interface : public Entity {
 private:
 	sf::Text text;
 public:
-	Interface(sf::Image &IMAGE, float X, float Y, sf::Text TEXT)
-		:Entity(IMAGE, X, Y) {
+	Interface(sf::Texture &Texture, float X, float Y, sf::Text TEXT)
+		:Entity(Texture, X, Y) {
 		if (x + w > screen_width) {
 			x = screen_width - w;
 		}

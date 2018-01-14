@@ -48,8 +48,10 @@ int Unit::update(float time) {
 void Unit::change_health(float VARIABLE) {
 	health += VARIABLE;
 
-	if (health < 0) {
+	if (health <= 0) {
 		health = 0;
+
+		alive = false;
 	}
 }
 

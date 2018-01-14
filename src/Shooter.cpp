@@ -1,82 +1,80 @@
 #include "Shooter.h"
 
 int Shooter(sf::RenderWindow & window) {
-	sf::Image aim_i;
-	if (!aim_i.loadFromFile("res/images/aim/aim.png")) {
+	sf::Texture aim_t;
+	if (!aim_t.loadFromFile("res/images/aim/aim.png")) {
 		return 0;
 	}
 
-	sf::Image background_rocksand1_i;
-	if (!background_rocksand1_i.loadFromFile
+	sf::Texture background_rocksand1_t;
+	if (!background_rocksand1_t.loadFromFile
 		("res/images/background/rocksand1.png")) {
 
 		return 0;
 	}
 
-	sf::Image background_rocksand2_i;
-	if (!background_rocksand2_i.loadFromFile
+	sf::Texture background_rocksand2_t;
+	if (!background_rocksand2_t.loadFromFile
 		("res/images/background/rocksand2.png")) {
 
 		return 0;
 	}
 
-	sf::Image background_rockgray1_i;
-	if (!background_rockgray1_i.loadFromFile
+	sf::Texture background_rockgray1_t;
+	if (!background_rockgray1_t.loadFromFile
 		("res/images/background/rockgray1.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_explosion1_i;
-	if (!effects_explosion1_i.loadFromFile
+	sf::Texture effects_explosion1_t;
+	if (!effects_explosion1_t.loadFromFile
 		("res/images/effects/explosion1.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_explosion2_i;
-	if (!effects_explosion2_i.loadFromFile
+	sf::Texture effects_explosion2_t;
+	if (!effects_explosion2_t.loadFromFile
 		("res/images/effects/explosion2.png")) {
 
 		return 0;
 	}
 
-	sf::Image effects_shooting_i;
-	if (!effects_shooting_i.loadFromFile("res/images/effects/shooting2.png")) {
+	sf::Texture effects_shooting_t;
+	if (!effects_shooting_t.loadFromFile("res/images/effects/shooting2.png")) {
 		return 0;
 	}
 
-	sf::Image enemy_copsjups_i;
-	if (!enemy_copsjups_i.loadFromFile("res/images/enemy/copsjups.png")) {
+	sf::Texture enemy_copsjups_t;
+	if (!enemy_copsjups_t.loadFromFile("res/images/enemy/copsjups.png")) {
 		return 0;
 	}
 
-	sf::Image enemy_hammer_i;
-	if (!enemy_hammer_i.loadFromFile("res/images/enemy/hammer.png")) {
+	sf::Texture enemy_hammer_t;
+	if (!enemy_hammer_t.loadFromFile("res/images/enemy/hammer.png")) {
 		return 0;
 	}
 
-	sf::Image enemy_lapdcar_i;
-	if (!enemy_lapdcar_i.loadFromFile("res/images/enemy/lapdcar.png")) {
+	sf::Texture enemy_lapdcar_t;
+	if (!enemy_lapdcar_t.loadFromFile("res/images/enemy/lapdcar.png")) {
 		return 0;
 	}
 
-	sf::Image background_i;
-	if (!background_i.loadFromFile
+	sf::Texture background_t;
+	if (!background_t.loadFromFile
 		("res/images/background/shooter-background.png")) {
 
 		return 0;
 	}
-	sf::Texture background_t;
-	background_t.loadFromImage(background_i);
 
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
 	background_s.setScale(Shooter_background_scale_x,
 		Shooter_background_scale_y);
 
-	sf::Image plate_i;
-	plate_i.loadFromFile("res/images/interface/button.png");
+	sf::Texture plate_t;
+	plate_t.loadFromFile("res/images/interface/button.png");
 
 	sf::Font font;
 	font.loadFromFile("res/font/beer_money.ttf");
@@ -84,10 +82,10 @@ int Shooter(sf::RenderWindow & window) {
 	text.setColor(sf::Color::Black);
 
 
-	Player player(aim_i, player_spawn_x, player_spawn_y, player_speed,
+	Player player(aim_t, player_spawn_x, player_spawn_y, player_speed,
 		player_spawn_health, Shooter_player_time_between_shots,
 		Shooter_player_damage_per_shot);
-	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
+	Interface interface_health_and_score_bar(plate_t, interface_plate_x,
 		interface_plate_y, text);
 
 	std::list<Background*>  background_objects;
@@ -137,8 +135,8 @@ int Shooter(sf::RenderWindow & window) {
 			Shooter_background_object_spawn_y,
 			Shooter_background_object_probability,
 			background_object_generate_probability,
-			background_objects, background_timer, background_rockgray1_i,
-			background_rocksand1_i, background_rocksand2_i);
+			background_objects, background_timer, background_rockgray1_t,
+			background_rocksand1_t, background_rocksand2_t);
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 		enemy_time = enemy_timer.getElapsedTime().asSeconds();
@@ -151,7 +149,7 @@ int Shooter(sf::RenderWindow & window) {
 			int r = rand() % 3;
 			switch (r) {
 			case 0:
-				enemies.push_back(new Shooter_enemies_cars(enemy_copsjups_i,
+				enemies.push_back(new Shooter_enemies_cars(enemy_copsjups_t,
 					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
 					Shooter_enemy_copsjups_speed, RIGHT,
 					Shooter_enemy_copsjups_health,
@@ -159,7 +157,7 @@ int Shooter(sf::RenderWindow & window) {
 					Shooter_enemy_copsjups_damage));
 				break;
 			case 1:
-				enemies.push_back(new Shooter_enemies_cars(enemy_hammer_i,
+				enemies.push_back(new Shooter_enemies_cars(enemy_hammer_t,
 					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
 					Shooter_enemy_hammer_speed, RIGHT,
 					Shooter_enemy_hammer_health,
@@ -167,7 +165,7 @@ int Shooter(sf::RenderWindow & window) {
 					Shooter_enemy_hammer_damage));
 				break;
 			case 2:
-				enemies.push_back(new Shooter_enemies_cars(enemy_lapdcar_i,
+				enemies.push_back(new Shooter_enemies_cars(enemy_lapdcar_t,
 					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
 					Shooter_enemy_lapdcar_speed, RIGHT,
 					Shooter_enemy_lapdcar_health,
@@ -205,7 +203,7 @@ int Shooter(sf::RenderWindow & window) {
 			}
 			if (e->is_alive() == false || e->get_health() <= 0) {
 				if (e->get_health() <= 0) {
-					effects.push_back(new Effect(effects_explosion2_i,
+					effects.push_back(new Effect(effects_explosion2_t,
 						Effects_spawn_x, Effects_spawn_y, background_speed,
 						LEFT, effects_explosion2_exist_time));
 
@@ -228,7 +226,7 @@ int Shooter(sf::RenderWindow & window) {
 			&& player.is_shot_available()) {
 			player.shoot();
 
-			effects.push_back(new Effect(effects_shooting_i,
+			effects.push_back(new Effect(effects_shooting_t,
 				Effects_player_spawn_x, Effects_player_spawn_y,
 				Shooter_effects_shooting_speed, STAY,
 				Shooter_effects_shooting_exist_time));
@@ -239,7 +237,7 @@ int Shooter(sf::RenderWindow & window) {
 
 				if (e->get_rect().intersects(player.get_rect())) {
 					e->change_health(-player.return_damage());
-					effects.push_back(new Effect(effects_explosion1_i,
+					effects.push_back(new Effect(effects_explosion1_t,
 						Effects_player_spawn_x, Effects_player_spawn_y,
 						background_speed, LEFT, effects_explosion1_exist_time));
 				}

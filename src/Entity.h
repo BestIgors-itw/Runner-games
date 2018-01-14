@@ -12,20 +12,18 @@ protected:
 	float x, y;
 	unsigned short int w, h;
 	bool alive;
-	sf::Texture texture;
 	sf::Sprite sprite;
 public:
-	Entity(sf::Image &image, float X, float Y) {
+	Entity(sf::Texture &TEXTURE, float X, float Y) {
 		sf::Vector2u buffer;
-		buffer = image.getSize();
+		buffer = TEXTURE.getSize();
 		x = X;
 		y = Y;
 		w = buffer.x;
 		h = buffer.y;
 
 		alive = true;
-		texture.loadFromImage(image);
-		sprite.setTexture(texture);
+		sprite.setTexture(TEXTURE);
 		sprite.setOrigin(w / 2, h / 2);
 	}
 

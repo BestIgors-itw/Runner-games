@@ -10,8 +10,8 @@ protected:
 	float speed;
 	unsigned short int direction;
 public:
-	Movable(sf::Image &IMAGE, float X, float Y, float SPEED, unsigned short int DIRECTION)
-		:Entity(IMAGE, X, Y) {
+	Movable(sf::Texture &TEXTURE, float X, float Y, float SPEED, unsigned short int DIRECTION)
+		:Entity(TEXTURE, X, Y) {
 		speed = SPEED;
 		direction = DIRECTION;
 		Direction_convert(direction, dx, dy, speed);

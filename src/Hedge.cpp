@@ -23,17 +23,17 @@ int Hedge::update(float time) {
 
 void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 	std::list<Hedge*> &HEDGES, float GAME_TIME, sf::Clock &HEDGE_TIMER,
-	sf::Image IMAGE1, sf::Image IMAGE2) {
+	sf::Texture &HEDGES_DEADCARS1, sf::Texture &HEDGES_DEADCARS2) {
 	if (HEDGE_GENERATE_PROBABILITY < 0) {
 		int r = rand() % 2;
 		switch (r) {
 		case 0:
-			HEDGES.push_back(new Hedge(IMAGE1,
+			HEDGES.push_back(new Hedge(HEDGES_DEADCARS1,
 				Race_enemy_spawn_x, Race_enemy_spawn_y,
 				DOWN, Race_hedges_deadcars1_health));
 			break;
 		case 1:
-			HEDGES.push_back(new Hedge(IMAGE2,
+			HEDGES.push_back(new Hedge(HEDGES_DEADCARS2,
 				Race_enemy_spawn_x, Race_enemy_spawn_y,
 				DOWN, Race_hedges_deadcars2_health));
 			break;
@@ -48,20 +48,32 @@ void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 }
 
 void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
-	std::list<Effect*> &EFFECTS, sf::Image EFFECTS_EXPLOSION_i) {
+	std::list<Effect*> &EFFECTS, sf::Texture &EFFECTS_EXPLOSION_T) {
 	std::list<Hedge*>::iterator it1_hedges;
 	for (it1_hedges = HEDGES.begin(); it1_hedges != HEDGES.end();
 		++it1_hedges) {
 		Hedge *e = *it1_hedges;
 		if (e->get_rect().intersects(PLAYER.get_rect())) {
 			e->alive = false;
-			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION_i,
+			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION_T,
 				Effects_spawn_x, Effects_spawn_y,
 				background_speed, DOWN, effects_explosion2_exist_time));
 
 			PLAYER.change_health(-(e->health));
 
 			PLAYER.change_score(-5);
+		}
+	}
+}
+
+void hedges_garbage_collector(std::list<Hedge*> &HEDGES) {
+	for (std::list<Hedge*>::iterator it1_hedges = HEDGES.begin(); it1_hedges
+		!= HEDGES.end(); ) {
+		if ((*it1_hedges)->alive == false) {
+			it1_hedges = HEDGES.erase(it1_hedges);
+		}
+		else {
+			++it1_hedges;
 		}
 	}
 }

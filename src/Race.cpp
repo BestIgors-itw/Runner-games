@@ -1,63 +1,35 @@
 #include "Race.h"
 
-int Race(sf::RenderWindow & window) {
-	sf::Image player_i;
-	if (!player_i.loadFromFile("res/images/unit/chevroletbattle.png")) {
-		return 0;
+int Race(sf::RenderWindow &WINDOW) {
+	sf::Texture player_t;
+	
+	sf::Texture background_rocksand1_t;
+	sf::Texture background_rocksand2_t;
+	sf::Texture background_rockgray1_t;
+
+	sf::Texture hedges_deadcars1_t;
+	sf::Texture hedges_deadcars2_t;
+	
+	sf::Texture effects_explosion2_t;
+
+	sf::Texture interface_plate_t;
+
+	if (initializing(player_t, background_rocksand1_t, background_rocksand2_t,
+		background_rockgray1_t, hedges_deadcars1_t,
+		hedges_deadcars2_t, effects_explosion2_t, interface_plate_t)) {
+
+		return 1;
 	}
 
-	sf::Image background_rocksand1_i;
-	if (!background_rocksand1_i.loadFromFile
-		("res/images/background/rocksand1.png")) {
-
-		return 0;
-	}
-
-	sf::Image background_rocksand2_i;
-	if (!background_rocksand2_i.loadFromFile
-		("res/images/background/rocksand2.png")) {
-
-		return 0;
-	}
-
-	sf::Image background_rockgray1_i;
-	if (!background_rockgray1_i.loadFromFile
-		("res/images/background/rockgray1.png")) {
-
-		return 0;
-	}
-
-	sf::Image hedges_deadcars1_i;
-	if (!hedges_deadcars1_i.loadFromFile("res/images/hedges/deadcars1.png")) {
-		return 0;
-	}
-
-	sf::Image hedges_deadcars2_i;
-	if (!hedges_deadcars2_i.loadFromFile("res/images/hedges/deadcars2.png")) {
-		return 0;
-	}
-
-	sf::Image effects_explosion2_i;
-	if (!effects_explosion2_i.loadFromFile
-		("res/images/effects/explosion2.png")) {
-
-		return 0;
-	}
-
-	sf::Image background_i;
-	if (!background_i.loadFromFile
-		("res/images/background/sandbackground.png")) {
-		return 0;
-	}
 	sf::Texture background_t;
-	background_t.loadFromImage(background_i);
+	if (!background_t.loadFromFile
+		("res/images/background/sandbackground.png")) {
+		return 1;
+	}
 
 	sf::Sprite background_s;
 	background_s.setTexture(background_t);
 	background_s.setScale(Race_background_scale_x, Race_background_scale_y);
-
-	sf::Image plate_i;
-	plate_i.loadFromFile("res/images/interface/button.png");
 
 	sf::Font font;
 	font.loadFromFile("res/font/beer_money.ttf");
@@ -65,20 +37,15 @@ int Race(sf::RenderWindow & window) {
 	text.setColor(sf::Color::Black);
 
 
-	Player player(player_i, player_spawn_x, player_spawn_y, player_speed,
+	Player player(player_t, player_spawn_x, player_spawn_y, player_speed,
 		player_spawn_health, Scroll_Shooter_player_time_between_shots,
 		Scroll_Shooter_player_damage_per_shot);
-	Interface interface_health_and_score_bar(plate_i, interface_plate_x,
+	Interface interface_health_and_score_bar(interface_plate_t, interface_plate_x,
 		interface_plate_y, text);
 
 	std::list<Background*> background_objects;
-	std::list<Background*>::iterator it_background;
-
 	std::list<Effect*> effects;
-	std::list<Effect*>::iterator it_effects;
-
 	std::list<Hedge*> hedges;
-	std::list<Hedge*>::iterator it1_hedges, it2_hedges;
 
 	srand(time(NULL));
 
@@ -86,117 +53,182 @@ int Race(sf::RenderWindow & window) {
 	float score_time = game_time;
 
 	float hedge_generate_probability = Race_game_difficulty;
-	float hedge_time;
 
 	float background_object_generate_probability
 		= Race_background_object_probability;
-	float background_time;
 
-	float Compensating_for_performance_losses_time;
-
-	while (window.isOpen()) {
+	while (WINDOW.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
-
-		Compensating_for_performance_losses_time
-			= Compensating_for_performance_losses_timer.getElapsedTime()
-			.asMicroseconds();
-
-		Compensating_for_performance_losses_timer.restart();
-
-		Compensating_for_performance_losses_time
-			= Compensating_for_performance_losses_coefficient;
 
 		game_time = game_timer.getElapsedTime().asSeconds();
 
 		player.change_score(game_time - score_time);
 		score_time = game_time;
 
-		background_time = background_timer.getElapsedTime().asSeconds();
+		generate(background_objects, hedges,
+			background_object_generate_probability, hedge_generate_probability,
+			background_rockgray1_t, background_rocksand1_t,
+			background_rocksand2_t, hedges_deadcars1_t, hedges_deadcars2_t);
 
-		background_object_generate_probability
-			= background_object_generate_probability - background_time * 100
-			- rand() % 100;
+		player_collision_hedges(player, hedges, effects, effects_explosion2_t);
 
-		generate_background_objects(DOWN, Race_background_object_spawn_x,
-			Race_background_object_spawn_y, Race_background_object_probability,
-			background_object_generate_probability,
-			background_objects, background_timer, background_rockgray1_i,
-			background_rocksand1_i, background_rocksand2_i);
-
-		hedge_time = hedge_timer.getElapsedTime().asSeconds();
-		hedge_generate_probability = hedge_generate_probability - hedge_time
-			* 10 - rand() % 100;
-
-		generate_hedge(hedge_generate_probability, hedges, game_time,
-			hedge_timer, hedges_deadcars1_i, hedges_deadcars2_i);
-
-		background_garbage_collector(background_objects);
-
-		player_collision_hedges(player, hedges, effects, effects_explosion2_i);
-
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();) {
-			Hedge *e = *it1_hedges;
-			if (e->is_alive() == false) {
-				it1_hedges = hedges.erase(it1_hedges);
-				delete e;
-			}
-			else ++it1_hedges;
-		}
-
-		for (it_effects = effects.begin(); it_effects != effects.end();) {
-			Effect *e = *it_effects;
-			if (e->is_alive() == false) {
-				it_effects = effects.erase(it_effects);
-				delete e;
-			}
-			else ++it_effects;
-		}
-
-		if (player.update(Compensating_for_performance_losses_time)) {
+		if (!player.is_alive()) {
 			break;
 		}
 
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end(); ++it_background) {
-			(*it_background)->update(Compensating_for_performance_losses_time);
-		}
+		garbage_collector(background_objects, hedges, effects);
 
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();
-			++it1_hedges) {
-			(*it1_hedges)->update(Compensating_for_performance_losses_time);
-		}
+		update(WINDOW, background_objects, hedges, effects, player);
 
-		for (it_effects = effects.begin(); it_effects != effects.end();
-			++it_effects) {
-			(*it_effects)->update(Compensating_for_performance_losses_time);
-		}
-
-		window.draw(background_s);
-
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end(); ++it_background) {
-			window.draw((*it_background)->get_sprite());
-		}
-
-		for (it1_hedges = hedges.begin(); it1_hedges != hedges.end();
-			++it1_hedges) {
-			window.draw((*it1_hedges)->get_sprite());
-		}
-
-		window.draw(player.get_sprite());
-
-		for (it_effects = effects.begin(); it_effects != effects.end();
-			++it_effects) {
-			window.draw((*it_effects)->get_sprite());
-		}
+		draw(WINDOW, background_s, background_objects, hedges, effects,
+			player);
 
 		interface_health_and_score_bar.update(player.get_score(),
-			player.get_health(), window);
+			player.get_health(), WINDOW);
 
-		window.display();
+		WINDOW.display();
 	}
 
 	return 0;
+}
+
+inline bool initializing(sf::Texture &player_t,
+	sf::Texture &background_rocksand1_t, sf::Texture &background_rocksand2_t,
+	sf::Texture &background_rockgray1_t, sf::Texture &hedges_deadcars1_t,
+	sf::Texture &hedges_deadcars2_t, sf::Texture &effects_explosion2_t,
+	sf::Texture &plate_t) {
+	if (!player_t.loadFromFile("res/images/unit/chevroletbattle.png")) {
+		return 1;
+	}
+
+	if (!background_rocksand1_t.loadFromFile
+	("res/images/background/rocksand1.png")) {
+
+		return 1;
+	}
+
+	if (!background_rocksand2_t.loadFromFile
+	("res/images/background/rocksand2.png")) {
+
+		return 1;
+	}
+
+	if (!background_rockgray1_t.loadFromFile
+	("res/images/background/rockgray1.png")) {
+
+		return 1;
+	}
+
+	if (!hedges_deadcars1_t.loadFromFile("res/images/hedges/deadcars1.png")) {
+		return 1;
+	}
+
+	if (!hedges_deadcars2_t.loadFromFile("res/images/hedges/deadcars2.png")) {
+		return 1;
+	}
+
+	if (!effects_explosion2_t.loadFromFile
+	("res/images/effects/explosion2.png")) {
+		return 1;
+	}
+
+	if (!plate_t.loadFromFile("res/images/interface/button.png")) {
+		return 1;
+	}
+
+	return 0;
+}
+
+inline void generate(std::list<Background*> &BACKGROUND_OBJECTS,
+	std::list<Hedge*> &HEDGES, float &BACKGROUND_OBJECT_GENERATE_PROBABILITY,
+	float &HEDGE_GENERATE_PROBABILITY, sf::Texture &BACKGROUND_ROCKGRAY1_T,
+	sf::Texture &BACKGROUND_ROCKSAND1_T, sf::Texture &BACKGROUND_ROCKSAND2_T,
+	sf::Texture &HEDGES_DEADCARS1_T, sf::Texture &HEDGES_DEADCARS2_T) {
+	float background_time = background_timer.getElapsedTime().asSeconds();
+
+	BACKGROUND_OBJECT_GENERATE_PROBABILITY
+		= BACKGROUND_OBJECT_GENERATE_PROBABILITY - background_time * 100
+		- rand() % 100;
+
+	generate_background_objects(DOWN, Race_background_object_spawn_x,
+		Race_background_object_spawn_y, Race_background_object_probability,
+		BACKGROUND_OBJECT_GENERATE_PROBABILITY,
+		BACKGROUND_OBJECTS, background_timer, BACKGROUND_ROCKGRAY1_T,
+		BACKGROUND_ROCKSAND1_T, BACKGROUND_ROCKSAND2_T);
+
+	float hedge_time = hedge_timer.getElapsedTime().asSeconds();
+	HEDGE_GENERATE_PROBABILITY = HEDGE_GENERATE_PROBABILITY - hedge_time
+		* 100 - rand() % 100;
+
+	float game_time = game_timer.getElapsedTime().asSeconds();
+	generate_hedge(HEDGE_GENERATE_PROBABILITY, HEDGES, game_time,
+		hedge_timer, HEDGES_DEADCARS1_T, HEDGES_DEADCARS2_T);
+}
+
+inline void garbage_collector(std::list<Background*> &BACKGROUND_OBJECTS,
+	std::list<Hedge*> &HEDGES, std::list<Effect*> &EFFECTS) {
+
+	background_garbage_collector(BACKGROUND_OBJECTS);
+
+	hedges_garbage_collector(HEDGES);
+
+	effects_garbage_collector(EFFECTS);
+}
+
+inline void update(sf::RenderWindow &WINDOW,
+	std::list<Background*> &BACKGROUND_OBJECTS, std::list<Hedge*> &HEDGES,
+	std::list<Effect*> &EFFECTS, Player &PLAYER) {
+
+	float Compensating_for_performance_losses_time
+		= Compensating_for_performance_losses_timer.getElapsedTime()
+		.asMicroseconds();
+
+	Compensating_for_performance_losses_timer.restart();
+
+	Compensating_for_performance_losses_time
+		= Compensating_for_performance_losses_coefficient;
+
+	PLAYER.update(Compensating_for_performance_losses_time);
+
+	for (std::list<Background*>::iterator it_background
+		= BACKGROUND_OBJECTS.begin(); it_background
+		!= BACKGROUND_OBJECTS.end(); ++it_background) {
+		(*it_background)->update(Compensating_for_performance_losses_time);
+	}
+
+	for (std::list<Hedge*>::iterator it1_hedges = HEDGES.begin(); it1_hedges
+		!= HEDGES.end(); ++it1_hedges) {
+		(*it1_hedges)->update(Compensating_for_performance_losses_time);
+	}
+
+	for (std::list<Effect*>::iterator it_effects = EFFECTS.begin(); it_effects
+		!= EFFECTS.end(); ++it_effects) {
+		(*it_effects)->update(Compensating_for_performance_losses_time);
+	}
+}
+
+inline void draw(sf::RenderWindow &WINDOW, sf::Sprite &BACKGROUND,
+	std::list<Background*> &BACKGROUND_OBJECTS, std::list<Hedge*> &HEDGES,
+	std::list<Effect*> &EFFECTS, Player &PLAYER) {
+	WINDOW.draw(BACKGROUND);
+
+	for (std::list<Background*>::iterator it_background
+		= BACKGROUND_OBJECTS.begin(); it_background
+		!= BACKGROUND_OBJECTS.end(); ++it_background) {
+		WINDOW.draw((*it_background)->get_sprite());
+	}
+
+	for (std::list<Hedge*>::iterator it1_hedges
+		= HEDGES.begin(); it1_hedges != HEDGES.end(); ++it1_hedges) {
+		WINDOW.draw((*it1_hedges)->get_sprite());
+	}
+
+	WINDOW.draw(PLAYER.get_sprite());
+
+	for (std::list<Effect*>::iterator it_effects = EFFECTS.begin(); it_effects
+		!= EFFECTS.end(); ++it_effects) {
+		WINDOW.draw((*it_effects)->get_sprite());
+	}
 }
