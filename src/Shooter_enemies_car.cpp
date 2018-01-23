@@ -3,7 +3,7 @@
 #define screen_width 1600
 #define screen_height 900
 
-int Shooter_enemies_cars::update(float time) {
+int Shooter_enemies_car::update(float time) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 2) {
 		if (direction == RIGHT || direction == UP_RIGHT
 			|| direction == DOWN_RIGHT) {
@@ -75,4 +75,61 @@ int Shooter_enemies_cars::update(float time) {
 	}
 
 	return 0;
+}
+
+void shooter_enemies_car_generate(float &GENERATE_PROBABILITY,
+	char &ENEMY_NUMBER, std::list<Shooter_enemies_car*> &ENEMIES,
+	float GAME_TIME, sf::Clock &TIMER, sf::Texture &ENEMY_COPSJUPS_T,
+	sf::Texture &ENEMY_HAMMER_T, sf::Texture &ENEMY_LAPDCAR_T) {
+
+	if (GENERATE_PROBABILITY < 0 && ENEMY_NUMBER < 7) {
+		++ENEMY_NUMBER;
+
+		int r = rand() % 3;
+		switch (r) {
+		case 0:
+			ENEMIES.push_back(new Shooter_enemies_car(ENEMY_COPSJUPS_T,
+				Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
+				Shooter_enemy_copsjups_speed, RIGHT,
+				Shooter_enemy_copsjups_health,
+				Shooter_enemy_copsjups_time_between_attack,
+				Shooter_enemy_copsjups_damage));
+			break;
+		case 1:
+			ENEMIES.push_back(new Shooter_enemies_car(ENEMY_HAMMER_T,
+				Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
+				Shooter_enemy_hammer_speed, RIGHT,
+				Shooter_enemy_hammer_health,
+				Shooter_enemy_hammer_time_between_attack,
+				Shooter_enemy_hammer_damage));
+			break;
+		case 2:
+			ENEMIES.push_back(new Shooter_enemies_car(ENEMY_LAPDCAR_T,
+				Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
+				Shooter_enemy_lapdcar_speed, RIGHT,
+				Shooter_enemy_lapdcar_health,
+				Shooter_enemy_lapdcar_time_between_attack,
+				Shooter_enemy_lapdcar_damage));
+			break;
+		}
+
+		GENERATE_PROBABILITY = Shooter_game_difficulty - GAME_TIME * 25;
+
+		if (GENERATE_PROBABILITY < Shooter_max_game_difficulty) {
+			GENERATE_PROBABILITY = Shooter_max_game_difficulty;
+		}
+		TIMER.restart();
+	}
+}
+
+void shooter_enemies_car_garbage_collector(std::list<Shooter_enemies_car*> &ENEMIES) {
+	for (std::list<Shooter_enemies_car*>::iterator it_enemies
+		= ENEMIES.begin(); it_enemies != ENEMIES.end(); ) {
+		if ((*it_enemies)->is_alive() == false) {
+			it_enemies = ENEMIES.erase(it_enemies);
+		}
+		else {
+			++it_enemies;
+		}
+	}
 }

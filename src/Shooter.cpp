@@ -1,64 +1,29 @@
 #include "Shooter.h"
 
-int Shooter(sf::RenderWindow & window) {
+int Shooter(sf::RenderWindow & WINDOW) {
 	sf::Texture aim_t;
-	if (!aim_t.loadFromFile("res/images/aim/aim.png")) {
-		return 0;
-	}
 
 	sf::Texture background_rocksand1_t;
-	if (!background_rocksand1_t.loadFromFile
-		("res/images/background/rocksand1.png")) {
-
-		return 0;
-	}
-
 	sf::Texture background_rocksand2_t;
-	if (!background_rocksand2_t.loadFromFile
-		("res/images/background/rocksand2.png")) {
-
-		return 0;
-	}
-
 	sf::Texture background_rockgray1_t;
-	if (!background_rockgray1_t.loadFromFile
-		("res/images/background/rockgray1.png")) {
-
-		return 0;
-	}
 
 	sf::Texture effects_explosion1_t;
-	if (!effects_explosion1_t.loadFromFile
-		("res/images/effects/explosion1.png")) {
-
-		return 0;
-	}
-
 	sf::Texture effects_explosion2_t;
-	if (!effects_explosion2_t.loadFromFile
-		("res/images/effects/explosion2.png")) {
-
-		return 0;
-	}
 
 	sf::Texture effects_shooting_t;
-	if (!effects_shooting_t.loadFromFile("res/images/effects/shooting2.png")) {
-		return 0;
-	}
 
 	sf::Texture enemy_copsjups_t;
-	if (!enemy_copsjups_t.loadFromFile("res/images/enemy/copsjups.png")) {
-		return 0;
-	}
-
 	sf::Texture enemy_hammer_t;
-	if (!enemy_hammer_t.loadFromFile("res/images/enemy/hammer.png")) {
-		return 0;
-	}
-
 	sf::Texture enemy_lapdcar_t;
-	if (!enemy_lapdcar_t.loadFromFile("res/images/enemy/lapdcar.png")) {
-		return 0;
+
+	sf::Texture interface_plate_t;
+
+	if (initializing(aim_t, background_rocksand1_t, background_rocksand2_t,
+		background_rockgray1_t, enemy_copsjups_t, enemy_hammer_t,
+		enemy_lapdcar_t, effects_explosion1_t, effects_explosion2_t,
+		effects_shooting_t, interface_plate_t)) {
+
+		return 1;
 	}
 
 	sf::Texture background_t;
@@ -73,9 +38,6 @@ int Shooter(sf::RenderWindow & window) {
 	background_s.setScale(Shooter_background_scale_x,
 		Shooter_background_scale_y);
 
-	sf::Texture plate_t;
-	plate_t.loadFromFile("res/images/interface/button.png");
-
 	sf::Font font;
 	font.loadFromFile("res/font/beer_money.ttf");
 	sf::Text text("", font, 50);
@@ -85,17 +47,12 @@ int Shooter(sf::RenderWindow & window) {
 	Player player(aim_t, player_spawn_x, player_spawn_y, player_speed,
 		player_spawn_health, Shooter_player_time_between_shots,
 		Shooter_player_damage_per_shot);
-	Interface interface_health_and_score_bar(plate_t, interface_plate_x,
+	Interface interface_health_and_score_bar(interface_plate_t, interface_plate_x,
 		interface_plate_y, text);
 
-	std::list<Background*>  background_objects;
-	std::list<Background*>::iterator it_background;
-
-	std::list<Effect*>  effects;
-	std::list<Effect*>::iterator it_effects;
-
-	std::list<Shooter_enemies_cars*>  enemies;
-	std::list<Shooter_enemies_cars*>::iterator it_enemies;
+	std::list<Background*> background_objects;
+	std::list<Effect*> effects;
+	std::list<Shooter_enemies_car*> enemies;
 
 	srand(time(NULL));
 
@@ -104,180 +61,251 @@ int Shooter(sf::RenderWindow & window) {
 	float enemy_generate_probability = Shooter_game_difficulty;
 	float background_object_generate_probability
 		= Shooter_background_object_probability;
-	float background_time;
 	float enemy_time;
-	int enemy_number = 0;
+	char enemy_number = 0;
 
-	while (window.isOpen()) {
+	while (WINDOW.isOpen()) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			break;
 		}
 
-		float Compensating_for_performance_losses_time
-			= Compensating_for_performance_losses_timer.getElapsedTime().asMicroseconds();
-
-		Compensating_for_performance_losses_timer.restart();
-
-		Compensating_for_performance_losses_time
-			= Compensating_for_performance_losses_coefficient;
-
-		if (player.update(Compensating_for_performance_losses_time)) {
-			break;
-		}
-
-		background_time = background_timer.getElapsedTime().asSeconds();
-
-		background_object_generate_probability
-			= background_object_generate_probability - background_time * 100
-			- rand() % 100;
-
-		generate_background_objects(LEFT, Shooter_background_object_spawn_x,
-			Shooter_background_object_spawn_y,
-			Shooter_background_object_probability,
-			background_object_generate_probability,
-			background_objects, background_timer, background_rockgray1_t,
-			background_rocksand1_t, background_rocksand2_t);
-
 		game_time = game_timer.getElapsedTime().asSeconds();
-		enemy_time = enemy_timer.getElapsedTime().asSeconds();
-		enemy_generate_probability = enemy_generate_probability - enemy_time
-			* 100 - rand() % 100;
-
-		if (enemy_generate_probability < 0 && enemy_number < 7) {
-			++enemy_number;
-
-			int r = rand() % 3;
-			switch (r) {
-			case 0:
-				enemies.push_back(new Shooter_enemies_cars(enemy_copsjups_t,
-					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
-					Shooter_enemy_copsjups_speed, RIGHT,
-					Shooter_enemy_copsjups_health,
-					Shooter_enemy_copsjups_time_between_attack,
-					Shooter_enemy_copsjups_damage));
-				break;
-			case 1:
-				enemies.push_back(new Shooter_enemies_cars(enemy_hammer_t,
-					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
-					Shooter_enemy_hammer_speed, RIGHT,
-					Shooter_enemy_hammer_health,
-					Shooter_enemy_hammer_time_between_attack,
-					Shooter_enemy_hammer_damage));
-				break;
-			case 2:
-				enemies.push_back(new Shooter_enemies_cars(enemy_lapdcar_t,
-					Shooter_enemy_spawn_x, Shooter_enemy_spawn_y,
-					Shooter_enemy_lapdcar_speed, RIGHT,
-					Shooter_enemy_lapdcar_health,
-					Shooter_enemy_lapdcar_time_between_attack,
-					Shooter_enemy_lapdcar_damage));
-				break;
-			}
-			enemy_generate_probability = Shooter_game_difficulty - game_time
-				* 25;
-			if (enemy_generate_probability < Shooter_max_game_difficulty) {
-				enemy_generate_probability = Shooter_max_game_difficulty;
-			}
-			enemy_timer.restart();
-		}
 
 		player.change_score(game_time - score_time);
 		score_time = game_time;
 
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end();) {
-			Background *b = *it_background;
-			b->update(Compensating_for_performance_losses_time);
-			if (b->is_alive() == false) {
-				it_background = background_objects.erase(it_background);
-				delete b;
-			}
-			else ++it_background;
+		generate(background_objects, enemies,
+			background_object_generate_probability, enemy_generate_probability,
+			enemy_number, background_rockgray1_t, background_rocksand1_t,
+			background_rocksand2_t, enemy_copsjups_t, enemy_hammer_t,
+			enemy_lapdcar_t);
+
+		objects_interact(player, enemies, effects, enemy_number,
+			effects_shooting_t, effects_explosion1_t, effects_explosion2_t);
+
+		if (!player.is_alive()) {
+			break;
 		}
 
-		for (it_enemies = enemies.begin(); it_enemies != enemies.end();) {
-			Shooter_enemies_cars *e = *it_enemies;
-			if (e->update(Compensating_for_performance_losses_time)) {
-				player.change_health(-e->return_damage());
-				player.change_score(-5);
-			}
-			if (e->is_alive() == false || e->get_health() <= 0) {
-				if (e->get_health() <= 0) {
-					effects.push_back(new Effect(effects_explosion2_t,
-						Effects_spawn_x, Effects_spawn_y, background_speed,
-						LEFT, effects_explosion2_exist_time));
+		garbage_collector(background_objects, enemies, effects);
 
-					player.change_score(5);
+		update(WINDOW, background_objects, enemies, effects, player);
 
-					it_enemies = enemies.erase(it_enemies);
-					delete e;
-					--enemy_number;
-				}
-				if (e->is_alive() == false) {
-					it_enemies = enemies.erase(it_enemies);
-					delete e;
-					--enemy_number;
-				}
-			}
-			else ++it_enemies;
-		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
-			&& player.is_shot_available()) {
-			player.shoot();
-
-			effects.push_back(new Effect(effects_shooting_t,
-				Effects_player_spawn_x, Effects_player_spawn_y,
-				Shooter_effects_shooting_speed, STAY,
-				Shooter_effects_shooting_exist_time));
-			
-			for (it_enemies = enemies.begin(); it_enemies != enemies.end();
-				++it_enemies) {
-				Shooter_enemies_cars *e = *it_enemies;
-
-				if (e->get_rect().intersects(player.get_rect())) {
-					e->change_health(-player.return_damage());
-					effects.push_back(new Effect(effects_explosion1_t,
-						Effects_player_spawn_x, Effects_player_spawn_y,
-						background_speed, LEFT, effects_explosion1_exist_time));
-				}
-			}
-		}
-
-		for (it_effects = effects.begin(); it_effects != effects.end();) {
-			Effect *e = *it_effects;
-			e->update(Compensating_for_performance_losses_time);
-			if (e->is_alive() == false) {
-				it_effects = effects.erase(it_effects);
-				delete e;
-			}
-			else ++it_effects;
-		}
-
-		window.draw(background_s);
-
-		for (it_background = background_objects.begin();
-			it_background != background_objects.end(); ++it_background) {
-			window.draw((*it_background)->get_sprite());
-		}
-
-		for (it_enemies = enemies.begin(); it_enemies != enemies.end();
-			++it_enemies) {
-			window.draw((*it_enemies)->get_sprite());
-		}
-
-		for (it_effects = effects.begin(); it_effects != effects.end();
-			++it_effects) {
-			window.draw((*it_effects)->get_sprite());
-		}
-
-		window.draw(player.get_sprite());
+		draw(WINDOW, background_s, background_objects, enemies, effects,
+			player);
 
 		interface_health_and_score_bar.update(player.get_score(),
-			player.get_health(), window);
+			player.get_health(), WINDOW);
 
-		window.display();
+		WINDOW.display();
 	}
 
 	return 0;
+}
+
+inline bool initializing(sf::Texture &aim_t,
+	sf::Texture &background_rocksand1_t, sf::Texture &background_rocksand2_t,
+	sf::Texture &background_rockgray1_t, sf::Texture &enemy_copsjups_t,
+	sf::Texture &enemy_hammer_t, sf::Texture &enemy_lapdcar_t, sf::Texture &effects_explosion1_t,
+	sf::Texture &effects_explosion2_t, sf::Texture &effects_shooting_t, 
+	sf::Texture &interface_plate_t) {
+	if (!aim_t.loadFromFile("res/images/aim/aim.png")) {
+		return 1;
+	}
+
+	if (!background_rocksand1_t.loadFromFile
+	("res/images/background/rocksand1.png")) {
+
+		return 1;
+	}
+
+	if (!background_rocksand2_t.loadFromFile
+	("res/images/background/rocksand2.png")) {
+
+		return 1;
+	}
+
+	if (!background_rockgray1_t.loadFromFile
+	("res/images/background/rockgray1.png")) {
+
+		return 1;
+	}
+
+	if (!enemy_copsjups_t.loadFromFile("res/images/enemy/copsjups.png")) {
+		return 1;
+	}
+
+	if (!enemy_hammer_t.loadFromFile("res/images/enemy/hammer.png")) {
+		return 1;
+	}
+
+	if (!enemy_lapdcar_t.loadFromFile("res/images/enemy/lapdcar.png")) {
+		return 1;
+	}
+
+	if (!effects_explosion1_t.loadFromFile
+	("res/images/effects/explosion1.png")) {
+
+		return 1;
+	}
+
+	if (!effects_explosion2_t.loadFromFile
+	("res/images/effects/explosion2.png")) {
+		return 1;
+	}
+
+	if (!effects_shooting_t.loadFromFile("res/images/effects/shooting2.png")) {
+		return 1;
+	}
+
+	if (!interface_plate_t.loadFromFile("res/images/interface/button.png")) {
+		return 1;
+	}
+
+	return 0;
+}
+
+inline void generate(std::list<Background*> &BACKGROUND_OBJECTS,
+	std::list<Shooter_enemies_car*> &ENEMIES,
+	float &BACKGROUND_OBJECT_GENERATE_PROBABILITY,
+	float &ENEMY_GENERATE_PROBABILITY, char &ENEMY_NUMBER,
+	sf::Texture &BACKGROUND_ROCKGRAY1_T, sf::Texture &BACKGROUND_ROCKSAND1_T,
+	sf::Texture &BACKGROUND_ROCKSAND2_T, sf::Texture &ENEMY_COPSJUPS_T,
+	sf::Texture &ENEMY_HAMMER_T, sf::Texture &ENEMY_LAPDCAR_T) {
+
+	float background_time = background_timer.getElapsedTime().asSeconds();
+	float enemy_time = enemy_timer.getElapsedTime().asSeconds();
+	float game_time = game_timer.getElapsedTime().asSeconds();
+
+	BACKGROUND_OBJECT_GENERATE_PROBABILITY
+		= BACKGROUND_OBJECT_GENERATE_PROBABILITY - background_time * 100
+		- rand() % 100;
+
+	ENEMY_GENERATE_PROBABILITY = ENEMY_GENERATE_PROBABILITY - enemy_time
+		* 100 - rand() % 100;
+
+	background_objects_generate(LEFT, Shooter_background_object_spawn_x,
+		Shooter_background_object_spawn_y, Shooter_background_object_probability,
+		BACKGROUND_OBJECT_GENERATE_PROBABILITY,
+		BACKGROUND_OBJECTS, background_timer, BACKGROUND_ROCKGRAY1_T,
+		BACKGROUND_ROCKSAND1_T, BACKGROUND_ROCKSAND2_T);
+
+	shooter_enemies_car_generate(ENEMY_GENERATE_PROBABILITY,
+		ENEMY_NUMBER, ENEMIES, game_time, enemy_timer, ENEMY_COPSJUPS_T,
+		ENEMY_HAMMER_T, ENEMY_LAPDCAR_T);
+}
+
+inline void objects_interact(Player &PLAYER,
+	std::list<Shooter_enemies_car*> &ENEMIES, std::list<Effect*> &EFFECTS,
+	char &ENEMY_NUMBER, sf::Texture &effects_shooting_t,
+	sf::Texture &effects_explosion1_t, sf::Texture &effects_explosion2_t) {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
+		&& PLAYER.is_shot_available()) {
+		PLAYER.shoot();
+
+		EFFECTS.push_back(new Effect(effects_shooting_t,
+			Shooter_effects_player_shot_spawn_x, Shooter_effects_player_shot_spawn_y,
+			Shooter_effects_shooting_speed, STAY,
+			Shooter_effects_shooting_exist_time));
+
+		for (std::list<Shooter_enemies_car*>::iterator it_enemies
+			= ENEMIES.begin(); it_enemies != ENEMIES.end();
+			++it_enemies) {
+			Shooter_enemies_car *e = *it_enemies;
+
+			if (e->get_rect().intersects(PLAYER.get_rect())) {
+				e->change_health(-PLAYER.return_damage());
+				EFFECTS.push_back(new Effect(effects_explosion1_t,
+					Shooter_effects_player_shot_spawn_x, Shooter_effects_player_shot_spawn_y,
+					background_speed, LEFT,
+					effects_explosion1_exist_time));
+			}
+		}
+	}
+
+	for (std::list<Shooter_enemies_car*>::iterator it_enemies
+		= ENEMIES.begin(); it_enemies != ENEMIES.end(); ++it_enemies) {
+		if ((*it_enemies)->get_health() <= 0) {
+			EFFECTS.push_back(new Effect(effects_explosion2_t,
+				Effects_spawn_x, Effects_spawn_y, background_speed,
+				LEFT, effects_explosion2_exist_time));
+
+			PLAYER.change_score(5);
+
+			--ENEMY_NUMBER;
+			(*it_enemies)->kill_object();
+		}
+	}
+}
+
+inline void garbage_collector(std::list<Background*> &BACKGROUND_OBJECTS,
+	std::list<Shooter_enemies_car*> &ENEMIES, std::list<Effect*> &EFFECTS) {
+
+	background_garbage_collector(BACKGROUND_OBJECTS);
+
+	shooter_enemies_car_garbage_collector(ENEMIES);
+
+	effects_garbage_collector(EFFECTS);
+}
+
+inline void update(sf::RenderWindow &WINDOW,
+	std::list<Background*> &BACKGROUND_OBJECTS, std::list<Shooter_enemies_car*> &ENEMIES,
+	std::list<Effect*> &EFFECTS, Player &PLAYER) {
+
+	float Compensating_for_performance_losses_time
+		= Compensating_for_performance_losses_timer.getElapsedTime()
+		.asMicroseconds();
+
+	Compensating_for_performance_losses_timer.restart();
+
+	Compensating_for_performance_losses_time
+		= Compensating_for_performance_losses_coefficient;
+
+	PLAYER.update(Compensating_for_performance_losses_time);
+
+	for (std::list<Background*>::iterator it_background
+		= BACKGROUND_OBJECTS.begin(); it_background
+		!= BACKGROUND_OBJECTS.end(); ++it_background) {
+		(*it_background)->update(Compensating_for_performance_losses_time);
+	}
+
+	for (std::list<Shooter_enemies_car*>::iterator it_enemies
+		= ENEMIES.begin(); it_enemies != ENEMIES.end(); ++it_enemies) {
+
+		if ((*it_enemies)->update(Compensating_for_performance_losses_time)) {
+			PLAYER.change_health(-(*it_enemies)->return_damage());
+			PLAYER.change_score(-5);
+		}
+	}
+
+	for (std::list<Effect*>::iterator it_effects = EFFECTS.begin(); it_effects
+		!= EFFECTS.end(); ++it_effects) {
+		(*it_effects)->update(Compensating_for_performance_losses_time);
+	}
+}
+
+inline void draw(sf::RenderWindow &WINDOW, sf::Sprite &BACKGROUND,
+	std::list<Background*> &BACKGROUND_OBJECTS, std::list<Shooter_enemies_car*> &ENEMIES,
+	std::list<Effect*> &EFFECTS, Player &PLAYER) {
+	WINDOW.draw(BACKGROUND);
+
+	for (std::list<Background*>::iterator it_background
+		= BACKGROUND_OBJECTS.begin(); it_background
+		!= BACKGROUND_OBJECTS.end(); ++it_background) {
+		WINDOW.draw((*it_background)->get_sprite());
+	}
+
+	for (std::list<Shooter_enemies_car*>::iterator it_enemies
+		= ENEMIES.begin(); it_enemies != ENEMIES.end();
+		++it_enemies) {
+		WINDOW.draw((*it_enemies)->get_sprite());
+	}
+
+	for (std::list<Effect*>::iterator it_effects = EFFECTS.begin(); it_effects
+		!= EFFECTS.end(); ++it_effects) {
+		WINDOW.draw((*it_effects)->get_sprite());
+	}
+
+	WINDOW.draw(PLAYER.get_sprite());
 }

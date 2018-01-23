@@ -98,7 +98,7 @@ inline bool initializing(sf::Texture &player_t,
 	sf::Texture &background_rocksand1_t, sf::Texture &background_rocksand2_t,
 	sf::Texture &background_rockgray1_t, sf::Texture &hedges_deadcars1_t,
 	sf::Texture &hedges_deadcars2_t, sf::Texture &effects_explosion2_t,
-	sf::Texture &plate_t) {
+	sf::Texture &interface_plate_t) {
 	if (!player_t.loadFromFile("res/images/unit/chevroletbattle.png")) {
 		return 1;
 	}
@@ -134,7 +134,7 @@ inline bool initializing(sf::Texture &player_t,
 		return 1;
 	}
 
-	if (!plate_t.loadFromFile("res/images/interface/button.png")) {
+	if (!interface_plate_t.loadFromFile("res/images/interface/button.png")) {
 		return 1;
 	}
 
@@ -147,22 +147,22 @@ inline void generate(std::list<Background*> &BACKGROUND_OBJECTS,
 	sf::Texture &BACKGROUND_ROCKSAND1_T, sf::Texture &BACKGROUND_ROCKSAND2_T,
 	sf::Texture &HEDGES_DEADCARS1_T, sf::Texture &HEDGES_DEADCARS2_T) {
 	float background_time = background_timer.getElapsedTime().asSeconds();
+	float hedge_time = hedge_timer.getElapsedTime().asSeconds();
+	float game_time = game_timer.getElapsedTime().asSeconds();
 
 	BACKGROUND_OBJECT_GENERATE_PROBABILITY
 		= BACKGROUND_OBJECT_GENERATE_PROBABILITY - background_time * 100
 		- rand() % 100;
 
-	generate_background_objects(DOWN, Race_background_object_spawn_x,
+	HEDGE_GENERATE_PROBABILITY = HEDGE_GENERATE_PROBABILITY - hedge_time
+		* 100 - rand() % 100;
+
+	background_objects_generate(DOWN, Race_background_object_spawn_x,
 		Race_background_object_spawn_y, Race_background_object_probability,
 		BACKGROUND_OBJECT_GENERATE_PROBABILITY,
 		BACKGROUND_OBJECTS, background_timer, BACKGROUND_ROCKGRAY1_T,
 		BACKGROUND_ROCKSAND1_T, BACKGROUND_ROCKSAND2_T);
 
-	float hedge_time = hedge_timer.getElapsedTime().asSeconds();
-	HEDGE_GENERATE_PROBABILITY = HEDGE_GENERATE_PROBABILITY - hedge_time
-		* 100 - rand() % 100;
-
-	float game_time = game_timer.getElapsedTime().asSeconds();
 	generate_hedge(HEDGE_GENERATE_PROBABILITY, HEDGES, game_time,
 		hedge_timer, HEDGES_DEADCARS1_T, HEDGES_DEADCARS2_T);
 }

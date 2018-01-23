@@ -110,7 +110,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 	std::list<Bullet*>::iterator it_bullets;
 
 	std::list<Enemies_cars*>  enemies_cars;
-	std::list<Enemies_cars*>::iterator it1_enemies_cars, it2_enemies_cars;
+	std::list<Enemies_cars*>::iterator it_enemies, it2_enemies_cars;
 
 	srand(time(NULL));
 
@@ -142,7 +142,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			= background_object_generate_probability - background_time
 			* 100 - rand() % 100;
 
-		generate_background_objects(DOWN,
+		background_objects_generate(DOWN,
 			Scroll_Shooter_background_object_spawn_x,
 			Scroll_Shooter_background_object_spawn_y,
 			Scroll_Shooter_background_object_probability,
@@ -245,9 +245,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 		background_garbage_collector(background_objects);
 
-		for (it1_enemies_cars = enemies_cars.begin();
-			it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
-			Enemies_cars *e1 = *it1_enemies_cars;
+		for (it_enemies = enemies_cars.begin();
+			it_enemies != enemies_cars.end(); ++it_enemies) {
+			Enemies_cars *e1 = *it_enemies;
 
 			for (it2_enemies_cars = enemies_cars.begin();
 				it2_enemies_cars != enemies_cars.end(); ++it2_enemies_cars) {
@@ -265,9 +265,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 		for (it_bullets = bullets.begin(); it_bullets != bullets.end();) {
 			Bullet *b = *it_bullets;
 
-			for (it1_enemies_cars = enemies_cars.begin();
-				it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
-				Enemies_cars *e = *it1_enemies_cars;
+			for (it_enemies = enemies_cars.begin();
+				it_enemies != enemies_cars.end(); ++it_enemies) {
+				Enemies_cars *e = *it_enemies;
 
 				if (b->get_rect().intersects(e->get_rect()) && b->side == player_side) {
 					e->change_health(-b->damage);
@@ -282,7 +282,7 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					break;
 				}
 			}
-			if (it1_enemies_cars == enemies_cars.end()) {
+			if (it_enemies == enemies_cars.end()) {
 				++it_bullets;
 			}
 		}
@@ -308,9 +308,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			}
 		}
 
-		for (it1_enemies_cars = enemies_cars.begin();
-			it1_enemies_cars != enemies_cars.end();) {
-			Enemies_cars *e = *it1_enemies_cars;
+		for (it_enemies = enemies_cars.begin();
+			it_enemies != enemies_cars.end();) {
+			Enemies_cars *e = *it_enemies;
 
 			if (e->get_rect().intersects(player.get_rect())) {
 				effects.push_back(new Effect(effects_explosion2_t, Effects_spawn_x,
@@ -321,11 +321,11 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 
 				player.change_score(-5);
 
-				it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
+				it_enemies = enemies_cars.erase(it_enemies);
 				delete e;
 			}
 			else {
-				++it1_enemies_cars;
+				++it_enemies;
 			}
 		}
 
@@ -349,9 +349,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			else ++it_bullets;
 		}
 
-		for (it1_enemies_cars = enemies_cars.begin();
-			it1_enemies_cars != enemies_cars.end();) {
-			Enemies_cars *e = *it1_enemies_cars;
+		for (it_enemies = enemies_cars.begin();
+			it_enemies != enemies_cars.end();) {
+			Enemies_cars *e = *it_enemies;
 			
 			if (e->update(Compensating_for_performance_losses_time)) {
 				if (e->get_direction() == DOWN || e->get_direction()
@@ -382,16 +382,16 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 					effects.push_back(new Effect(effects_explosion2_t,
 						Effects_spawn_x, Effects_spawn_y, background_speed,
 						DOWN, effects_explosion2_exist_time));
-					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
+					it_enemies = enemies_cars.erase(it_enemies);
 					delete e;
 				}
 				if (e->is_alive() == false) {
-					it1_enemies_cars = enemies_cars.erase(it1_enemies_cars);
+					it_enemies = enemies_cars.erase(it_enemies);
 					delete e;
 				}
 			}
 			else {
-				++it1_enemies_cars;
+				++it_enemies;
 			}
 		}
 
@@ -413,9 +413,9 @@ int Scroll_Shooter(sf::RenderWindow & window) {
 			window.draw((*it_background)->get_sprite());
 		}
 
-		for (it1_enemies_cars = enemies_cars.begin();
-			it1_enemies_cars != enemies_cars.end(); ++it1_enemies_cars) {
-			window.draw((*it1_enemies_cars)->get_sprite());
+		for (it_enemies = enemies_cars.begin();
+			it_enemies != enemies_cars.end(); ++it_enemies) {
+			window.draw((*it_enemies)->get_sprite());
 		}
 
 		for (it_effects = effects.begin(); it_effects != effects.end();

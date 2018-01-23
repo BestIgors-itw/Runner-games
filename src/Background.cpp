@@ -13,7 +13,7 @@ int Background::update(float time) {
 	return 0;
 }
 
-void generate_background_objects(unsigned short int DIRECTION,
+void background_objects_generate(unsigned short int DIRECTION,
 	float BACKGROUND_OBJECT_SPAWN_X, float BACKGROUND_OBJECT_SPAWN_Y,
 	float BACKGROUND_OBJECT_PROBABILITY, float &GENERATE_PROBABILITY,
 	std::list<Background*> &BACKGROUND_OBJECTS, sf::Clock &TIMER,

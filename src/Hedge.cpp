@@ -49,17 +49,16 @@ void generate_hedge(float &HEDGE_GENERATE_PROBABILITY,
 
 void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
 	std::list<Effect*> &EFFECTS, sf::Texture &EFFECTS_EXPLOSION_T) {
-	std::list<Hedge*>::iterator it1_hedges;
-	for (it1_hedges = HEDGES.begin(); it1_hedges != HEDGES.end();
-		++it1_hedges) {
-		Hedge *e = *it1_hedges;
-		if (e->get_rect().intersects(PLAYER.get_rect())) {
-			e->alive = false;
+	for (std::list<Hedge*>::iterator it_hedges = HEDGES.begin(); it_hedges
+		!= HEDGES.end(); ++it_hedges) {
+		if ((*it_hedges)->get_rect().intersects(PLAYER.get_rect())) {
+			(*it_hedges)->alive = false;
 			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION_T,
-				Effects_spawn_x, Effects_spawn_y,
+				(*it_hedges)->get_x() + (*it_hedges)->get_w() / 2,
+				(*it_hedges)->get_y() + (*it_hedges)->get_h() / 2,
 				background_speed, DOWN, effects_explosion2_exist_time));
 
-			PLAYER.change_health(-(e->health));
+			PLAYER.change_health(-((*it_hedges)->health));
 
 			PLAYER.change_score(-5);
 		}
