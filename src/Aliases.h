@@ -50,10 +50,10 @@
 #define Shooter_player_damage_per_shot 20
 #define Shooter_effects_player_shot_spawn_x PLAYER.get_x() + PLAYER.get_w() / 2
 #define Shooter_effects_player_shot_spawn_y PLAYER.get_y() + PLAYER.get_h() / 2
-#define player_shot_1point_x player.get_x() + 15
-#define player_shot_2point_x player.get_x() + 55 - bullet_width
-#define player_shot_1point_y player.get_y()
-#define player_shot_2point_y player.get_y()
+#define player_shot_1point_x PLAYER.get_x() + 15
+#define player_shot_2point_x PLAYER.get_x() + 55 - bullet_width
+#define player_shot_1point_y PLAYER.get_y()
+#define player_shot_2point_y PLAYER.get_y()
 #define player_bullet_speed 1
 
 #define Scroll_Shooter_effects_shooting_speed 0
@@ -65,8 +65,8 @@
 #define Effects_spawn_x (*it_enemies)->get_x() + (*it_enemies)->get_w() / 2
 #define Effects_spawn_y (*it_enemies)->get_y() + (*it_enemies)->get_h() / 2
 
-#define Effects_bullets_spawn_x b->get_x() + b->get_w() / 2
-#define Effects_bullets_spawn_y b->get_y() + b->get_h() / 2
+#define Effects_bullets_spawn_x (*it_bullets)->get_x() + (*it_bullets)->get_w() / 2
+#define Effects_bullets_spawn_y (*it_bullets)->get_y() + (*it_bullets)->get_h() / 2
 
 #define effects_explosion1_exist_time 0.1
 #define effects_explosion2_exist_time 0.25
@@ -116,9 +116,9 @@
 #define Scroll_Shooter_enemy_slage_time_between_attack 2
 #define Scroll_Shooter_enemy_slage_damage 15
 
-#define enemy_shot_point_x e->get_x() + e->get_w() / 2
-#define enemy_shot_down_point_y e->get_y() + e->get_h()
-#define enemy_shot_up_point_y e->get_y()
+#define enemy_shot_point_x (*it_enemies)->get_x() + (*it_enemies)->get_w() / 2
+#define enemy_shot_down_point_y (*it_enemies)->get_y() + (*it_enemies)->get_h()
+#define enemy_shot_up_point_y (*it_enemies)->get_y()
 #define enemy_bullet_speed 0.5
 
 #define Race_enemy_spawn_x rand() % screen_width

@@ -14,7 +14,7 @@
 
 extern sf::Clock game_timer, Compensating_for_performance_losses_timer, background_timer, enemy_timer;
 
-int Shooter(sf::RenderWindow & window);
+int Shooter(sf::RenderWindow &WINDOW);
 
 inline bool initializing(sf::Texture &aim_t,
 	sf::Texture &background_rocksand1_t, sf::Texture &background_rocksand2_t,

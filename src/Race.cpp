@@ -172,9 +172,9 @@ inline void garbage_collector(std::list<Background*> &BACKGROUND_OBJECTS,
 
 	background_garbage_collector(BACKGROUND_OBJECTS);
 
-	hedges_garbage_collector(HEDGES);
+	hedge_garbage_collector(HEDGES);
 
-	effects_garbage_collector(EFFECTS);
+	effect_garbage_collector(EFFECTS);
 }
 
 inline void update(sf::RenderWindow &WINDOW,

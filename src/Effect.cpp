@@ -11,7 +11,7 @@ int Effect::update(float time) {
 	return 0;
 }
 
-void effects_garbage_collector(std::list<Effect*> &EFFECTS) {
+void effect_garbage_collector(std::list<Effect*> &EFFECTS) {
 	for (std::list<Effect*>::iterator it_effects = EFFECTS.begin(); it_effects
 		!= EFFECTS.end(); ) {
 		if ((*it_effects)->alive == false) {

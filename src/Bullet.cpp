@@ -10,3 +10,12 @@ int Bullet::update(float time) {
 	}
 	return 0;
 }
+
+void bullet_garbage_collector(std::list<Bullet*> &BULLETS) {
+	for (std::list<Bullet*>::iterator it_bullets = BULLETS.begin(); it_bullets != BULLETS.end();) {
+		if ((*it_bullets)->is_alive() == false) {
+			it_bullets = BULLETS.erase(it_bullets);
+		}
+		else ++it_bullets;
+	}
+}

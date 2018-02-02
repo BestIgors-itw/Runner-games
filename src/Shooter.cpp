@@ -1,6 +1,6 @@
 #include "Shooter.h"
 
-int Shooter(sf::RenderWindow & WINDOW) {
+int Shooter(sf::RenderWindow &WINDOW) {
 	sf::Texture aim_t;
 
 	sf::Texture background_rocksand1_t;
@@ -30,7 +30,7 @@ int Shooter(sf::RenderWindow & WINDOW) {
 	if (!background_t.loadFromFile
 		("res/images/background/shooter-background.png")) {
 
-		return 0;
+		return 1;
 	}
 
 	sf::Sprite background_s;
@@ -61,7 +61,6 @@ int Shooter(sf::RenderWindow & WINDOW) {
 	float enemy_generate_probability = Shooter_game_difficulty;
 	float background_object_generate_probability
 		= Shooter_background_object_probability;
-	float enemy_time;
 	char enemy_number = 0;
 
 	while (WINDOW.isOpen()) {
@@ -103,62 +102,63 @@ int Shooter(sf::RenderWindow & WINDOW) {
 	return 0;
 }
 
-inline bool initializing(sf::Texture &aim_t,
-	sf::Texture &background_rocksand1_t, sf::Texture &background_rocksand2_t,
-	sf::Texture &background_rockgray1_t, sf::Texture &enemy_copsjups_t,
-	sf::Texture &enemy_hammer_t, sf::Texture &enemy_lapdcar_t, sf::Texture &effects_explosion1_t,
-	sf::Texture &effects_explosion2_t, sf::Texture &effects_shooting_t, 
-	sf::Texture &interface_plate_t) {
-	if (!aim_t.loadFromFile("res/images/aim/aim.png")) {
+inline bool initializing(sf::Texture &AIM_T,
+	sf::Texture &BACKGROUND_ROCKSAND1_T, sf::Texture &BACKGROUND_ROCKSAND2_T,
+	sf::Texture &BACKGROUND_ROCKGRAY1_T, sf::Texture &ENEMY_COPSJUPS_T,
+	sf::Texture &ENEMY_HAMMER_T, sf::Texture &ENEMY_LAPDCAR_T, sf::Texture &EFFECTS_EXPLOSION1_T,
+	sf::Texture &EFFECTS_EXPLOSION2_T, sf::Texture &EFFECTS_SHOOTING_T, 
+	sf::Texture &INTERFACE_PLATE_T) {
+
+	if (!AIM_T.loadFromFile("res/images/aim/aim.png")) {
 		return 1;
 	}
 
-	if (!background_rocksand1_t.loadFromFile
+	if (!BACKGROUND_ROCKSAND1_T.loadFromFile
 	("res/images/background/rocksand1.png")) {
 
 		return 1;
 	}
 
-	if (!background_rocksand2_t.loadFromFile
+	if (!BACKGROUND_ROCKSAND2_T.loadFromFile
 	("res/images/background/rocksand2.png")) {
 
 		return 1;
 	}
 
-	if (!background_rockgray1_t.loadFromFile
+	if (!BACKGROUND_ROCKGRAY1_T.loadFromFile
 	("res/images/background/rockgray1.png")) {
 
 		return 1;
 	}
 
-	if (!enemy_copsjups_t.loadFromFile("res/images/enemy/copsjups.png")) {
+	if (!ENEMY_COPSJUPS_T.loadFromFile("res/images/enemy/copsjups.png")) {
 		return 1;
 	}
 
-	if (!enemy_hammer_t.loadFromFile("res/images/enemy/hammer.png")) {
+	if (!ENEMY_HAMMER_T.loadFromFile("res/images/enemy/hammer.png")) {
 		return 1;
 	}
 
-	if (!enemy_lapdcar_t.loadFromFile("res/images/enemy/lapdcar.png")) {
+	if (!ENEMY_LAPDCAR_T.loadFromFile("res/images/enemy/lapdcar.png")) {
 		return 1;
 	}
 
-	if (!effects_explosion1_t.loadFromFile
+	if (!EFFECTS_EXPLOSION1_T.loadFromFile
 	("res/images/effects/explosion1.png")) {
 
 		return 1;
 	}
 
-	if (!effects_explosion2_t.loadFromFile
+	if (!EFFECTS_EXPLOSION2_T.loadFromFile
 	("res/images/effects/explosion2.png")) {
 		return 1;
 	}
 
-	if (!effects_shooting_t.loadFromFile("res/images/effects/shooting2.png")) {
+	if (!EFFECTS_SHOOTING_T.loadFromFile("res/images/effects/shooting2.png")) {
 		return 1;
 	}
 
-	if (!interface_plate_t.loadFromFile("res/images/interface/button.png")) {
+	if (!INTERFACE_PLATE_T.loadFromFile("res/images/interface/button.png")) {
 		return 1;
 	}
 
@@ -197,14 +197,14 @@ inline void generate(std::list<Background*> &BACKGROUND_OBJECTS,
 
 inline void objects_interact(Player &PLAYER,
 	std::list<Shooter_enemies_car*> &ENEMIES, std::list<Effect*> &EFFECTS,
-	char &ENEMY_NUMBER, sf::Texture &effects_shooting_t,
-	sf::Texture &effects_explosion1_t, sf::Texture &effects_explosion2_t) {
+	char &ENEMY_NUMBER, sf::Texture &EFFECTS_SHOOTING_T,
+	sf::Texture &EFFECTS_EXPLOSION1_T, sf::Texture &EFFECTS_EXPLOSION2_T) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
 		&& PLAYER.is_shot_available()) {
 		PLAYER.shoot();
 
-		EFFECTS.push_back(new Effect(effects_shooting_t,
+		EFFECTS.push_back(new Effect(EFFECTS_SHOOTING_T,
 			Shooter_effects_player_shot_spawn_x, Shooter_effects_player_shot_spawn_y,
 			Shooter_effects_shooting_speed, STAY,
 			Shooter_effects_shooting_exist_time));
@@ -212,11 +212,10 @@ inline void objects_interact(Player &PLAYER,
 		for (std::list<Shooter_enemies_car*>::iterator it_enemies
 			= ENEMIES.begin(); it_enemies != ENEMIES.end();
 			++it_enemies) {
-			Shooter_enemies_car *e = *it_enemies;
 
-			if (e->get_rect().intersects(PLAYER.get_rect())) {
-				e->change_health(-PLAYER.return_damage());
-				EFFECTS.push_back(new Effect(effects_explosion1_t,
+			if ((*it_enemies)->get_rect().intersects(PLAYER.get_rect())) {
+				(*it_enemies)->change_health(-PLAYER.return_damage());
+				EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION1_T,
 					Shooter_effects_player_shot_spawn_x, Shooter_effects_player_shot_spawn_y,
 					background_speed, LEFT,
 					effects_explosion1_exist_time));
@@ -227,7 +226,7 @@ inline void objects_interact(Player &PLAYER,
 	for (std::list<Shooter_enemies_car*>::iterator it_enemies
 		= ENEMIES.begin(); it_enemies != ENEMIES.end(); ++it_enemies) {
 		if ((*it_enemies)->get_health() <= 0) {
-			EFFECTS.push_back(new Effect(effects_explosion2_t,
+			EFFECTS.push_back(new Effect(EFFECTS_EXPLOSION2_T,
 				Effects_spawn_x, Effects_spawn_y, background_speed,
 				LEFT, effects_explosion2_exist_time));
 
@@ -246,7 +245,7 @@ inline void garbage_collector(std::list<Background*> &BACKGROUND_OBJECTS,
 
 	shooter_enemies_car_garbage_collector(ENEMIES);
 
-	effects_garbage_collector(EFFECTS);
+	effect_garbage_collector(EFFECTS);
 }
 
 inline void update(sf::RenderWindow &WINDOW,

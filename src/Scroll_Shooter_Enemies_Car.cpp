@@ -1,6 +1,6 @@
 #include "Scroll_Shooter_Enemies_Car.h"
 
-int Enemies_cars::update(float TIME) {
+int Scroll_Shooter_enemies_car::update(float TIME) {
 	if (game_timer.getElapsedTime().asSeconds() - moving_timer > 1) {
 		if (direction == DOWN || direction == DOWN_LEFT
 			|| direction == DOWN_RIGHT) {
@@ -65,4 +65,91 @@ int Enemies_cars::update(float TIME) {
 	}
 
 	return 0;
+}
+
+void scroll_shooter_enemies_car_generate
+(float &ENEMY_GENERATE_PROBABILITY,
+	std::list<Scroll_Shooter_enemies_car*> &ENEMIES, float GAME_TIME,
+	sf::Clock &ENEMY_TIMER, sf::Texture &ENEMY_BATTLEMULE_T,
+	sf::Texture &ENEMY_IMPALABATTLE_T, sf::Texture &ENEMY_SLAGE_T) {
+
+	if (ENEMY_GENERATE_PROBABILITY < 0) {
+		int r = rand() % 8;
+		switch (r) {
+		case 0:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car
+			(ENEMY_BATTLEMULE_T, Scroll_Shooter_enemy_up_spawn_x,
+				Scroll_Shooter_enemy_up_spawn_y,
+				Scroll_Shooter_enemy_battlemule_speed,
+				DOWN, Scroll_Shooter_enemy_battlemule_health,
+				Scroll_Shooter_enemy_battlemule_time_between_attack,
+				Scroll_Shooter_enemy_battlemule_damage));
+			break;
+		case 1:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car
+			(ENEMY_IMPALABATTLE_T, Scroll_Shooter_enemy_up_spawn_x,
+				Scroll_Shooter_enemy_up_spawn_y,
+				Scroll_Shooter_enemy_impalabattle_speed,
+				DOWN, Scroll_Shooter_enemy_impalabattle_health,
+				Scroll_Shooter_enemy_impalabattle_time_between_attack,
+				Scroll_Shooter_enemy_impalabattle_damage));
+			break;
+		case 2:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car(ENEMY_SLAGE_T,
+				Scroll_Shooter_enemy_up_spawn_x,
+				Scroll_Shooter_enemy_up_spawn_y,
+				Scroll_Shooter_enemy_slage_speed,
+				DOWN, Scroll_Shooter_enemy_slage_health,
+				Scroll_Shooter_enemy_slage_time_between_attack,
+				Scroll_Shooter_enemy_slage_damage));
+			break;
+		case 3:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car
+			(ENEMY_BATTLEMULE_T, Scroll_Shooter_enemy_down_spawn_x,
+				Scroll_Shooter_enemy_down_spawn_y,
+				Scroll_Shooter_enemy_battlemule_speed,
+				UP, Scroll_Shooter_enemy_battlemule_health,
+				Scroll_Shooter_enemy_battlemule_time_between_attack,
+				Scroll_Shooter_enemy_battlemule_damage));
+			break;
+		case 4:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car
+			(ENEMY_IMPALABATTLE_T, Scroll_Shooter_enemy_down_spawn_x,
+				Scroll_Shooter_enemy_down_spawn_y,
+				Scroll_Shooter_enemy_impalabattle_speed,
+				UP, Scroll_Shooter_enemy_impalabattle_health,
+				Scroll_Shooter_enemy_impalabattle_time_between_attack,
+				Scroll_Shooter_enemy_impalabattle_damage));
+			break;
+		case 5:
+			ENEMIES.push_back(new Scroll_Shooter_enemies_car(ENEMY_SLAGE_T,
+				Scroll_Shooter_enemy_down_spawn_x,
+				Scroll_Shooter_enemy_down_spawn_y,
+				Scroll_Shooter_enemy_slage_speed,
+				UP, Scroll_Shooter_enemy_slage_health,
+				Scroll_Shooter_enemy_slage_time_between_attack,
+				Scroll_Shooter_enemy_slage_damage));
+			break;
+		}
+		ENEMY_GENERATE_PROBABILITY = Scroll_Shooter_game_difficulty
+			- GAME_TIME * 25;
+		if (ENEMY_GENERATE_PROBABILITY < Scroll_Shooter_max_game_difficulty) {
+			ENEMY_GENERATE_PROBABILITY = Scroll_Shooter_max_game_difficulty;
+		}
+		ENEMY_TIMER.restart();
+	}
+}
+
+void scroll_shooter_enemies_car_garbage_collector
+(std::list<Scroll_Shooter_enemies_car*> &ENEMIES) {
+	for (std::list<Scroll_Shooter_enemies_car*>::iterator it_enemies
+		= ENEMIES.begin(); it_enemies
+		!= ENEMIES.end(); ) {
+		if ((*it_enemies)->alive == false) {
+			it_enemies = ENEMIES.erase(it_enemies);
+		}
+		else {
+			++it_enemies;
+		}
+	}
 }

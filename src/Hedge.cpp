@@ -65,14 +65,14 @@ void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
 	}
 }
 
-void hedges_garbage_collector(std::list<Hedge*> &HEDGES) {
-	for (std::list<Hedge*>::iterator it1_hedges = HEDGES.begin(); it1_hedges
+void hedge_garbage_collector(std::list<Hedge*> &HEDGES) {
+	for (std::list<Hedge*>::iterator it_hedges = HEDGES.begin(); it_hedges
 		!= HEDGES.end(); ) {
-		if ((*it1_hedges)->alive == false) {
-			it1_hedges = HEDGES.erase(it1_hedges);
+		if ((*it_hedges)->alive == false) {
+			it_hedges = HEDGES.erase(it_hedges);
 		}
 		else {
-			++it1_hedges;
+			++it_hedges;
 		}
 	}
 }

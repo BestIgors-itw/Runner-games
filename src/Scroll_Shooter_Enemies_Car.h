@@ -5,11 +5,11 @@
 
 extern sf::Clock game_timer;
 
-class Enemies_cars : public Unit {
+class Scroll_Shooter_enemies_car : public Unit {
 private:
 	float moving_timer;
 public:
-	Enemies_cars(sf::Texture &TEXTURE, float X, float Y, float SPEED,
+	Scroll_Shooter_enemies_car(sf::Texture &TEXTURE, float X, float Y, float SPEED,
 		float DIRECTION, float HEALTH, float TIME_BETWEEN_ATTACK, int DAMAGE)
 		:Unit(TEXTURE, X, Y, SPEED, DIRECTION, HEALTH, TIME_BETWEEN_ATTACK, DAMAGE) {
 
@@ -21,4 +21,13 @@ public:
 	}
 
 	int update(float time);
+
+	friend void scroll_shooter_enemies_car_generate
+	(float &ENEMY_GENERATE_PROBABILITY,
+		std::list<Scroll_Shooter_enemies_car*> &ENEMIES, float GAME_TIMER,
+		sf::Clock &ENEMY_TIMER, sf::Texture &ENEMY_BATTLEMULE_T,
+		sf::Texture &ENEMY_IMPALABATTLE_T, sf::Texture &ENEMY_SLAGE_T);
+
+	friend void scroll_shooter_enemies_car_garbage_collector
+	(std::list<Scroll_Shooter_enemies_car*> &ENEMIES);
 };

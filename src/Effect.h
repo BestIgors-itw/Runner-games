@@ -16,5 +16,5 @@ public:
 
 	int update(float time);
 
-	friend void effects_garbage_collector(std::list<Effect*> &EFFECTS);
+	friend void effect_garbage_collector(std::list<Effect*> &EFFECTS);
 };

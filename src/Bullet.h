@@ -14,4 +14,6 @@ public:
 	}
 
 	int update(float);
+
+	friend void bullet_garbage_collector(std::list<Bullet*> &BULLETS);
 };

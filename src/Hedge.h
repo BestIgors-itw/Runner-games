@@ -18,7 +18,7 @@ public:
 
 	float get_health();
 
-	friend void hedges_garbage_collector(std::list<Hedge*>&);
+	friend void hedge_garbage_collector(std::list<Hedge*>&);
 
 	friend void player_collision_hedges(Player &PLAYER, std::list<Hedge*> &HEDGES,
 		std::list<Effect*> &EFFECTS, sf::Texture &EFFECTS_EXPLOSION_T);
